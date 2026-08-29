@@ -25,9 +25,9 @@ def test_catalog_discovery_is_public_and_read_only(monkeypatch):
                         "max_context_length": 262144,
                     },
                     {
-                        "name": "Smollm-135m",
+                        "name": "qwen38-flash-next-125b-nvfp4",
                         "type": "text",
-                        "max_context_length": 2048,
+                        "max_context_length": 262144,
                     },
                     {
                         "name": "Krea 2 Turbo",
@@ -41,9 +41,9 @@ def test_catalog_discovery_is_public_and_read_only(monkeypatch):
             json=lambda: {
                 "data": [
                     {"id": "auto"},
-                    {"id": "Smollm-135m"},
                     {"id": "deepseek-v4-flash-nvfp4"},
                     {"id": "gpt-oss-120b"},
+                    {"id": "qwen38-flash-next-125b-nvfp4"},
                 ]
             },
         )
@@ -55,12 +55,12 @@ def test_catalog_discovery_is_public_and_read_only(monkeypatch):
     online = check_catalog.online_text_contexts()
     dynamic_candidates = check_catalog.validate_catalog(predefined, client, online)
 
-    assert set(predefined) == client
-    assert dynamic_candidates == set()
+    assert set(predefined) == client - {"qwen38-flash-next-125b-nvfp4"}
+    assert dynamic_candidates == {"qwen38-flash-next-125b-nvfp4"}
     assert online == {
         "gpt-oss-120b": 60000,
         "deepseek-v4-flash-nvfp4": 262144,
-        "Smollm-135m": 2048,
+        "qwen38-flash-next-125b-nvfp4": 262144,
     }
     assert calls == [
         ("https://api.aipowergrid.io/v1/models", (5, 15)),

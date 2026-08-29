@@ -185,6 +185,28 @@ test("npm publication workflows disable package-manager caches", async () => {
   }
 });
 
+test("npm publication tags can release only commits already on main", async () => {
+  const workflows = [
+    [".github/workflows/publish-n8n.yml", 1],
+    [".github/workflows/publish-packages.yml", 2],
+  ];
+
+  for (const [path, expectedJobs] of workflows) {
+    const workflow = await read(path);
+    const checkoutCount = [...workflow.matchAll(/uses:\s*actions\/checkout@/g)].length;
+    const fullHistoryCount = [...workflow.matchAll(/fetch-depth:\s*0/g)].length;
+    const mainGateCount = [
+      ...workflow.matchAll(
+        /git merge-base --is-ancestor "\$GITHUB_SHA" origin\/main/g,
+      ),
+    ].length;
+
+    assert.equal(checkoutCount, expectedJobs, `${path} job count changed`);
+    assert.equal(fullHistoryCount, checkoutCount, `${path} does not fetch history for every publish job`);
+    assert.equal(mainGateCount, checkoutCount, `${path} does not gate every publish job on main ancestry`);
+  }
+});
+
 test("publishable packages are exercised from their packed consumer payloads", async () => {
   const [rootPackage, workflow, verify, smoke] = await Promise.all([
     readJson("package.json"),

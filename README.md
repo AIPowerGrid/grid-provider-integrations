@@ -140,8 +140,9 @@ repository secret of the same name. After npm has created the package, attach
 the `AIPowerGrid/grid-provider-integrations` repository and the matching
 publish workflow as its Trusted Publisher, remove the token secret, and use
 OIDC-only releases thereafter. Never publish locally: the tag workflows are
-serialized, require the tag to match `package.json`, and produce npm
-provenance tied to the release commit.
+serialized, require the tag to match `package.json`, reject release commits
+that are not already on `main`, and produce npm provenance tied to the release
+commit.
 
 The publication workflows deliberately disable `setup-node` package-manager
 caching. Release jobs carry OIDC permission, and restoring a writable package

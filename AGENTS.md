@@ -73,6 +73,8 @@ authority for submission structure and acceptance.
 - Publication workflows carry OIDC permission and must explicitly set
   `package-manager-cache: false`; do not restore dependency caches into a
   privileged release job.
+- Publication workflows must fetch full Git history and prove the tagged
+  release commit is already reachable from `origin/main` before publishing.
 
 ## Verification
 

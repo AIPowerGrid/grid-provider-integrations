@@ -10,7 +10,6 @@ ROOT = Path(__file__).resolve().parents[1]
 MODEL_DIR = ROOT / "models" / "llm"
 EXPECTED_MODELS = {
     "auto",
-    "Smollm-135m",
     "deepseek-v4-flash-nvfp4",
     "gpt-oss-120b",
 }
@@ -63,7 +62,6 @@ def test_only_reviewed_named_models_have_nonzero_static_prices():
     assert prices["auto"] == (Decimal(0), Decimal(0))
     assert prices["gpt-oss-120b"] == (Decimal("0.075"), Decimal("0.30"))
     assert prices["deepseek-v4-flash-nvfp4"] == (Decimal("0.07"), Decimal("0.14"))
-    assert prices["Smollm-135m"] == (Decimal("0.005"), Decimal("0.01"))
 
 
 def test_packager_requirements_match_frozen_runtime_lock():
