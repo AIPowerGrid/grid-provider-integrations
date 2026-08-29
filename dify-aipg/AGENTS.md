@@ -50,6 +50,11 @@ UV_CACHE_DIR=/tmp/aipg-dify-uv uv export --frozen --offline \
   --no-header --output-file requirements.txt
 ```
 
+`.github/workflows/package-dify.yml` is provenance-only. It may build,
+validate, checksum, and upload a short-lived GitHub artifact, but it must not
+publish to Dify Marketplace, receive registry credentials, or imply that the
+credentialed Community Edition and Cloud tests passed.
+
 The catalog check is public and read-only. A real Dify generation requires a
 separately approved scoped key and is not part of the default suite.
 

@@ -1,0 +1,96 @@
+name: Package Dify plugin
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: package-dify-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  DIFY_CLI_VERSION: "0.6.10"
+  DIFY_CLI_SHA256: "0cef74bcae375a4337c2ff7d42e4787717981a795e1c23cf56bb27ec07ec8304"
+  YQ_VERSION: "4.44.5"
+  YQ_SHA256: "638c4b251c49201fc94b598834b715f8f1c6e9b1854d2820772d2c79f0289002"
+  MARKETPLACE_TOOLKIT_COMMIT: "57a21d1304b1108df3e6b90a15a4f5dd9f0915f9"
+
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.13"
+
+      - name: Install verified packaging tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          tool_dir="$RUNNER_TEMP/aipg-dify-tools"
+          mkdir -p "$tool_dir"
+
+          curl --fail --location --silent --show-error \
+            "https://github.com/langgenius/dify-plugin-daemon/releases/download/${DIFY_CLI_VERSION}/dify-plugin-linux-amd64" \
+            --output "$tool_dir/dify"
+          echo "${DIFY_CLI_SHA256}  $tool_dir/dify" | sha256sum --check
+
+          curl --fail --location --silent --show-error \
+            "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64" \
+            --output "$tool_dir/yq"
+          echo "${YQ_SHA256}  $tool_dir/yq" | sha256sum --check
+
+          chmod +x "$tool_dir/dify" "$tool_dir/yq"
+          echo "$tool_dir" >> "$GITHUB_PATH"
+
+      - name: Package plugin
+        shell: bash
+        run: |
+          set -euo pipefail
+          version=$(yq '.version' dify-aipg/manifest.yaml)
+          output_dir="$RUNNER_TEMP/aipg-dify-package"
+          mkdir -p "$output_dir"
+          dify plugin package dify-aipg \
+            --output_path "$output_dir/aipg-${version}.difypkg"
+          sha256sum "$output_dir/aipg-${version}.difypkg" \
+            > "$output_dir/aipg-${version}.difypkg.sha256"
+          echo "AIPG_DIFY_PACKAGE=$output_dir/aipg-${version}.difypkg" \
+            >> "$GITHUB_ENV"
+          echo "AIPG_DIFY_OUTPUT=$output_dir" >> "$GITHUB_ENV"
+
+      - name: Validate package with pinned Marketplace toolkit
+        shell: bash
+        run: |
+          set -euo pipefail
+          toolkit_dir="$RUNNER_TEMP/dify-marketplace-toolkit"
+          report_dir="$AIPG_DIFY_OUTPUT/validation"
+          git init --quiet "$toolkit_dir"
+          git -C "$toolkit_dir" remote add origin \
+            https://github.com/langgenius/dify-marketplace-toolkit.git
+          git -C "$toolkit_dir" fetch --quiet --depth 1 origin \
+            "$MARKETPLACE_TOOLKIT_COMMIT"
+          git -C "$toolkit_dir" checkout --quiet --detach FETCH_HEAD
+          test "$(git -C "$toolkit_dir" rev-parse HEAD)" = \
+            "$MARKETPLACE_TOOLKIT_COMMIT"
+          mkdir -p "$report_dir"
+          python "$toolkit_dir/validator/validate-difypkg.py" \
+            "$AIPG_DIFY_PACKAGE" \
+            --toolkit-dir "$toolkit_dir" \
+            --output-dir "$report_dir" \
+            --pr-body-file dify-aipg/MARKETPLACE_SUBMISSION.md
+          grep --fixed-strings --quiet -- "- Blocking failures: 0" \
+            "$report_dir/summary.md"
+          grep --fixed-strings --quiet \
+            -- "- Environment/check execution failures: 0" \
+            "$report_dir/summary.md"
+
+      - name: Upload validated package evidence
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: aipg-dify-package-${{ github.sha }}
+          path: ${{ env.AIPG_DIFY_OUTPUT }}
+          if-no-files-found: error
+          retention-days: 14

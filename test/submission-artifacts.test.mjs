@@ -81,3 +81,33 @@ test("Open WebUI draft requires upstream consent before a provider page", async 
   assert.match(query, /open-webui\/docs\/discussions\/1364/);
   assert.doesNotMatch(query, /partner(ship)?|endorse(ment)?/i);
 });
+
+test("Dify package workflow is provenance-only and supply-chain pinned", async () => {
+  const [workflow, manifest, submission] = await Promise.all([
+    read(".github/workflows/package-dify.yml"),
+    read("dify-aipg/manifest.yaml"),
+    read("dify-aipg/MARKETPLACE_SUBMISSION.md"),
+  ]);
+
+  assert.match(workflow, /workflow_dispatch:/);
+  assert.match(workflow, /contents: read/);
+  assert.match(workflow, /DIFY_CLI_VERSION: "0\.6\.10"/);
+  assert.match(
+    workflow,
+    /DIFY_CLI_SHA256: "0cef74bcae375a4337c2ff7d42e4787717981a795e1c23cf56bb27ec07ec8304"/,
+  );
+  assert.match(
+    workflow,
+    /YQ_SHA256: "638c4b251c49201fc94b598834b715f8f1c6e9b1854d2820772d2c79f0289002"/,
+  );
+  assert.match(
+    workflow,
+    /MARKETPLACE_TOOLKIT_COMMIT: "57a21d1304b1108df3e6b90a15a4f5dd9f0915f9"/,
+  );
+  assert.match(workflow, /validate-difypkg\.py/);
+  assert.match(workflow, /Blocking failures: 0/);
+  assert.match(workflow, /actions\/upload-artifact@ea165f8d/);
+  assert.match(manifest, /version: 0\.1\.0/);
+  assert.match(submission, /credentialed Dify Community Edition and Dify Cloud/i);
+  assert.doesNotMatch(workflow, /id-token: write|secrets\.|npm publish|marketplace.*upload/i);
+});
