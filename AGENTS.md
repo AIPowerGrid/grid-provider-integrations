@@ -34,6 +34,8 @@ authority for submission structure and acceptance.
 - `scripts/smoke-packed-package.mjs` - installs the exact AI SDK or ElizaOS
   tarball into a disposable clean consumer with its declared host peer, imports
   the public package name, and removes the consumer afterward.
+- `scripts/verify-revoked-key.mjs` - fixed-origin, body-blind post-release proof
+  that the disposable production key has been revoked and now returns `401`.
 - Each integration directory also owns source-ready upstream or marketplace
   submission notes. These drafts must preserve the distinction between local
   readiness, registry publication, upstream submission, and upstream
@@ -84,6 +86,8 @@ authority for submission structure and acceptance.
 - `AIPG_LIVE_E2E=1 AIPG_API_KEY="..." npm run release:e2e:live` - supervised
   five-integration production gate using a disposable `account.read` +
   `inference.submit` key; never run in default CI.
+- `AIPG_API_KEY="..." npm run release:key:verify-revoked` - after revocation,
+  prove the disposable key fails with `401`, then unset it from the shell.
 
 ## Child DOX Index
 

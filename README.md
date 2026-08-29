@@ -119,6 +119,18 @@ that spend changed within the preflight bound. It does not print or persist the
 key, account balances, prompts, generated content, response headers, or worker
 identity. Revoke the disposable key immediately after the run.
 
+After revoking it in the Console, keep the same environment variable only long
+enough to prove the credential is dead:
+
+```bash
+npm run release:key:verify-revoked
+unset AIPG_API_KEY AIPG_LIVE_E2E AIPG_E2E_MAX_SPEND_USD
+```
+
+The revocation proof calls only the fixed production credit-summary endpoint,
+does not read a response body, and succeeds only on `401`. Any other status is
+ambiguous and fails closed.
+
 This package-level gate does not replace Dify Community Edition and Cloud UI
 installation checks, npm provenance, or upstream review.
 
