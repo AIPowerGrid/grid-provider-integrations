@@ -31,31 +31,28 @@ point-in-time capacity observation, not an uptime promise.
   current ElizaOS host core still brings one high `pdfjs-dist` advisory and
   one low `elliptic` advisory.
 - The Dify provider passed 14 tests, lint, format, and a public production
-  catalog check covering four curated text models and their advertised
+  catalog check covering three curated text models and their advertised
   context windows. Dify daemon 0.6.10
-  produced a 20-file runtime-only `.difypkg`; the current Marketplace toolkit
+  produced a 19-file runtime-only `.difypkg`; the current Marketplace toolkit
   at commit `57a21d1304b1108df3e6b90a15a4f5dd9f0915f9` passed its content,
   manifest, README, dependency, binary, OSV, domain, and PR-template checks
   with zero blocking or execution failures. The package SHA-256 is
-  `88c54550bc333fb55c68c9b5a3ea3c8f509368235c5333fc7059c7950d351190`.
+  `6b656f2add99cd108c0dac814b8a841d51939b4e159eeeef8eea2a49ebf8b744`.
   The exact GitHub-built package installed successfully on a clean local Dify
   Community Edition 1.17.0 stack: the install task succeeded, its local runtime
   reached ready state, and Dify listed provider `aipowergrid/aipg/aipg` with
-  the four curated text models. The live Grid also advertises
+  the three curated text models. The live Grid also advertises
   `grid/qwen38-flash-next-125b-nvfp4`; that dynamic model remains outside the
   static package until its Core price and Dify metadata are reviewed.
-  Credentialed Community Edition and Cloud generation tests remain pending, so
-  the package has not been submitted to the Marketplace. Packaging hardening commits
-  `d789ce1` and `ab57272` passed the repository's Node, Python, and ElizaOS
-  GitHub jobs in [CI run 33231584103](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33231584103);
-  the earlier `d789ce1` run is superseded because its byte-for-byte comparison
-  treated version-dependent `uv` annotations as dependency changes.
-  Current runtime-package commit `2518636` built the exact package on Linux and passed the
-  pinned Marketplace toolkit in
-  [run 33238108393](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33238108393).
-  Artifact `9710523103` contains the package, checksum, and full validator
-  report and expires on 2026-09-12; it is build evidence, not a Marketplace
-  publication.
+  The exact artifact also installed in Dify Cloud, accepted a disposable
+  scoped Grid key, exposed the three curated models, and completed one bounded
+  production generation through `Auto Router`; the key was revoked
+  immediately afterward. Credentialed Community Edition generation remains
+  pending, so the package has not been submitted to the Marketplace. The final
+  provenance-only [package run 33274264650](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33274264650)
+  built this exact package on Linux and passed the pinned Marketplace toolkit.
+  Its short-lived artifact contains the package, checksum, and full validator
+  report; it is build evidence, not a Marketplace publication.
 - The LangChain cookbook passed eleven local protocol tests through the real
   `ChatOpenAI` surface, including invocation, SSE streaming, tool-call decoding,
   public keyless model discovery, lint, format, compile, and a zero-vulnerability
@@ -73,8 +70,7 @@ point-in-time capacity observation, not an uptime promise.
   of the public model catalog, closing a false-positive key check. n8n 2.36.8
   loaded the node and registered all four operations in a local editor smoke
   test. Its production transport then passed text, image, one-second video, and
-  ten-second audio generation through the real Grid. A provenance-only GitHub
-  release workflow is prepared; no package has been published.
+  ten-second audio generation through the real Grid.
 - A cross-provider credential-destination audit closed environment-key
   forwarding and redirect gaps before package release. AI SDK and LangChain
   environment credentials are now eligible only for the canonical Grid origin;
@@ -187,23 +183,23 @@ an upstream integration only if that project accepts and merges it.
   `main`; together they add, refresh, and correct the path of only
   `aipowergrid/aipg/aipg-0.1.0.difypkg`. The remotely validated package
   matches SHA-256
-  `88c54550bc333fb55c68c9b5a3ea3c8f509368235c5333fc7059c7950d351190`.
-  No Marketplace PR exists. Credentialed Dify Community Edition and Cloud
-  checks plus the Plugin Developer Agreement still gate submission.
+  `6b656f2add99cd108c0dac814b8a841d51939b4e159eeeef8eea2a49ebf8b744`.
+  No Marketplace PR exists. The credentialed Dify Cloud check passed with this
+  artifact. Credentialed Community Edition generation and the Plugin Developer
+  Agreement still gate submission.
 
 ## Release gates still open
 
-- Complete the separate credentialed Dify Community Edition and Cloud
-  installation checks before Marketplace submission. The direct Dify provider
-  production lane passed, but it does not substitute for those host-level
-  checks.
-- Publish the first-party packages only after their final tarballs are scanned
-  and their registry names are confirmed. The names are available and the
-  inspected tarballs contain only their intended compiled payloads, docs,
-  licenses, icons, and metadata. The serialized GitHub release paths pin the
-  npm registry and produce provenance, but the unpublished packages still need
-  a one-time short-lived `NPM_TOKEN` bootstrap before their Trusted Publishers
-  can be attached and the token removed. No release tag has been created.
+- Complete the credentialed Dify Community Edition generation check before
+  Marketplace submission. The direct provider and Cloud production lanes
+  passed, but neither substitutes for the remaining Community Edition check.
+- Submit the published AI SDK, ElizaOS, and n8n packages to their upstream
+  provider catalogs. npm publication is complete: `@aipowergrid/ai-sdk-provider@0.1.0`,
+  `@aipowergrid/plugin-aipg@0.1.0`, and
+  `@aipowergrid/n8n-nodes-aipg@0.1.1` were released by GitHub Actions with
+  provenance. Their npm OIDC Trusted Publishers are attached, both repository
+  `NPM_TOKEN` secrets are absent, and the one-time bootstrap token is revoked.
+  Registry publication is not upstream acceptance.
 - ElizaOS should update the inherited PDF and elliptic dependency paths in its
   host core; this plugin cannot safely override peer internals.
 

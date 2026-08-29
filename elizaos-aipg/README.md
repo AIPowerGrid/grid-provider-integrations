@@ -80,8 +80,7 @@ own PDF/crypto transitive dependencies under a full `bun audit`. They are not
 bundled by this package (`@elizaos/core` is a peer), but the upstream findings
 must remain visible in release notes until ElizaOS updates them.
 
-Publish only through the root `publish-packages.yml` workflow after the live
-gate, using a tag that exactly matches the package version, such as
-`plugin-aipg-v0.1.0`. Configure npm Trusted Publishing for the
-`AIPowerGrid/grid-provider-integrations` repository and that workflow; use a
-package-scoped `NPM_TOKEN` only if npm requires one for the first publication.
+`@aipowergrid/plugin-aipg@0.1.0` is public with npm provenance from tag
+`plugin-aipg-v0.1.0`. Future releases publish only through the root
+`publish-packages.yml` workflow and its npm OIDC Trusted Publisher. The
+one-time bootstrap token is revoked; do not restore a registry token.

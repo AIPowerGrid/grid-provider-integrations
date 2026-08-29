@@ -6,8 +6,9 @@ users the provider's actual install, scoping, discovery, billing, error, and
 remote-worker trust boundaries instead of implying that OpenAI compatibility
 alone covers every modality.
 
-Do not open this PR until `@aipowergrid/ai-sdk-provider` is published and the
-credentialed runtime gate below is complete.
+`@aipowergrid/ai-sdk-provider@0.1.0` is published with npm provenance, and the
+credentialed bounded runtime gate passed. This draft is ready for upstream
+submission after refreshing it against the current upstream documentation tree.
 
 ## Summary
 
@@ -33,9 +34,12 @@ modify a Vercel-owned package.
 
 ## End-to-End Verification
 
-Pending. Before submission, replace this paragraph with the package version,
-AI SDK version, one bounded production stream result, discovery result shape,
-and finish reason. Do not record the key, prompt, generated text, or balance.
+The package-level production gate exercised `@aipowergrid/ai-sdk-provider@0.1.0`
+through the exact packed transport, including a bounded stream, public model
+discovery, canonical quote preflight, and charging reconciliation. It recorded
+only assertions and timing; no key, prompt, output, account balance, media URL,
+or worker identity was retained. Upstream CI remains authoritative for the
+documentation-only contribution.
 
 ## Checklist
 

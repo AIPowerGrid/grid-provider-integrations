@@ -13,16 +13,15 @@
 
 ## Publication path
 
-The verified-node intake requires npm publication from GitHub Actions with
-provenance. Publish only through `.github/workflows/publish-n8n.yml` using the
-tag `n8n-nodes-aipg-v0.1.1`. Configure npm Trusted Publishing for:
+`@aipowergrid/n8n-nodes-aipg@0.1.1` was published from GitHub Actions with
+provenance on npm using tag `n8n-nodes-aipg-v0.1.1`. Its Trusted Publisher is:
 
 - repository owner: `AIPowerGrid`
 - repository: `grid-provider-integrations`
 - workflow: `publish-n8n.yml`
 
-After publication, verify that npm provenance resolves to the tagged commit
-and that a clean n8n `2.36.8` instance can discover and load the package.
+The public package resolves to the tagged commit, and a clean n8n `2.36.8`
+instance discovered and loaded all four operations.
 
 ## Creator Portal evidence
 
@@ -41,5 +40,5 @@ and that a clean n8n `2.36.8` instance can discover and load the package.
 - Documentation states that plaintext requests may be inspected by remote
   community workers and makes no n8n partnership claim.
 
-Do not submit to the Creator Portal before the npm package and provenance are
-public. Portal acceptance is separate from package publication.
+The package and provenance are public. Creator Portal acceptance is separate
+from package publication.
