@@ -33,8 +33,8 @@ routes remain below the 3-worker redundancy target.
 ### Post 4
 
 Distribution: native integration source and reproducible release evidence are public.
-LiteLLM provider and documentation PRs are submitted; Dify, ElizaOS, AI SDK,
-LangChain, n8n, and Open WebUI work is tracked separately from upstream acceptance.
+LiteLLM provider and documentation, elizaOS registry, and LangChain documentation
+PRs are submitted; Dify, AI SDK, n8n, and Open WebUI remain tracked separately.
 
 https://github.com/AIPowerGrid/grid-provider-integrations
 
@@ -57,6 +57,8 @@ Incident history is currently reported as `false`.
 - Provider campaign source:
   https://github.com/AIPowerGrid/grid-provider-integrations
 - LiteLLM provider PR: https://github.com/BerriAI/litellm/pull/38725
+- elizaOS registry PR: https://github.com/elizaOS/eliza/pull/29964
+- LangChain documentation PR: https://github.com/langchain-ai/docs/pull/5770
 - Open WebUI scope discussion:
   https://github.com/open-webui/docs/discussions/1364
 
