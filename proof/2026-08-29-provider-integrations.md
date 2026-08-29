@@ -74,6 +74,10 @@ point-in-time capacity observation, not an uptime promise.
   bases, and authenticated Dify, ElizaOS, AI SDK, LangChain, and n8n transports
   refuse redirects. These are release-boundary controls, not claims that a
   third-party host is trusted merely because a caller supplied it explicitly.
+- Privileged npm publication jobs now explicitly disable `setup-node` package
+  caches, while ordinary read-only CI retains its lock-keyed cache. A root
+  release-contract test fails if any publish job re-enables npm, yarn, or pnpm
+  caching or omits the explicit cache-disable setting.
 - Open WebUI v0.11.1 discovered the current Grid text-model set through its standard
   OpenAI-compatible connection path. The public guide checker passed, and the
   prepared community tutorial passed Prettier plus a production build inside

@@ -68,6 +68,9 @@ authority for submission structure and acceptance.
   upstream PR or accepted marketplace package separately.
 - Pin every third-party GitHub Action to a full commit SHA in CI, packaging,
   and publication workflows. Keep the release tag in a short trailing comment.
+- Publication workflows carry OIDC permission and must explicitly set
+  `package-manager-cache: false`; do not restore dependency caches into a
+  privileged release job.
 
 ## Verification
 

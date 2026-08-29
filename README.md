@@ -130,3 +130,8 @@ publish workflow as its Trusted Publisher, remove the token secret, and use
 OIDC-only releases thereafter. Never publish locally: the tag workflows are
 serialized, require the tag to match `package.json`, and produce npm
 provenance tied to the release commit.
+
+The publication workflows deliberately disable `setup-node` package-manager
+caching. Release jobs carry OIDC permission, and restoring a writable package
+cache into that job creates an avoidable cache-poisoning path. Ordinary CI may
+still use lock-keyed caches because it has no package-publish permission.

@@ -148,6 +148,21 @@ test("GitHub workflows pin every third-party action by commit", async () => {
   }
 });
 
+test("npm publication workflows disable package-manager caches", async () => {
+  const paths = [
+    ".github/workflows/publish-n8n.yml",
+    ".github/workflows/publish-packages.yml",
+  ];
+
+  for (const path of paths) {
+    const workflow = await read(path);
+    const setupNodeCount = [...workflow.matchAll(/uses:\s*actions\/setup-node@/g)].length;
+    const cacheDisabledCount = [...workflow.matchAll(/package-manager-cache:\s*false/g)].length;
+    assert.equal(cacheDisabledCount, setupNodeCount, `${path} does not disable every npm cache`);
+    assert.doesNotMatch(workflow, /^\s+cache:\s*(?:npm|yarn|pnpm)\s*$/m);
+  }
+});
+
 test("publishable packages are exercised from their packed consumer payloads", async () => {
   const [rootPackage, workflow, verify, smoke] = await Promise.all([
     readJson("package.json"),
