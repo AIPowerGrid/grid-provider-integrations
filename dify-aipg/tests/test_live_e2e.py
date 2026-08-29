@@ -21,7 +21,7 @@ def test_live_dify_validation_and_stream() -> None:
     api_key = os.environ.get("AIPG_API_KEY", "").strip()
     if not api_key:
         raise RuntimeError("AIPG_API_KEY is required for the explicit live E2E lane")
-    model = os.environ.get("AIPG_E2E_SMALL_MODEL", "Smollm-135m")
+    model = os.environ.get("AIPG_E2E_SMALL_MODEL", "deepseek-v4-flash-nvfp4")
     credentials = {"api_key": api_key}
 
     provider = object.__new__(AIPGProvider)
