@@ -9,9 +9,11 @@ import {
 } from '../dist/nodes/AiPowerGrid/contracts.js';
 import { gridApiRequest } from '../dist/nodes/AiPowerGrid/transport.js';
 import { AiPowerGrid } from '../dist/nodes/AiPowerGrid/AiPowerGrid.node.js';
+import { AipgApi } from '../dist/credentials/AipgApi.credentials.js';
 import {
 	getAudioModels,
 	getImageModels,
+	getTextModels,
 	getVideoModels,
 } from '../dist/nodes/AiPowerGrid/loadOptions.js';
 
@@ -64,6 +66,29 @@ test('authenticates every request through the encrypted n8n credential', async (
 	assert.equal(captured.options.url, 'https://api.aipowergrid.io/v1/models');
 	assert.equal(captured.options.method, 'GET');
 	assert.equal(captured.options.body, undefined);
+});
+
+test('credential test uses an authenticated read-only endpoint', () => {
+	const credential = new AipgApi();
+	assert.equal(credential.test.request.method, 'GET');
+	assert.equal(credential.test.request.url, '/account/credits');
+	assert.notEqual(credential.test.request.url, '/models');
+});
+
+test('text picker reads the canonical model catalog', async () => {
+	const context = {
+		helpers: {
+			httpRequestWithAuthentication: async () => ({
+				object: 'list',
+				data: [{ id: 'gpt-oss-120b' }, { id: 'auto' }, { name: 'invalid' }],
+			}),
+		},
+	};
+
+	assert.deepEqual(await getTextModels.call(context), [
+		{ name: 'auto', value: 'auto' },
+		{ name: 'gpt-oss-120b', value: 'gpt-oss-120b' },
+	]);
 });
 
 test('media pickers include only models compatible with each operation', async () => {

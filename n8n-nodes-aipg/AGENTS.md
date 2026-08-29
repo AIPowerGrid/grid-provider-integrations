@@ -18,6 +18,8 @@ keeps Grid credentials in n8n's encrypted credential store.
   source-media workflows must remain absent rather than silently dropping data.
 - HTTP errors, including `401`, `402`, `404`, `422`, `429`, and `503`, must be
   surfaced to n8n so workflow error branches can handle them.
+- Credential validation must call an authenticated, read-only endpoint. Public
+  model discovery cannot prove that a key is valid.
 
 ## Verification
 
@@ -26,3 +28,5 @@ keeps Grid credentials in n8n's encrypted credential store.
 - `npm run lint`
 - `npm run build`
 - `npm pack --dry-run`
+- `AIPG_LIVE_E2E=1 npm run test:e2e:live` (explicitly authorized disposable
+  key and credit spend only)

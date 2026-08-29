@@ -26,6 +26,7 @@
 		"lint": "n8n-node lint",
 		"lint:fix": "n8n-node lint --fix",
 		"test": "npm run build && node --test test/*.test.mjs",
+		"test:e2e:live": "npm run build && node --test test/live.e2e.test.mjs",
 		"prepublishOnly": "n8n-node prerelease"
 	},
 	"files": [

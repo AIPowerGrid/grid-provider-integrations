@@ -42,7 +42,7 @@ export class AipgApi implements ICredentialType {
 	test: ICredentialTestRequest = {
 		request: {
 			baseURL: 'https://api.aipowergrid.io/v1',
-			url: '/models',
+			url: '/account/credits',
 			method: 'GET',
 		},
 	};

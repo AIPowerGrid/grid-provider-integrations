@@ -8,9 +8,11 @@ a stale model catalog.
 
 Create a server-side API key in the
 [Grid console](https://console.aipowergrid.io/dashboard/api-key). The key needs
-the `inference.submit` scope; ordinary programmatic keys also carry
-`account.read`. Add it to an **AI Power Grid API** credential in n8n. n8n stores
-the secret and adds it as a bearer token. The key is never a workflow field.
+the `account.read` and `inference.submit` scopes carried by ordinary
+programmatic keys. `account.read` lets n8n validate the credential without
+spending credit; `inference.submit` authorizes generation. Add it to an **AI
+Power Grid API** credential in n8n. n8n stores the secret and adds it as a
+bearer token. The key is never a workflow field.
 
 Do not put the key in browser code, workflow JSON, expressions, prompts, or
 screenshots. Give production workflows a separate, revocable key with only the
@@ -75,4 +77,12 @@ npm pack --dry-run
 
 A credentialed release check must exercise one bounded request in every
 operation before publication. Those checks spend account credit and are not
-part of the default test suite.
+part of the default test suite:
+
+```bash
+AIPG_LIVE_E2E=1 npm run test:e2e:live
+```
+
+Use a disposable `account.read` + `inference.submit` key and revoke it after the
+run. The live test does not print the key, prompts, generated media URLs, model
+output, or account balance.
