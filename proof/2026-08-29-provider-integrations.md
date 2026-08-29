@@ -28,7 +28,11 @@ point-in-time capacity observation, not an uptime promise.
   an independent repeat build produced the same bytes.
   A stale Qwen catalog entry was removed before release. Credentialed Dify
   Community Edition and Cloud generation tests remain pending, so the package
-  has not been submitted to the Marketplace.
+  has not been submitted to the Marketplace. Packaging hardening commits
+  `d789ce1` and `ab57272` passed the repository's Node, Python, and ElizaOS
+  GitHub jobs in [CI run 33231584103](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33231584103);
+  the earlier `d789ce1` run is superseded because its byte-for-byte comparison
+  treated version-dependent `uv` annotations as dependency changes.
 - The LangChain cookbook passed eight local protocol tests through the real
   `ChatOpenAI` surface, including invocation, SSE streaming, tool-call decoding,
   public keyless model discovery, lint, format, compile, and a zero-vulnerability
