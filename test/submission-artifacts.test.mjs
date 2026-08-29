@@ -116,3 +116,21 @@ test("Dify package workflow is provenance-only and supply-chain pinned", async (
   assert.match(submission, /credentialed Dify Community Edition and Dify Cloud/i);
   assert.doesNotMatch(workflow, /id-token: write|secrets\.|npm publish|marketplace.*upload/i);
 });
+
+test("GitHub workflows pin every third-party action by commit", async () => {
+  const paths = [
+    ".github/workflows/ci.yml",
+    ".github/workflows/package-dify.yml",
+    ".github/workflows/publish-n8n.yml",
+    ".github/workflows/publish-packages.yml",
+  ];
+
+  for (const path of paths) {
+    const workflow = await read(path);
+    const actionReferences = [...workflow.matchAll(/uses:\s*([^\s#]+)/g)].map((match) => match[1]);
+    assert.ok(actionReferences.length > 0, `${path} contains no action references`);
+    for (const reference of actionReferences) {
+      assert.match(reference, /@[0-9a-f]{40}$/, `${path} has an unpinned action: ${reference}`);
+    }
+  }
+});

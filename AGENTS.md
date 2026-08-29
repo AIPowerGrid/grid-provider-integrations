@@ -53,6 +53,8 @@ authority for submission structure and acceptance.
   satisfy a third-party framework.
 - A first-party demo or passing mock is not upstream adoption. Record a merged
   upstream PR or accepted marketplace package separately.
+- Pin every third-party GitHub Action to a full commit SHA in CI, packaging,
+  and publication workflows. Keep the release tag in a short trailing comment.
 
 ## Verification
 

@@ -67,11 +67,14 @@ point-in-time capacity observation, not an uptime promise.
 - Source-ready release and submission contracts now cover the current active
   ElizaOS registry, Vercel AI SDK community-provider docs, LangChain chat
   integration docs, Dify Marketplace package path, and n8n Creator Portal.
-  Thirteen deterministic root tests keep package names, versions, provenance tags,
+  Fourteen deterministic root tests keep package names, versions, provenance tags,
   trust disclosures, and upstream targets aligned. Commit `43b7e5f` passed all
   three GitHub CI jobs after push. Capability enforcement and live metadata
   drift checks then passed all three jobs at commit `5b9218d` in
   [CI run 33232941595](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33232941595).
+  Every third-party action in CI, packaging, and publication workflows is now
+  pinned to a full commit SHA, with a regression test preventing mutable action
+  tags from returning before any npm release.
 - The current Open WebUI contribution template rejects provider-listing
   submissions. The AIPG guide remains tested first-party documentation; an
   upstream tutorial PR is gated on explicit maintainer confirmation rather
