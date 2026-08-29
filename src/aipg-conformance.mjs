@@ -164,9 +164,14 @@ export async function runConformance(options = {}) {
       "invalid status model entry",
     );
     const textModels = body.filter((entry) => entry.type === "text");
+    const capabilityModels = body.filter((entry) => entry.type === "image" || entry.type === "video");
     assertion(
       textModels.every((entry) => Number.isInteger(entry.max_context_length) && entry.max_context_length > 0),
       "text status entry is missing a positive context window",
+    );
+    assertion(
+      capabilityModels.every((entry) => Array.isArray(entry.capabilities) && entry.capabilities.length > 0),
+      "image or video status entry is missing capability metadata",
     );
     const undiscoverable = textModels.map((entry) => entry.name).filter((name) => !clientModels.has(name));
     assertion(undiscoverable.length === 0, `online text models missing from /v1/models: ${undiscoverable.join(", ")}`);
@@ -177,6 +182,7 @@ export async function runConformance(options = {}) {
       models: body.length,
       modalities,
       text_contexts: textModels.length,
+      capability_models: capabilityModels.length,
     });
   });
 

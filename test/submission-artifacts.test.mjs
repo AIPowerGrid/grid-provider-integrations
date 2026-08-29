@@ -24,16 +24,21 @@ test("ElizaOS registry draft follows the package release contract", async () => 
   assert.match(workflow, /plugin-aipg-v\$\(node -p/);
 });
 
-test("AI SDK submission draft targets the package and provenance workflow", async () => {
-  const [packageJson, page, pullRequest, workflow] = await Promise.all([
+test("AI SDK submission draft targets the package and live modality contract", async () => {
+  const [packageJson, page, readme, pullRequest, workflow] = await Promise.all([
     readJson("ai-sdk-aipg/package.json"),
     read("ai-sdk-aipg/upstream-provider.mdx"),
+    read("ai-sdk-aipg/README.md"),
     read("ai-sdk-aipg/UPSTREAM_PR.md"),
     read(".github/workflows/publish-packages.yml"),
   ]);
 
   assert.equal(packageJson.name, "@aipowergrid/ai-sdk-provider");
   assert.match(page, new RegExp(packageJson.name.replace("/", "\\/")));
+  assert.match(page, /videoModel\('LTX Director 2\.0'\)/);
+  assert.match(readme, /videoModel\("LTX Director 2\.0"\)/);
+  assert.match(page, /`LTX-2\.3` require one inline start frame/);
+  assert.match(readme, /`LTX-2\.3` require one inline start-frame file/);
   assert.match(pullRequest, /55-aipg\.mdx/);
   assert.match(workflow, /ai-sdk-provider-v\$\(node -p/);
 });

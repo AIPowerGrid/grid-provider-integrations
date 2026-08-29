@@ -29,7 +29,7 @@ function routes(request, response) {
   if (request.url === "/v1/status/models") {
     return replyJson(response, 200, [
       { name: "model-a", count: 1, type: "text", max_context_length: 60000 },
-      { name: "image-a", count: 1, type: "image", max_context_length: 2048 },
+      { name: "image-a", count: 1, type: "image", max_context_length: 2048, capabilities: ["txt2img"] },
     ]);
   }
   if (request.url === "/v1/models/__aipg_conformance_missing__") {
@@ -150,6 +150,29 @@ test("public mode rejects text models without a positive context window", async 
     assert.match(
       report.checks.find((entry) => entry.name === "models.modality_status").error,
       /positive context window/,
+    );
+  } finally {
+    await grid.close();
+  }
+});
+
+test("public mode rejects image and video models without capability metadata", async () => {
+  const invalidRoutes = (request, response) => {
+    if (request.url === "/v1/status/models") {
+      return replyJson(response, 200, [
+        { name: "model-a", count: 1, type: "text", max_context_length: 60000 },
+        { name: "video-a", count: 1, type: "video", capabilities: null },
+      ]);
+    }
+    return routes(request, response);
+  };
+  const grid = await mockGrid(invalidRoutes);
+  try {
+    const report = await runConformance({ baseUrl: grid.baseUrl });
+    assert.equal(report.ok, false);
+    assert.match(
+      report.checks.find((entry) => entry.name === "models.modality_status").error,
+      /missing capability metadata/,
     );
   } finally {
     await grid.close();

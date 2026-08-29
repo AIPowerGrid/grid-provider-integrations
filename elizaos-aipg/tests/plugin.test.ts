@@ -66,4 +66,26 @@ describe("aipgPlugin", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     fetchMock.mockRestore();
   });
+
+  it("rejects text-to-video when the online model only supports image-to-video", async () => {
+    const fetchMock = vi
+      .spyOn(globalThis, "fetch")
+      .mockResolvedValue(
+        new Response(
+          JSON.stringify([
+            { name: "LTX-2.3", count: 1, type: "video", capabilities: ["img2video"] },
+          ]),
+          { status: 200, headers: { "Content-Type": "application/json" } },
+        ),
+      );
+
+    const result = await videoAction.handler(runtime("test-key"), {} as never, undefined, {
+      parameters: { prompt: "move", model: "LTX-2.3" },
+    } as HandlerOptions);
+
+    expect(result).toMatchObject({ success: false });
+    expect(result?.text).toContain("does not advertise txt2video");
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    fetchMock.mockRestore();
+  });
 });

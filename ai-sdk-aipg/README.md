@@ -78,7 +78,7 @@ import { experimental_generateVideo as generateVideo } from "ai";
 import { aipg } from "@aipowergrid/ai-sdk-provider";
 
 const result = await generateVideo({
-  model: aipg.videoModel("LTX-2.3"),
+  model: aipg.videoModel("LTX Director 2.0"),
   prompt: "Slow camera push through a luminous server hall",
   resolution: "768x512",
   duration: 4,
@@ -86,8 +86,9 @@ const result = await generateVideo({
 });
 ```
 
-Image-to-video accepts one inline start-frame file. AI SDK `frameImages`,
-`inputReferences`, and remote URL inputs are rejected rather than ignored.
+Image-to-video models such as `LTX-2.3` require one inline start-frame file.
+AI SDK `frameImages`, `inputReferences`, and remote URL inputs are rejected
+rather than ignored.
 
 ## Music
 

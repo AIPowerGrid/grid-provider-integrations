@@ -269,6 +269,32 @@ describe("AI Power Grid AI SDK provider", () => {
     expect(mock.calls).toHaveLength(1);
   });
 
+  it("rejects media generation when capability metadata is absent", async () => {
+    const model = "Krea 2 Turbo";
+    const mock = fixture({
+      "/v1/status/models": () => status(model, "image"),
+    });
+    const aipg = createAipg({
+      apiKey: "grid_test",
+      baseURL: "http://localhost/v1",
+      fetch: mock.fetch,
+    });
+
+    await expect(
+      aipg.imageModel(model).doGenerate({
+        prompt: "a circuit",
+        n: 1,
+        size: undefined,
+        aspectRatio: undefined,
+        seed: undefined,
+        files: undefined,
+        mask: undefined,
+        providerOptions: {},
+      }),
+    ).rejects.toThrow("txt2img");
+    expect(mock.calls).toHaveLength(1);
+  });
+
   it("exposes music as music, with exact Grid control names", async () => {
     const model = "ace-step-v1.5-xl-turbo";
     const mock = fixture({

@@ -111,7 +111,7 @@ import { experimental_generateVideo as generateVideo } from 'ai';
 import { aipg } from '@aipowergrid/ai-sdk-provider';
 
 const result = await generateVideo({
-  model: aipg.videoModel('LTX-2.3'),
+  model: aipg.videoModel('LTX Director 2.0'),
   prompt: 'Slow camera push through a luminous server hall',
   resolution: '768x512',
   duration: 4,
@@ -119,9 +119,9 @@ const result = await generateVideo({
 });
 ```
 
-Image-to-video accepts one inline start frame. Remote URL inputs, frame arrays,
-and reference collections are rejected because the current Grid request
-contract does not support them.
+Image-to-video models such as `LTX-2.3` require one inline start frame. Remote
+URL inputs, frame arrays, and reference collections are rejected because the
+current Grid request contract does not support them.
 
 ## Music Generation
 

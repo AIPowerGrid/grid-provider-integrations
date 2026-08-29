@@ -17,7 +17,7 @@ export interface AipgModelStatus {
   name: string;
   count: number;
   type: "text" | "image" | "video" | "audio" | string;
-  capabilities?: string[];
+  capabilities?: string[] | null;
   max_context_length?: number | null;
 }
 

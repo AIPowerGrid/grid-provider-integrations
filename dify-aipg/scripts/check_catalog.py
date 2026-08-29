@@ -65,8 +65,7 @@ def validate_catalog(
     }
     if missing_status or context_drift:
         raise SystemExit(
-            f"metadata drift: missing_status={missing_status}, "
-            f"context={context_drift}"
+            f"metadata drift: missing_status={missing_status}, context={context_drift}"
         )
 
 

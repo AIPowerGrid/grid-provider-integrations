@@ -43,6 +43,7 @@ async function assertOnlineModel(
   client: AipgClient,
   model: string,
   modality: "text" | "image" | "video" | "audio",
+  requiredCapability?: string,
 ): Promise<void> {
   if (modality === "text" && model === "auto") return;
   const models = await client.modelStatus();
@@ -56,6 +57,9 @@ async function assertOnlineModel(
     throw new Error(
       `Grid ${modality} model '${model}' is not online. Available: ${online.join(", ") || "none"}`,
     );
+  }
+  if (requiredCapability && !match.capabilities?.includes(requiredCapability)) {
+    throw new Error(`Grid ${modality} model '${model}' does not advertise ${requiredCapability}.`);
   }
 }
 
@@ -179,14 +183,15 @@ export const imageAction: Action = {
     try {
       const params = parameters(options);
       const model = textParam(params, "model", true) as string;
+      const image = textParam(params, "image");
       const client = clientFor(runtime);
-      await assertOnlineModel(client, model, "image");
+      await assertOnlineModel(client, model, "image", image ? "img2img" : "txt2img");
       const result = await client.generateImage({
         prompt: textParam(params, "prompt", true) as string,
         model,
         size: textParam(params, "size"),
         seed: numberParam(params, "seed"),
-        image: textParam(params, "image"),
+        image,
         negativePrompt: textParam(params, "negative_prompt"),
       });
       const url = firstUrl(result.data, "image");
@@ -223,8 +228,9 @@ export const videoAction: Action = {
     try {
       const params = parameters(options);
       const model = textParam(params, "model", true) as string;
+      const image = textParam(params, "image");
       const client = clientFor(runtime);
-      await assertOnlineModel(client, model, "video");
+      await assertOnlineModel(client, model, "video", image ? "img2video" : "txt2video");
       const result = await client.generateVideo({
         prompt: textParam(params, "prompt", true) as string,
         model,
@@ -232,7 +238,7 @@ export const videoAction: Action = {
         seconds: numberParam(params, "seconds"),
         fps: numberParam(params, "fps"),
         seed: numberParam(params, "seed"),
-        image: textParam(params, "image"),
+        image,
       });
       const url = firstUrl(result.data, "video");
       const text = `Generated a video with ${model}: ${url}`;

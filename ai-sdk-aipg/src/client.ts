@@ -137,7 +137,7 @@ export class AipgClient {
   }
 
   assertCapability(status: AipgModelStatus, capability: string): void {
-    if (status.capabilities && !status.capabilities.includes(capability)) {
+    if (!status.capabilities?.includes(capability)) {
       throw new AipgApiError(
         `AIPG model '${status.name}' does not advertise the '${capability}' capability`,
         400,
