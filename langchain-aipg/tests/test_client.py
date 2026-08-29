@@ -19,10 +19,12 @@ from aipg_langchain import MissingAPIKeyError, create_chat_model, list_text_mode
 class _State:
     requests: list[dict[str, Any]]
     catalog_authorization: str | None
+    catalog_user_agent: str | None
 
     def __init__(self) -> None:
         self.requests = []
         self.catalog_authorization = None
+        self.catalog_user_agent = None
 
 
 @contextmanager
@@ -46,6 +48,7 @@ def _grid_server() -> Iterator[tuple[str, _State]]:
                 self._json(404, {"detail": "not found"})
                 return
             state.catalog_authorization = self.headers.get("Authorization")
+            state.catalog_user_agent = self.headers.get("User-Agent")
             self._json(
                 200,
                 {
@@ -190,6 +193,7 @@ def test_model_discovery_uses_key_when_supplied() -> None:
     with _grid_server() as (base_url, state):
         list_text_models(api_key=SecretStr("grid_test"), base_url=base_url)
     assert state.catalog_authorization == "Bearer grid_test"
+    assert state.catalog_user_agent == "aipg-langchain/0.1"
 
 
 def test_chat_clients_refuse_redirects() -> None:

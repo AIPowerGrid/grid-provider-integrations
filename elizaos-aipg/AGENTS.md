@@ -35,6 +35,9 @@ ElizaOS plugin API and uses only documented Grid `/v1` contracts.
 - Text must support both bounded non-streaming and SSE streaming. Treat a
   truncated or malformed stream as an error; never return partial output as a
   successful completion.
+- The explicit production lane uses `AIPG_E2E_ELIZA_MODEL` and a bounded
+  production-grade text model. Do not use a backend known to exhaust its output
+  allowance as the release oracle for strict truncation handling.
 - Register image generation through ElizaOS `ModelType.IMAGE`. Video and audio
   remain explicit actions because the stable ElizaOS model types describe
   processing inputs, not generative request contracts.

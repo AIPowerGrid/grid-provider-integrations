@@ -24,31 +24,31 @@ export const LIVE_WORKLOADS = Object.freeze([
   },
   {
     id: "eliza-text",
-    model: "Smollm-135m",
+    model: "gpt-oss-120b",
     modality: "text",
-    prompt_tokens: 2_048,
-    max_tokens: 8,
+    prompt_tokens: 4_096,
+    max_tokens: 256,
   },
   {
     id: "langchain-invoke",
     model: "gpt-oss-120b",
     modality: "text",
     prompt_tokens: 4_096,
-    max_tokens: 24,
+    max_tokens: 256,
   },
   {
     id: "langchain-stream",
     model: "gpt-oss-120b",
     modality: "text",
     prompt_tokens: 4_096,
-    max_tokens: 24,
+    max_tokens: 256,
   },
   {
     id: "langchain-tool",
     model: "gpt-oss-120b",
     modality: "text",
     prompt_tokens: 4_096,
-    max_tokens: 24,
+    max_tokens: 256,
   },
   {
     id: "n8n-text",
@@ -206,6 +206,7 @@ export async function runLiveReleaseGate() {
     AIPG_LIVE_E2E: "1",
     AIPG_API_KEY: apiKey,
     AIPG_E2E_SMALL_MODEL: "Smollm-135m",
+    AIPG_E2E_ELIZA_MODEL: "gpt-oss-120b",
     AIPG_E2E_TOOL_MODEL: "gpt-oss-120b",
     UV_CACHE_DIR:
       process.env.UV_CACHE_DIR ||

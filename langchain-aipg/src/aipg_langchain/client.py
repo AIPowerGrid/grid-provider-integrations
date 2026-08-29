@@ -67,7 +67,10 @@ def list_text_models(
         ValueError: The base URL is unsafe.
     """
     url = f"{_validated_base_url(base_url)}/models"
-    headers = {"Accept": "application/json"}
+    headers = {
+        "Accept": "application/json",
+        "User-Agent": "aipg-langchain/0.1",
+    }
     if api_key is not None:
         headers["Authorization"] = f"Bearer {api_key.get_secret_value()}"
     request = Request(  # noqa: S310

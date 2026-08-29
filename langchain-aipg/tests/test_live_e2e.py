@@ -17,7 +17,7 @@ pytestmark = pytest.mark.skipif(
 
 def _model():
     model = os.environ.get("AIPG_E2E_TOOL_MODEL", "gpt-oss-120b")
-    return create_chat_model(model, max_tokens=24, timeout=90)
+    return create_chat_model(model, max_tokens=256, timeout=90)
 
 
 def test_live_langchain_invoke_stream_and_tool_call() -> None:
@@ -43,4 +43,4 @@ def test_live_langchain_invoke_stream_and_tool_call() -> None:
     )
     assert result.tool_calls
     assert result.tool_calls[0]["name"] == multiply.name
-    assert multiply.invoke(result.tool_calls[0]) == 391
+    assert multiply.invoke(result.tool_calls[0]["args"]) == 391

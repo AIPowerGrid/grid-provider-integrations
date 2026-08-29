@@ -53,10 +53,10 @@ test("quoted bounds match every child live test", async () => {
   assert.match(dify, /"max_tokens": 8/);
   assert.match(aiSdk, /AIPG_E2E_SMALL_MODEL/);
   assert.match(aiSdk, /maxOutputTokens: 8/);
-  assert.match(eliza, /AIPG_E2E_SMALL_MODEL/);
-  assert.match(eliza, /maxTokens: 8/);
+  assert.match(eliza, /AIPG_E2E_ELIZA_MODEL/);
+  assert.match(eliza, /maxTokens: 256/);
   assert.match(langchain, /AIPG_E2E_TOOL_MODEL/);
-  assert.match(langchain, /max_tokens=24/);
+  assert.match(langchain, /max_tokens=256/);
   assert.match(n8n, /max_tokens: 4/);
   assert.match(n8n, /seconds: 1/);
   assert.match(n8n, /seconds: 10/);

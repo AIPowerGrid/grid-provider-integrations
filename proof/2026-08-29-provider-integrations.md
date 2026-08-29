@@ -1,6 +1,6 @@
 # Provider Integration Proof - 2026-08-29
 
-AI Power Grid's current production discovery endpoint reported ten online
+AI Power Grid's current production discovery endpoint reported eleven online
 model entries across text, image, video, and audio during this check. This is a
 point-in-time capacity observation, not an uptime promise.
 
@@ -9,14 +9,14 @@ point-in-time capacity observation, not an uptime promise.
 - The public conformance runner passed OpenAI-compatible model discovery,
   public modality status, positive text context-window checks, image/video
   capability-metadata checks, and missing/invalid credential rejection against
-  production. It observed four client-facing text IDs, ten online model
-  entries, three concrete text context windows, and six image/video capability
+  production. It observed five client-facing text IDs, eleven online model
+  entries, four concrete text context windows, and six image/video capability
   declarations.
 - The Vercel AI SDK provider passed 15 tests, type checking, lint, build, pack
   inspection, and a zero-vulnerability production dependency audit. Its
   scoped-key documentation now uses Core's real `account.read` scope, and an
-  opt-in AI SDK 7 `streamText` production lane is prepared but has not been run
-  without a disposable key.
+  opt-in AI SDK 7 `streamText` production lane passed against production with
+  a disposable scoped key.
 - The exact AI SDK and ElizaOS release tarballs also installed and imported
   successfully from disposable clean consumers with their declared host peers.
   Both pack and install phases disable lifecycle scripts, and the consumers are
@@ -24,7 +24,10 @@ point-in-time capacity observation, not an uptime promise.
   the payload developers would actually install from npm.
 - The ElizaOS plugin passed 13 component tests plus a real `AgentRuntime`
   registration/invocation test, type checking, lint, build, and pack
-  inspection. Its publish payload contains no runtime dependencies. The
+  inspection. Its production `AgentRuntime` discovery and bounded stream lane
+  also passed with `gpt-oss-120b`; the lane keeps strict rejection of truncated
+  output instead of accepting a partial completion. Its publish payload
+  contains no runtime dependencies. The
   current ElizaOS host core still brings one high `pdfjs-dist` advisory and
   one low `elliptic` advisory.
 - The Dify provider passed 14 tests, lint, format, and a public production
@@ -60,15 +63,18 @@ point-in-time capacity observation, not an uptime promise.
   hosted guide for an unfeatured integration below 50,000 monthly downloads,
   so the staged upstream diff is one restrained link in the existing Chat
   Completions API section while the full cookbook stays first-party. Its opt-in
-  production lane covers bounded invoke, streaming, and forced tool calling but
-  has not been run without a disposable key.
+  production lane passed bounded invoke, streaming, forced tool calling, and
+  local execution of the emitted arguments. The live pass also found that the
+  production edge rejects Python's generic `urllib` user agent; discovery now
+  sends the fixed non-identifying `aipg-langchain/0.1` identifier.
 - The n8n node passed strict community-node lint, nine deterministic tests,
   build, pack inspection, and a zero-vulnerability production dependency
   audit. Its credential test now uses authenticated read-only credits instead
   of the public model catalog, closing a false-positive key check. n8n 2.36.8
   loaded the node and registered all four operations in a local editor smoke
-  test. A provenance-only GitHub release workflow and an opt-in four-modality
-  production gate are prepared but have not published or spent credit.
+  test. Its production transport then passed text, image, one-second video, and
+  ten-second audio generation through the real Grid. A provenance-only GitHub
+  release workflow is prepared; no package has been published.
 - A cross-provider credential-destination audit closed environment-key
   forwarding and redirect gaps before package release. AI SDK and LangChain
   environment credentials are now eligible only for the canonical Grid origin;
@@ -97,8 +103,12 @@ point-in-time capacity observation, not an uptime promise.
   new supervised release command now preflights ten fixed Dify, AI SDK,
   ElizaOS, LangChain, and n8n workloads against Core's canonical quote API,
   requires active charging and sufficient credit, and enforces a hard `$0.03`
-  ceiling before dispatch. The gate itself has not been run without an
-  explicitly approved disposable key.
+  ceiling before dispatch. The supervised production campaign passed all five
+  integration lanes and every advertised n8n modality. Starting from an
+  idempotent `$0.03` operator-canary grant, observed spend was `$0.025254`.
+  The temporary five-model charging allowlist was restored to the original
+  `z-image-turbo`-only policy, the disposable key was revoked, and the fixed
+  revocation probe proved it returns HTTP `401`.
 - Weekly proof copy is now generated from the public network-status, job-total,
   and payout APIs instead of hand-maintained arithmetic. The generator rejects
   unknown status schemas and economically active validator states, and it
@@ -183,10 +193,10 @@ an upstream integration only if that project accepts and merges it.
 
 ## Release gates still open
 
-- Run the bounded credentialed production gate, then complete the separate
-  Dify Community Edition and Cloud installation checks before marketplace or
-  package-registry publication. These checks spend credits and are deliberately
-  absent from default CI.
+- Complete the separate credentialed Dify Community Edition and Cloud
+  installation checks before Marketplace submission. The direct Dify provider
+  production lane passed, but it does not substitute for those host-level
+  checks.
 - Publish the first-party packages only after their final tarballs are scanned
   and their registry names are confirmed. The names are available and the
   inspected tarballs contain only their intended compiled payloads, docs,

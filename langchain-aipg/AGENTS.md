@@ -30,6 +30,9 @@ not a new LangChain provider package.
   no environment key unless the caller supplies one directly.
 - Public model discovery must work without a key. Supplying a key is optional
   and must not change the returned catalog contract.
+- Public discovery sends the stable `aipg-langchain/0.1` user agent because the
+  production edge rejects Python's generic `urllib` agent. Keep it free of
+  account, host, or credential material.
 - Set `use_responses_api=False` explicitly. LangChain can infer Responses API
   routing from model names, which is unsafe for a custom OpenAI-compatible
   endpoint.
