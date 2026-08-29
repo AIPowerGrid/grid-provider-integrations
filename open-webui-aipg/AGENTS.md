@@ -12,6 +12,7 @@ than provider-specific modules.
 - `README.md` - short setup and security guide for AIPG users.
 - `upstream-tutorial.mdx` - source-ready tutorial for the official
   `open-webui/docs` repository.
+- `UPSTREAM_PR.md` - upstream PR body and explicit release-gate checklist.
 - `scripts/check-public.mjs` - non-mutating compatibility check for discovery,
   authentication rejection, and browser CORS.
 - `VERIFICATION.md` - bounded evidence and remaining upstream release gates.
@@ -35,7 +36,7 @@ than provider-specific modules.
 ## Verification
 
 - `node scripts/check-public.mjs`
-- `npx prettier --check README.md upstream-tutorial.mdx`
+- `npx prettier --check README.md upstream-tutorial.mdx UPSTREAM_PR.md`
 
 ## Child DOX Index
 

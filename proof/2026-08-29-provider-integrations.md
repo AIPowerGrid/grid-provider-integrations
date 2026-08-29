@@ -27,7 +27,10 @@ point-in-time capacity observation, not an uptime promise.
   2.36.8 loaded the node and registered all four operations in a local editor
   smoke test.
 - Open WebUI v0.11.1 discovered current Grid text models through its standard
-  OpenAI-compatible connection path. The public guide checker passed.
+  OpenAI-compatible connection path. The public guide checker passed, and the
+  prepared community tutorial passed Prettier plus a production build inside
+  the current official `open-webui/docs` tree. No upstream PR has been opened
+  before the credentialed runtime gate.
 - The public integrations repository's GitHub CI passed the Node, Bun, and
   Python jobs, including the unauthenticated production conformance run.
 - Grid Core merged normalization for current clients that send

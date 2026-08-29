@@ -1,10 +1,31 @@
 #!/usr/bin/env node
 
+import { readFile } from "node:fs/promises";
+
 const baseUrl = "https://api.aipowergrid.io/v1";
+const tutorial = await readFile(new URL("../upstream-tutorial.mdx", import.meta.url), "utf8");
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
+
+assert(
+  tutorial.includes("This tutorial is a community contribution and is not supported by the Open"),
+  "the upstream tutorial is missing Open WebUI's required community warning",
+);
+assert(
+  tutorial.includes("community-operated workers") ||
+    tutorial.includes("independently operated community"),
+  "the upstream tutorial is missing the remote-worker disclosure",
+);
+assert(
+  tutorial.includes("`inference.submit`"),
+  "the upstream tutorial is missing scoped-key guidance",
+);
+assert(
+  tutorial.includes("`GET /v1/models`"),
+  "the upstream tutorial is missing model-discovery behavior",
+);
 
 const modelsResponse = await fetch(`${baseUrl}/models`);
 assert(modelsResponse.status === 200, `/models returned ${modelsResponse.status}`);
