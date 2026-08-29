@@ -5,13 +5,13 @@ WebUI `v0.11.1` container.
 
 ## Passed without spending
 
-- Grid `GET /v1/models` returned a valid OpenAI list with `auto` and four live
-  concrete text models.
+- Grid `GET /v1/models` returned a valid OpenAI list containing `auto` and the
+  concrete text models available during the check.
 - An unauthenticated chat request returned `401` before generation dispatch.
 - Browser preflight for `Authorization` and `Content-Type` succeeded, which is
   required by Open WebUI Direct Connections.
 - Open WebUI `v0.11.1` started healthy with the Grid base URL and discovered
-  all five Grid text model ids through its own `/api/models` aggregation path.
+  the same Grid text-model set through its own `/api/models` aggregation path.
 
 The temporary Open WebUI container was removed after the check. The test used
 an invalid placeholder key and did not submit a generation.
