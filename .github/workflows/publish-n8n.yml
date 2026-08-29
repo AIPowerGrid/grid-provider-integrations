@@ -21,6 +21,8 @@ jobs:
         working-directory: n8n-nodes-aipg
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: 24
@@ -35,6 +37,8 @@ jobs:
             echo "Tag $RELEASE_TAG does not match $expected" >&2
             exit 1
           }
+      - name: Require the release commit to be on main
+        run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main
       - run: npm ci
       - run: npm test
       - run: npm run lint
