@@ -5,7 +5,7 @@ description = "AI Power Grid model provider for Dify"
 readme = "README.md"
 requires-python = ">=3.12,<3.14"
 dependencies = [
-    "dify-plugin>=0.9.0,<0.10.0",
+    "dify-plugin>=0.9.0,<0.11.0",
     "requests>=2.32.0,<3.0.0",
 ]
 
