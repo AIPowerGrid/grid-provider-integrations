@@ -23,6 +23,9 @@ authority for submission structure and acceptance.
 - `langchain-aipg/` - tested LangChain Python cookbook for Grid text models.
 - `n8n-nodes-aipg/` - native n8n community node for Grid text, image, video,
   and audio generation.
+- `starters/` - five dependency-free Web3 application examples sharing a
+  fixed-origin, quote-gated Grid client. Wallet funding stays out of the
+  inference process and receipt IDs are never mislabeled as on-chain proofs.
 - `proof/` - dated evidence reports that separate tests, submissions, merges,
   open release gates, and publication-ready weekly proof copy. Every number in
   a proof post must link to a public source and preserve unavailable metrics as
@@ -104,3 +107,5 @@ authority for submission structure and acceptance.
   model discovery helper, and local protocol tests.
 - [n8n-nodes-aipg/AGENTS.md](n8n-nodes-aipg/AGENTS.md) - n8n node contracts,
   credentials, model discovery, and release verification.
+- [starters/AGENTS.md](starters/AGENTS.md) - runnable Web3 application examples
+  and their shared security/billing boundary.
