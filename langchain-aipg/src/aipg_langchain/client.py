@@ -30,6 +30,13 @@ def _resolved_api_key(api_key: SecretStr | None) -> SecretStr:
     return resolved_key
 
 
+def _optional_api_key(api_key: SecretStr | None) -> SecretStr | None:
+    if api_key is not None:
+        return api_key
+    value = os.environ.get("AIPG_API_KEY", "")
+    return SecretStr(value) if value else None
+
+
 def _validated_base_url(base_url: str) -> str:
     parsed = urlparse(base_url)
     is_loopback_http = parsed.scheme == "http" and parsed.hostname in _LOOPBACK_HOSTS
@@ -49,7 +56,7 @@ def list_text_models(
     """Return model IDs from the Grid's canonical client-facing text catalog.
 
     Args:
-        api_key: Scoped Grid key. Defaults to `AIPG_API_KEY`.
+        api_key: Optional Grid key. Public production discovery does not require one.
         base_url: Grid API root. Plain HTTP is accepted only for loopback tests.
         timeout: Discovery request timeout in seconds.
 
@@ -61,13 +68,13 @@ def list_text_models(
         ValueError: The base URL is unsafe.
     """
     url = f"{_validated_base_url(base_url)}/models"
-    resolved_key = _resolved_api_key(api_key)
+    resolved_key = _optional_api_key(api_key)
+    headers = {"Accept": "application/json"}
+    if resolved_key is not None:
+        headers["Authorization"] = f"Bearer {resolved_key.get_secret_value()}"
     request = Request(  # noqa: S310
         url,
-        headers={
-            "Accept": "application/json",
-            "Authorization": f"Bearer {resolved_key.get_secret_value()}",
-        },
+        headers=headers,
     )
     with urlopen(request, timeout=timeout) as response:  # noqa: S310
         payload = json.load(response)

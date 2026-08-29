@@ -22,8 +22,8 @@ or a command-line argument.
 
 ## Discover models
 
-The client-facing text catalog changes as network capacity changes. Discovery
-uses the same scoped key as inference:
+The client-facing text catalog changes as network capacity changes. Production
+discovery is public, so listing models does not require or expose an API key:
 
 ```bash
 uv run python examples/chat.py --list-models
@@ -104,4 +104,12 @@ uv run python -m compileall -q src examples tests
 
 A credentialed production run is a separate release gate because it spends
 account credit. Run one bounded chat, stream, and tool call before publishing an
-upstream recipe.
+upstream recipe:
+
+```bash
+AIPG_LIVE_E2E=1 uv run pytest -q tests/test_live_e2e.py
+```
+
+Use a disposable key carrying only `account.read` and `inference.submit`, then
+revoke it after the run. The test asserts protocol behavior without printing
+the key, prompts, model output, or account balance.

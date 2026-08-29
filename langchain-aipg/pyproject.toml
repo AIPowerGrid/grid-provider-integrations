@@ -25,6 +25,7 @@ packages = ["src/aipg_langchain"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = ["live: opt-in checks that call production and may spend account credit"]
 
 [tool.ruff]
 line-length = 100

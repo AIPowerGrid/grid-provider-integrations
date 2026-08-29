@@ -18,9 +18,11 @@ from aipg_langchain import MissingAPIKeyError, create_chat_model, list_text_mode
 
 class _State:
     requests: list[dict[str, Any]]
+    catalog_authorization: str | None
 
     def __init__(self) -> None:
         self.requests = []
+        self.catalog_authorization = None
 
 
 @contextmanager
@@ -43,9 +45,7 @@ def _grid_server() -> Iterator[tuple[str, _State]]:
             if self.path != "/v1/models":
                 self._json(404, {"detail": "not found"})
                 return
-            if self.headers.get("Authorization") != "Bearer grid_test":
-                self._json(401, {"detail": "Invalid API key"})
-                return
+            state.catalog_authorization = self.headers.get("Authorization")
             self._json(
                 200,
                 {
@@ -161,18 +161,20 @@ def test_rejects_insecure_remote_base() -> None:
         create_chat_model(api_key=SecretStr("grid_test"), base_url="http://example.com/v1")
 
 
-def test_discovers_only_text_models() -> None:
-    with _grid_server() as (base_url, _state):
-        assert list_text_models(api_key=SecretStr("grid_test"), base_url=base_url) == (
+def test_discovers_only_text_models_without_a_key(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("AIPG_API_KEY", raising=False)
+    with _grid_server() as (base_url, state):
+        assert list_text_models(base_url=base_url) == (
             "auto",
             "gpt-oss-120b",
         )
+    assert state.catalog_authorization is None
 
 
-def test_model_discovery_requires_key(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.delenv("AIPG_API_KEY", raising=False)
-    with pytest.raises(MissingAPIKeyError):
-        list_text_models()
+def test_model_discovery_uses_key_when_supplied() -> None:
+    with _grid_server() as (base_url, state):
+        list_text_models(api_key=SecretStr("grid_test"), base_url=base_url)
+    assert state.catalog_authorization == "Bearer grid_test"
 
 
 def test_invokes_chat_completions() -> None:

@@ -23,8 +23,12 @@ point-in-time capacity observation, not an uptime promise.
   produced a 20-file runtime-only `.difypkg`; the current Marketplace toolkit
   passed its content, manifest, README, dependency, binary, OSV, domain, and
   PR-template checks. A stale Qwen catalog entry was removed before release.
-- The LangChain cookbook passed eight local protocol tests, lint, format,
-  compile, and a zero-vulnerability installed dependency audit.
+- The LangChain cookbook passed eight local protocol tests through the real
+  `ChatOpenAI` surface, including invocation, SSE streaming, tool-call decoding,
+  public keyless model discovery, lint, format, compile, and a zero-vulnerability
+  installed dependency audit. Its opt-in production lane covers bounded invoke,
+  streaming, and forced tool calling but has not been run without a disposable
+  key.
 - The n8n node passed strict community-node lint, seven tests, build, pack
   inspection, and a zero-vulnerability production dependency audit. n8n
   2.36.8 loaded the node and registered all four operations in a local editor

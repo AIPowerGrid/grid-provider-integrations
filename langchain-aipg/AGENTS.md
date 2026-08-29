@@ -19,6 +19,8 @@ not a new LangChain provider package.
 - Keep `https://api.aipowergrid.io/v1` as the production default.
 - API keys come from `AIPG_API_KEY` in examples. Never accept them as CLI
   arguments, print them, or write them to files.
+- Public model discovery must work without a key. Supplying a key is optional
+  and must not change the returned catalog contract.
 - Set `use_responses_api=False` explicitly. LangChain can infer Responses API
   routing from model names, which is unsafe for a custom OpenAI-compatible
   endpoint.
@@ -35,3 +37,5 @@ not a new LangChain provider package.
 - `uv run ruff check .`
 - `uv run ruff format --check .`
 - `uv run python -m compileall -q src examples tests`
+- `AIPG_LIVE_E2E=1 uv run pytest -q tests/test_live_e2e.py` (explicitly
+  authorized disposable key only)
