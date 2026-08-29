@@ -43,3 +43,5 @@ contracts; music is an explicit Grid helper because it is not speech synthesis.
 - `npm publish --dry-run --access public`
 - `AIPG_API_KEY="..." npm run test:e2e:live` - supervised bounded production
   stream with a disposable scoped key; never run in default CI.
+- Publish only through `.github/workflows/publish-packages.yml` using a matching
+  `ai-sdk-provider-vX.Y.Z` tag and npm provenance.

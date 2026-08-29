@@ -51,6 +51,8 @@ ElizaOS plugin API and uses only documented Grid `/v1` contracts.
 - `bun audit --production` - the published package has no bundled runtime
   dependencies. A full development-tree audit also reports upstream findings
   inherited from `@elizaos/core`; record those separately before release.
+- Publish only through `.github/workflows/publish-packages.yml` using a matching
+  `plugin-aipg-vX.Y.Z` tag and npm provenance.
 
 ## Child DOX Index
 

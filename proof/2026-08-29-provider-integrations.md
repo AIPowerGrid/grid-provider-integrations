@@ -67,7 +67,9 @@ an upstream integration only if that project accepts and merges it.
   marketplace or package-registry publication. These checks spend credits and
   are deliberately absent from default CI.
 - Publish the first-party packages only after their final tarballs are scanned
-  and their registry names are confirmed.
+  and their registry names are confirmed. Provenance-only GitHub release paths
+  are prepared for the AI SDK, ElizaOS, and n8n packages; no release tag has
+  been created.
 - ElizaOS should update the inherited PDF and elliptic dependency paths in its
   host core; this plugin cannot safely override peer internals.
 

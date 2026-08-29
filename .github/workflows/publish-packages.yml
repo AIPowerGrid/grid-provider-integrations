@@ -1,0 +1,84 @@
+name: Publish integration package
+
+on:
+  push:
+    tags:
+      - "ai-sdk-provider-v*.*.*"
+      - "plugin-aipg-v*.*.*"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  ai-sdk:
+    if: startsWith(github.ref_name, 'ai-sdk-provider-v')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ai-sdk-aipg
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: ai-sdk-aipg/package-lock.json
+      - run: npm install --global npm@11.17.0
+      - name: Require tag to match package version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          expected="ai-sdk-provider-v$(node -p "require('./package.json').version")"
+          test "$RELEASE_TAG" = "$expected" || {
+            echo "Tag $RELEASE_TAG does not match $expected" >&2
+            exit 1
+          }
+      - run: npm ci
+      - run: npm test
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run build
+      - run: npm audit --omit=dev
+      - name: Publish with npm provenance
+        run: |
+          [ -n "$NPM_TOKEN" ] && npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          npm publish --access public --provenance
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  elizaos:
+    if: startsWith(github.ref_name, 'plugin-aipg-v')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: elizaos-aipg
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+      - run: npm install --global npm@11.17.0
+      - name: Require tag to match package version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          expected="plugin-aipg-v$(node -p "require('./package.json').version")"
+          test "$RELEASE_TAG" = "$expected" || {
+            echo "Tag $RELEASE_TAG does not match $expected" >&2
+            exit 1
+          }
+      - run: bun install --frozen-lockfile
+      - run: bun run test
+      - run: bun run typecheck
+      - run: bun run lint
+      - run: bun run build
+      - name: Publish with npm provenance
+        run: |
+          [ -n "$NPM_TOKEN" ] && npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          npm publish --access public --provenance
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
