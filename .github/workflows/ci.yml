@@ -54,7 +54,7 @@ jobs:
           version: "0.9.24"
       - name: Dify provider
         working-directory: dify-aipg
-        run: uv sync --dev --frozen && uv run pytest && uv run ruff check . && uv run ruff format --check .
+        run: uv sync --dev --frozen && uv run pytest && uv run ruff check . && uv run ruff format --check . && uv run python scripts/check_catalog.py
       - name: LangChain cookbook
         working-directory: langchain-aipg
         run: uv sync --all-groups --frozen && uv run pytest && uv run ruff check . && uv run ruff format --check .

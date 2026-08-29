@@ -1,6 +1,4 @@
-"""Fail when Dify's predefined model IDs drift from the Grid client catalog."""
-
-import os
+"""Fail when Dify's predefined model IDs drift from the public Grid catalog."""
 
 from pathlib import Path
 
@@ -23,12 +21,8 @@ def predefined_models() -> set[str]:
 
 
 def client_models() -> set[str]:
-    api_key = os.environ.get("AIPG_API_KEY", "")
-    if not api_key:
-        raise SystemExit("Set AIPG_API_KEY to a scoped Grid key before checking the catalog")
     response = requests.get(
         CATALOG_URL,
-        headers={"Authorization": f"Bearer {api_key}"},
         timeout=(5, 15),
     )
     response.raise_for_status()

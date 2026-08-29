@@ -7,6 +7,8 @@ OpenAI-compatible adapter.
 
 Source: [AIPowerGrid/grid-provider-integrations](https://github.com/AIPowerGrid/grid-provider-integrations)
 
+Contact: [half@aipowergrid.io](mailto:half@aipowergrid.io)
+
 ## Configure
 
 1. Sign in at [console.aipowergrid.io](https://console.aipowergrid.io/).
@@ -42,6 +44,6 @@ UV_CACHE_DIR=/tmp/aipg-dify-uv uv run ruff check .
 UV_CACHE_DIR=/tmp/aipg-dify-uv uv run python scripts/check_catalog.py
 ```
 
-The test suite uses fakes. The catalog check reads the authenticated client
-model list and requires `AIPG_API_KEY`. Packaging with Dify daemon CLI 0.6.10 requires
-`uv` 0.12 or newer.
+The default test suite uses fakes and never spends credits. The catalog check
+reads the public client-facing text-model list and does not require a key.
+Packaging with Dify daemon CLI 0.6.10 requires `uv` 0.12 or newer.

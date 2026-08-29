@@ -20,6 +20,7 @@ const checks = [
   ["ElizaOS package", "npm", ["publish", "--dry-run", "--access", "public"], "elizaos-aipg"],
   ["Dify tests", "uv", ["run", "pytest"], "dify-aipg", { UV_CACHE_DIR: "/tmp/aipg-dify-uv" }],
   ["Dify lint", "uv", ["run", "ruff", "check", "."], "dify-aipg", { UV_CACHE_DIR: "/tmp/aipg-dify-uv" }],
+  ["Dify catalog", "uv", ["run", "python", "scripts/check_catalog.py"], "dify-aipg", { UV_CACHE_DIR: "/tmp/aipg-dify-uv" }],
   ["LangChain tests", "uv", ["run", "pytest"], "langchain-aipg", { UV_CACHE_DIR: "/tmp/aipg-langchain-uv-cache" }],
   ["LangChain lint", "uv", ["run", "ruff", "check", "."], "langchain-aipg", { UV_CACHE_DIR: "/tmp/aipg-langchain-uv-cache" }],
   ["n8n lint", "npm", ["run", "lint"], "n8n-nodes-aipg"],

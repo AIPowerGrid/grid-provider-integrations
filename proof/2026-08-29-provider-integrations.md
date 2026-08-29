@@ -15,9 +15,11 @@ point-in-time capacity observation, not an uptime promise.
   inspection. Its publish payload contains no runtime dependencies. The
   current ElizaOS host core still brings one high `pdfjs-dist` advisory and
   one low `elliptic` advisory.
-- The Dify provider passed eight tests and lint, and its installed Python
-  dependency audit found no known vulnerabilities. A stale Qwen catalog entry
-  was removed before release.
+- The Dify provider passed nine tests, lint, format, and a public production
+  catalog check covering four client-facing text models. Dify daemon 0.6.10
+  produced a 20-file runtime-only `.difypkg`; the current Marketplace toolkit
+  passed its content, manifest, README, dependency, binary, OSV, domain, and
+  PR-template checks. A stale Qwen catalog entry was removed before release.
 - The LangChain cookbook passed eight local protocol tests, lint, format,
   compile, and a zero-vulnerability installed dependency audit.
 - The n8n node passed strict community-node lint, seven tests, build, pack

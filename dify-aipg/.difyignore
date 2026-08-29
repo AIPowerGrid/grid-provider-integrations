@@ -7,5 +7,6 @@ __pycache__/
 *.difypkg
 .DS_Store
 AGENTS.md
+MARKETPLACE_SUBMISSION.md
 scripts/
 tests/
