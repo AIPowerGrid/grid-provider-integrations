@@ -46,6 +46,13 @@ point-in-time capacity observation, not an uptime promise.
 - Grid Core merged normalization for current clients that send
   `max_completion_tokens`, preventing the field from bypassing the metered
   generation cap: [AIPowerGrid/grid-core#63](https://github.com/AIPowerGrid/grid-core/pull/63).
+- The public website capability correction was merged and deployed from
+  [halfaipg/aipg-website#16](https://github.com/halfaipg/aipg-website/pull/16).
+  Production now distinguishes current coordinated Core, AIPG worker payouts,
+  daily allowances, and community inference from planned worker-claim,
+  multi-asset, partner-node, and confidential-compute capabilities. The
+  production build, eight browser smokes, dependency audit, and source plus
+  full-history secret scans passed before merge.
 
 ## Submitted upstream
 
@@ -55,8 +62,6 @@ point-in-time capacity observation, not an uptime promise.
 - LiteLLM documentation: [BerriAI/litellm-docs#1072](https://github.com/BerriAI/litellm-docs/pull/1072).
 - Open WebUI fork documentation correction:
   [AIPowerGrid/grid-openweb-ui#1](https://github.com/AIPowerGrid/grid-openweb-ui/pull/1).
-- Marketing capability-claim correction:
-  [halfaipg/aipg-website#16](https://github.com/halfaipg/aipg-website/pull/16).
 
 An open pull request is not adoption, endorsement, or a partnership. It becomes
 an upstream integration only if that project accepts and merges it.
