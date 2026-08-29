@@ -51,9 +51,9 @@ keys remain in Dify's secret provider credential store.
 
 ## Local validation
 
-Dify daemon CLI 0.6.10 produced the 20-file runtime package from the public
+Dify daemon CLI 0.6.10 produced the 19-file runtime package from the public
 source. Its SHA-256 is
-`88c54550bc333fb55c68c9b5a3ea3c8f509368235c5333fc7059c7950d351190`.
+`6b656f2add99cd108c0dac814b8a841d51939b4e159eeeef8eea2a49ebf8b744`.
 The Marketplace toolkit at commit
 `57a21d1304b1108df3e6b90a15a4f5dd9f0915f9` reported zero blocking failures,
 zero check-execution failures, and no known vulnerabilities across the 46
@@ -61,16 +61,17 @@ pinned lockfile dependencies. It emitted five review-warning categories,
 documented below.
 
 The provenance-only
-[GitHub package run](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33238108393)
-at source commit `2518636` built this exact package on Linux and uploaded
-artifact `9710523103` with its checksum and full validation report. The
+[GitHub package run](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33274264650)
+at source commit `68af5da` built this exact package on Linux and uploaded
+artifact `9721015728` with its checksum and full validation report. The
 artifact expires on 2026-09-12 and is not a Marketplace release.
 
 The exact GitHub-built package was uploaded to a clean local Dify Community
 Edition 1.17.0 deployment with signature verification disabled only for this
 unsigned development package. The install task completed successfully, the
 plugin runtime reached ready state, and Dify listed provider
-`aipowergrid/aipg/aipg` with its four curated text models. This proves package
+`aipowergrid/aipg/aipg` with its three curated text models: `auto`,
+`gpt-oss-120b`, and `deepseek-v4-flash-nvfp4`. This proves package
 installation and discovery on Community Edition; it does not replace the
 credentialed generation check.
 
