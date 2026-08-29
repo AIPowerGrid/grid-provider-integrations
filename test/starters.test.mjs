@@ -101,7 +101,7 @@ test("quote guard rejects unpriced, over-budget, and underfunded work", () => {
     () => assertAffordable({
       quote: {
         charging_enabled: true,
-        total_spendable_usd: 0,
+        total_spendable_usd: 5,
         estimate: { priced: true, cost_usd: 0.01, balance_sufficient: false },
       },
       credits: { total_spendable_usd: 0 },

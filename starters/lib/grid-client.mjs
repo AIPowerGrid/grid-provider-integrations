@@ -94,7 +94,10 @@ export function assertAffordable({ quote, credits, maximumUsd }) {
   const chargingEnabled = quote.charging_enabled ?? credits?.charging_enabled;
   const balanceSufficient = estimate.balance_sufficient;
   const spendable = finiteNumber(quote.total_spendable_usd ?? credits?.total_spendable_usd);
-  if (chargingEnabled === true && balanceSufficient !== true && spendable < costUsd) {
+  if (
+    chargingEnabled === true
+    && (balanceSufficient === false || (balanceSufficient !== true && spendable < costUsd))
+  ) {
     throw new GridStarterError("The Grid account does not have enough spendable credit");
   }
   return { costUsd, chargingEnabled: chargingEnabled === true };
