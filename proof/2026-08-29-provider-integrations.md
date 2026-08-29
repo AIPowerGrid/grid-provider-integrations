@@ -43,6 +43,16 @@ point-in-time capacity observation, not an uptime promise.
   before the credentialed runtime gate.
 - The public integrations repository's GitHub CI passed the Node, Bun, and
   Python jobs, including the unauthenticated production conformance run.
+- Source-ready release and submission contracts now cover the current active
+  ElizaOS registry, Vercel AI SDK community-provider docs, LangChain chat
+  integration docs, Dify Marketplace package path, and n8n Creator Portal.
+  Ten deterministic root tests keep package names, versions, provenance tags,
+  trust disclosures, and upstream targets aligned. Commit `43b7e5f` passed all
+  three GitHub CI jobs after push.
+- The current Open WebUI contribution template rejects provider-listing
+  submissions. The AIPG guide remains tested first-party documentation; an
+  upstream tutorial PR is gated on explicit maintainer confirmation rather
+  than being submitted as a promotional drive-by.
 - Grid Core merged normalization for current clients that send
   `max_completion_tokens`, preventing the field from bypassing the metered
   generation cap: [AIPowerGrid/grid-core#63](https://github.com/AIPowerGrid/grid-core/pull/63).
@@ -58,7 +68,9 @@ point-in-time capacity observation, not an uptime promise.
 
 - LiteLLM provider: [BerriAI/litellm#38725](https://github.com/BerriAI/litellm/pull/38725).
   All CI checks, including lint, security scans, unit shards, and benchmarks,
-  were green at the time of this report; maintainer review remained required.
+  were green on current head `c8a4cca` at the time of this report. The failed
+  lint notification for old head `2326088` is superseded. Maintainer review
+  and the contributor license agreement remain required.
 - LiteLLM documentation: [BerriAI/litellm-docs#1072](https://github.com/BerriAI/litellm-docs/pull/1072).
 - Open WebUI fork documentation correction:
   [AIPowerGrid/grid-openweb-ui#1](https://github.com/AIPowerGrid/grid-openweb-ui/pull/1).
@@ -71,6 +83,8 @@ an upstream integration only if that project accepts and merges it.
 - Run one bounded credentialed production check for each package path before
   marketplace or package-registry publication. These checks spend credits and
   are deliberately absent from default CI.
+- Sign the LiteLLM contributor license agreement for PR 38725. This is an
+  upstream administrative gate, not a code or CI failure.
 - Publish the first-party packages only after their final tarballs are scanned
   and their registry names are confirmed. Provenance-only GitHub release paths
   are prepared for the AI SDK, ElizaOS, and n8n packages; no release tag has
