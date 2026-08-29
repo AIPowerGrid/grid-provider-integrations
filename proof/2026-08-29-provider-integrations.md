@@ -10,9 +10,11 @@ point-in-time capacity observation, not an uptime promise.
   status, and missing/invalid credential rejection against production.
 - The Vercel AI SDK provider passed 13 tests, type checking, lint, build, pack
   inspection, and a zero-vulnerability production dependency audit.
-- The ElizaOS plugin passed 11 tests, type checking, lint, build, and pack
-  inspection. It ships no runtime dependencies. The current ElizaOS host core
-  still brings one high `pdfjs-dist` advisory and one low `elliptic` advisory.
+- The ElizaOS plugin passed 11 component tests plus a real `AgentRuntime`
+  registration/invocation test, type checking, lint, build, and pack
+  inspection. Its publish payload contains no runtime dependencies. The
+  current ElizaOS host core still brings one high `pdfjs-dist` advisory and
+  one low `elliptic` advisory.
 - The Dify provider passed eight tests and lint, and its installed Python
   dependency audit found no known vulnerabilities. A stale Qwen catalog entry
   was removed before release.

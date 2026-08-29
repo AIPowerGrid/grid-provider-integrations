@@ -14,8 +14,9 @@ ElizaOS plugin API and uses only documented Grid `/v1` contracts.
 - `src/actions.ts` - explicit text, image, video, audio, model-list, and
   credit-status actions.
 - `src/index.ts` - plugin assembly and public exports.
-- `tests/` - mocked wire-contract and action/model tests. Tests must never use
-  a real API key or spend credits.
+- `tests/` - mocked wire-contract tests, a real `AgentRuntime` registration
+  lane, and an explicit credentialed production lane. Default tests must never
+  use a real API key or spend credits.
 
 ## Local Contracts
 
@@ -40,9 +41,13 @@ ElizaOS plugin API and uses only documented Grid `/v1` contracts.
 ## Verification
 
 - `bun run typecheck`
-- `bun run lint`
+- `bun run lint:check`
 - `bun test`
 - `bun run build`
+- `npm publish --dry-run --access public` - inspect the exact package payload.
+- `AIPG_API_KEY="..." bun run test:e2e:live` - explicit pre-release production
+  check with a disposable scoped key; this spends one bounded text request and
+  must never run in default CI.
 - `bun audit --production` - the published package has no bundled runtime
   dependencies. A full development-tree audit also reports upstream findings
   inherited from `@elizaos/core`; record those separately before release.

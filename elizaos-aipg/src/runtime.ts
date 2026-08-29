@@ -21,5 +21,5 @@ export function clientFor(runtime: IAgentRuntime): AipgClient {
       "AIPG_API_KEY is required. Create a scoped key in the AI Power Grid developer console.",
     );
   }
-  return new AipgClient({ apiKey: key });
+  return new AipgClient({ apiKey: key, fetch: runtime.fetch ?? undefined });
 }

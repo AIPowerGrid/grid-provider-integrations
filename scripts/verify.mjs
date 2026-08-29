@@ -17,6 +17,7 @@ const checks = [
   ["ElizaOS types", "bun", ["run", "typecheck"], "elizaos-aipg"],
   ["ElizaOS lint", "bun", ["run", "lint"], "elizaos-aipg"],
   ["ElizaOS build", "bun", ["run", "build"], "elizaos-aipg"],
+  ["ElizaOS package", "npm", ["publish", "--dry-run", "--access", "public"], "elizaos-aipg"],
   ["Dify tests", "uv", ["run", "pytest"], "dify-aipg", { UV_CACHE_DIR: "/tmp/aipg-dify-uv" }],
   ["Dify lint", "uv", ["run", "ruff", "check", "."], "dify-aipg", { UV_CACHE_DIR: "/tmp/aipg-dify-uv" }],
   ["LangChain tests", "uv", ["run", "pytest"], "langchain-aipg", { UV_CACHE_DIR: "/tmp/aipg-langchain-uv-cache" }],

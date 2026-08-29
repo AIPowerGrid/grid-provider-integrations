@@ -58,15 +58,22 @@ means at least one compatible worker is currently connected; it is not an SLA.
 ```bash
 bun install --frozen-lockfile
 bun run typecheck
-bun run lint
+bun run lint:check
 bun test
 bun run build
 bun audit --production
+npm publish --dry-run --access public
 ```
 
 Mock tests never use a real key or spend credits. Before a release, run one
-supervised, low-output text generation with a dedicated scoped test key and
-record only status/timing evidence, never the key, prompt, output, or balance.
+supervised, low-output text generation through the real ElizaOS runtime with a
+dedicated scoped test key:
+
+```bash
+AIPG_API_KEY="..." bun run test:e2e:live
+```
+
+Record only status/timing evidence, never the key, prompt, output, or balance.
 
 The stable `@elizaos/core` development tree currently reports advisories in its
 own PDF/crypto transitive dependencies under a full `bun audit`. They are not

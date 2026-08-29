@@ -4,7 +4,10 @@
   "description": "ElizaOS plugin for AI Power Grid text, image, video, and music generation",
   "type": "module",
   "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "packageType": "plugin",
+  "platform": "node",
   "exports": {
     "./package.json": "./package.json",
     ".": {
@@ -22,8 +25,12 @@
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "biome check src/ tests/",
+    "lint:check": "biome check src/ tests/",
     "lint:fix": "biome check --write src/ tests/",
-    "test": "vitest run --config ./vitest.config.ts"
+    "test:component": "vitest run --config ./vitest.config.ts tests/client.test.ts tests/plugin.test.ts",
+    "test:e2e": "vitest run --config ./vitest.config.ts tests/runtime.e2e.test.ts",
+    "test:e2e:live": "AIPG_LIVE_E2E=1 vitest run --config ./vitest.config.ts tests/runtime.live.e2e.test.ts",
+    "test": "bun run test:component && bun run test:e2e"
   },
   "keywords": [
     "elizaos",
@@ -47,7 +54,7 @@
     "url": "https://github.com/AIPowerGrid/grid-provider-integrations/issues"
   },
   "peerDependencies": {
-    "@elizaos/core": ">=1.7.2 <3"
+    "@elizaos/core": "1.7.2"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.8",
@@ -58,6 +65,42 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "agentConfig": {
+    "pluginType": "elizaos:plugin:1.0.0",
+    "pluginParameters": {
+      "AIPG_API_KEY": {
+        "type": "string",
+        "description": "Scoped AI Power Grid key with account.read and inference.submit. Required at runtime; never commit values."
+      },
+      "AIPG_TEXT_SMALL_MODEL": {
+        "type": "string",
+        "description": "Optional online Grid model for ElizaOS small-text calls.",
+        "defaultValue": "auto"
+      },
+      "AIPG_TEXT_LARGE_MODEL": {
+        "type": "string",
+        "description": "Optional online Grid model for ElizaOS large-text calls.",
+        "defaultValue": "auto"
+      },
+      "AIPG_REASONING_MODEL": {
+        "type": "string",
+        "description": "Optional online Grid model for ElizaOS reasoning calls.",
+        "defaultValue": "auto"
+      },
+      "AIPG_COMPLETION_MODEL": {
+        "type": "string",
+        "description": "Optional online Grid model for completion calls.",
+        "defaultValue": "auto"
+      },
+      "AIPG_IMAGE_MODEL": {
+        "type": "string",
+        "description": "Online Grid image model selected explicitly for IMAGE calls."
+      }
+    }
   },
   "elizaos": {
     "plugin": {
