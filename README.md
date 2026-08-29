@@ -24,6 +24,11 @@ Weekly implementation evidence is recorded under [`proof/`](proof/). Each
 report distinguishes local verification, upstream submission, upstream merge,
 and remaining release gates.
 
+Builder-facing setup instructions and publication status are live at
+[aipowergrid.io/docs/integrations](https://aipowergrid.io/docs/integrations).
+The public page treats compatibility, first-party tests, package publication,
+and upstream acceptance as separate states.
+
 ## Public conformance
 
 Requires Node.js 20 or newer. The default run does not require a key and does

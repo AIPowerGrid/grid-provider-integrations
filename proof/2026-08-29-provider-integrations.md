@@ -71,6 +71,13 @@ point-in-time capacity observation, not an uptime promise.
   prepared community tutorial passed Prettier plus a production build inside
   the current official `open-webui/docs` tree. No upstream PR has been opened
   before the credentialed runtime gate.
+- First-party integration guidance is now published at
+  [aipowergrid.io/docs/integrations](https://aipowergrid.io/docs/integrations)
+  through [AIPowerGrid/aipg-documentation#13](https://github.com/AIPowerGrid/aipg-documentation/pull/13).
+  It gives usable Open WebUI and LangChain configuration while labeling every
+  native package by its actual publication or review state. The protected docs
+  PR passed both secret gates, merged, built on Vercel, and the production route
+  was verified with HTTP 200 and the expected content.
 - The public integrations repository's GitHub CI passed the Node, Bun, and
   Python jobs, including the unauthenticated production conformance run. A
   new supervised release command now preflights ten fixed Dify, AI SDK,
