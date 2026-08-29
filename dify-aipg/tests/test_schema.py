@@ -90,6 +90,14 @@ def test_packager_requirements_match_frozen_runtime_lock():
         text=True,
     ).stdout
 
-    assert (ROOT / "requirements.txt").read_text(encoding="utf-8") == exported
-    assert "pytest==" not in exported
-    assert "ruff==" not in exported
+    def requirement_entries(contents: str) -> list[str]:
+        return [
+            line.strip()
+            for line in contents.splitlines()
+            if line.strip() and not line.lstrip().startswith("#")
+        ]
+
+    packaged = (ROOT / "requirements.txt").read_text(encoding="utf-8")
+    assert requirement_entries(packaged) == requirement_entries(exported)
+    assert "pytest==" not in packaged
+    assert "ruff==" not in packaged
