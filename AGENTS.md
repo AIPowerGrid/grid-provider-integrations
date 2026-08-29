@@ -37,7 +37,9 @@ authority for submission structure and acceptance.
 ## Local Contracts
 
 - The default conformance run is read-only except for deliberately invalid,
-  authentication-gated requests that Core rejects before dispatch.
+  authentication-gated requests that Core rejects before dispatch. It verifies
+  public model discovery, online modality status, positive text context windows,
+  and the missing/invalid authentication boundaries without a credential.
 - Account checks read `GRID_API_KEY` or an explicitly named environment
   variable. Never accept, print, persist, or place keys in command arguments.
 - A real generation requires both a key and the explicit `--live-text` flag.

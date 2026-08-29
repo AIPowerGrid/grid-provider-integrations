@@ -24,13 +24,12 @@ function routes(request, response) {
     return replyJson(response, 200, { endpoints: { openai: "POST /v1/chat/completions", models: "GET /v1/models" } });
   }
   if (request.url === "/v1/models") {
-    if (auth !== "Bearer secret-test-key") return replyJson(response, 403, { detail: "local session required" });
     return replyJson(response, 200, { object: "list", data: [{ id: "model-a", object: "model" }] });
   }
   if (request.url === "/v1/status/models") {
     return replyJson(response, 200, [
-      { name: "model-a", count: 1, type: "text" },
-      { name: "image-a", count: 1, type: "image" },
+      { name: "model-a", count: 1, type: "text", max_context_length: 60000 },
+      { name: "image-a", count: 1, type: "image", max_context_length: 2048 },
     ]);
   }
   if (request.url === "/v1/models/__aipg_conformance_missing__") {
@@ -82,6 +81,7 @@ test("public mode verifies discovery and auth boundaries without a key", async (
     assert.equal(report.mode, "public");
     assert.deepEqual(report.checks.map((entry) => entry.name), [
       "service.discovery",
+      "models.openai_list",
       "models.modality_status",
       "auth.missing",
       "auth.invalid",
@@ -97,8 +97,7 @@ test("account mode validates summaries and one quote per online modality", async
   try {
     const report = await runConformance({ baseUrl: grid.baseUrl, apiKey: "secret-test-key", account: true });
     assert.equal(report.ok, true);
-    assert.deepEqual(report.checks.slice(-5).map((entry) => entry.name), [
-      "models.openai_list",
+    assert.deepEqual(report.checks.slice(-4).map((entry) => entry.name), [
       "models.missing",
       "account.credits",
       "quote.text",
@@ -135,4 +134,24 @@ test("account mode refuses to run without an environment-supplied key", async ()
 
 test("non-loopback HTTP targets are rejected", async () => {
   await assert.rejects(() => runConformance({ baseUrl: "http://api.example.com" }), /must use HTTPS/);
+});
+
+test("public mode rejects text models without a positive context window", async () => {
+  const invalidRoutes = (request, response) => {
+    if (request.url === "/v1/status/models") {
+      return replyJson(response, 200, [{ name: "model-a", count: 1, type: "text", max_context_length: null }]);
+    }
+    return routes(request, response);
+  };
+  const grid = await mockGrid(invalidRoutes);
+  try {
+    const report = await runConformance({ baseUrl: grid.baseUrl });
+    assert.equal(report.ok, false);
+    assert.match(
+      report.checks.find((entry) => entry.name === "models.modality_status").error,
+      /positive context window/,
+    );
+  } finally {
+    await grid.close();
+  }
 });

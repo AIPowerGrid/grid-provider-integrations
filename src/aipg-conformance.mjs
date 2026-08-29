@@ -132,6 +132,7 @@ export async function runConformance(options = {}) {
   if (account && !apiKey) throw new Error("Account checks require an API key supplied through the environment.");
 
   const checks = [];
+  let clientModels = new Set();
   let statusModels = [];
 
   await runCheck(checks, "service.discovery", async (startedAt) => {
@@ -143,15 +144,40 @@ export async function runConformance(options = {}) {
     return result("service.discovery", startedAt, { status: response.status });
   });
 
+  await runCheck(checks, "models.openai_list", async (startedAt) => {
+    const response = await request(baseUrl, "/v1/models");
+    assertion(response.status === 200, `expected 200, received ${response.status}`);
+    const body = await json(response);
+    assertion(body?.object === "list" && Array.isArray(body.data), "invalid OpenAI model-list shape");
+    assertion(body.data.every((entry) => typeof entry.id === "string" && entry.id), "model entry is missing an id");
+    clientModels = new Set(body.data.map((entry) => entry.id));
+    return result("models.openai_list", startedAt, { status: response.status, models: body.data.length });
+  });
+
   await runCheck(checks, "models.modality_status", async (startedAt) => {
     const response = await request(baseUrl, "/v1/status/models");
     assertion(response.status === 200, `expected 200, received ${response.status}`);
     const body = await json(response);
     assertion(Array.isArray(body), "status model response is not an array");
-    assertion(body.every((entry) => typeof entry.name === "string" && Number.isInteger(entry.count) && entry.count >= 0), "invalid status model entry");
+    assertion(
+      body.every((entry) => typeof entry.name === "string" && Number.isInteger(entry.count) && entry.count >= 0),
+      "invalid status model entry",
+    );
+    const textModels = body.filter((entry) => entry.type === "text");
+    assertion(
+      textModels.every((entry) => Number.isInteger(entry.max_context_length) && entry.max_context_length > 0),
+      "text status entry is missing a positive context window",
+    );
+    const undiscoverable = textModels.map((entry) => entry.name).filter((name) => !clientModels.has(name));
+    assertion(undiscoverable.length === 0, `online text models missing from /v1/models: ${undiscoverable.join(", ")}`);
     statusModels = body;
     const modalities = [...new Set(body.map((entry) => entry.type))].sort();
-    return result("models.modality_status", startedAt, { status: response.status, models: body.length, modalities });
+    return result("models.modality_status", startedAt, {
+      status: response.status,
+      models: body.length,
+      modalities,
+      text_contexts: textModels.length,
+    });
   });
 
   const authBody = { model: "auto", messages: [{ role: "user", content: "conformance" }], max_tokens: 1 };
@@ -174,15 +200,6 @@ export async function runConformance(options = {}) {
   });
 
   if (account) {
-    await runCheck(checks, "models.openai_list", async (startedAt) => {
-      const response = await request(baseUrl, "/v1/models", { apiKey });
-      assertion(response.status === 200, `expected 200, received ${response.status}`);
-      const body = await json(response);
-      assertion(body?.object === "list" && Array.isArray(body.data), "invalid OpenAI model-list shape");
-      assertion(body.data.every((entry) => typeof entry.id === "string" && entry.id), "model entry is missing an id");
-      return result("models.openai_list", startedAt, { status: response.status, models: body.data.length });
-    });
-
     await runCheck(checks, "models.missing", async (startedAt) => {
       const response = await request(baseUrl, "/v1/models/__aipg_conformance_missing__", { apiKey });
       assertion(response.status === 404, `expected 404, received ${response.status}`);
