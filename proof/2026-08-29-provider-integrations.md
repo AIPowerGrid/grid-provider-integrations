@@ -165,6 +165,16 @@ point-in-time capacity observation, not an uptime promise.
   pricing, credential boundary, and community-worker disclosure. The full
   Docusaurus production build and writing checks pass locally; the hosted
   preview remains an upstream check.
+- elizaOS registry: [elizaOS/eliza#29964](https://github.com/elizaOS/eliza/pull/29964).
+  Head `8d17be009` adds the published `@aipowergrid/plugin-aipg@0.1.0`
+  package to the community registry and regenerates its committed wire index.
+  The upstream registry validator and generator pass; ordinary maintainer
+  review and hosted checks remain acceptance gates.
+- LangChain documentation: [langchain-ai/docs#5770](https://github.com/langchain-ai/docs/pull/5770).
+  Head `af422919` adds one restrained paragraph to the existing Chat
+  Completions compatibility section. It links to the tested cookbook and
+  discloses the remote community-worker plaintext boundary. Hosted checks and
+  ordinary maintainer review remain acceptance gates.
 - Open WebUI fork documentation correction:
   [AIPowerGrid/grid-openweb-ui#1](https://github.com/AIPowerGrid/grid-openweb-ui/pull/1).
 - Open WebUI documentation scope question:
@@ -193,14 +203,15 @@ an upstream integration only if that project accepts and merges it.
 - Complete the credentialed Dify Community Edition generation check before
   Marketplace submission. The direct provider and Cloud production lanes
   passed, but neither substitutes for the remaining Community Edition check.
-- Submit the published AI SDK, ElizaOS, and n8n packages to their upstream
+- Submit the published AI SDK and n8n packages to their upstream
   provider catalogs. npm publication is complete: `@aipowergrid/ai-sdk-provider@0.1.0`,
   `@aipowergrid/plugin-aipg@0.1.0`, and
   `@aipowergrid/n8n-nodes-aipg@0.1.1` were released by GitHub Actions with
   provenance. Their npm OIDC Trusted Publishers are attached, both repository
   `NPM_TOKEN` secrets are absent, and the one-time bootstrap token is revoked.
-  Registry publication is not upstream acceptance.
-- ElizaOS should update the inherited PDF and elliptic dependency paths in its
+  The elizaOS package is submitted for registry review; registry publication
+  is not upstream acceptance.
+- elizaOS should update the inherited PDF and elliptic dependency paths in its
   host core; this plugin cannot safely override peer internals.
 
 Grid requests may be processed by remote community-operated workers. These
