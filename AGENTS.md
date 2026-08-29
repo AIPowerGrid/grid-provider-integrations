@@ -31,6 +31,9 @@ authority for submission structure and acceptance.
   weekly snapshot renderer for public job, capacity, validator, and payout
   evidence. It deliberately reports paid-demand, operator-independence, and
   historical-uptime gaps instead of inferring them.
+- `scripts/smoke-packed-package.mjs` - installs the exact AI SDK or ElizaOS
+  tarball into a disposable clean consumer with its declared host peer, imports
+  the public package name, and removes the consumer afterward.
 - Each integration directory also owns source-ready upstream or marketplace
   submission notes. These drafts must preserve the distinction between local
   readiness, registry publication, upstream submission, and upstream

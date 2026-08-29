@@ -147,3 +147,23 @@ test("GitHub workflows pin every third-party action by commit", async () => {
     }
   }
 });
+
+test("publishable packages are exercised from their packed consumer payloads", async () => {
+  const [rootPackage, workflow, verify, smoke] = await Promise.all([
+    readJson("package.json"),
+    read(".github/workflows/ci.yml"),
+    read("scripts/verify.mjs"),
+    read("scripts/smoke-packed-package.mjs"),
+  ]);
+
+  assert.match(rootPackage.scripts["test:package:ai-sdk"], /ai-sdk-aipg/);
+  assert.match(rootPackage.scripts["test:package:elizaos"], /elizaos-aipg/);
+  assert.match(workflow, /Vercel AI SDK packed consumer/);
+  assert.match(workflow, /ElizaOS packed consumer/);
+  assert.match(verify, /test:package:ai-sdk/);
+  assert.match(verify, /test:package:elizaos/);
+  assert.match(smoke, /npm.*pack/s);
+  assert.match(smoke, /--ignore-scripts/);
+  assert.match(smoke, /grid_packaged_consumer_fixture/);
+  assert.match(smoke, /rm\(workspace, \{ recursive: true, force: true \}\)/);
+});

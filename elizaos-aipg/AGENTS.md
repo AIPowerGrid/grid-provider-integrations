@@ -51,6 +51,9 @@ ElizaOS plugin API and uses only documented Grid `/v1` contracts.
 - `bun test`
 - `bun run build`
 - `npm publish --dry-run --access public` - inspect the exact package payload.
+- `npm run test:package:elizaos` from the repository root - pack, install, and
+  import the exact release payload with the declared ElizaOS host peer in a
+  disposable clean consumer.
 - `AIPG_API_KEY="..." bun run test:e2e:live` - explicit pre-release production
   check with a disposable scoped key; this spends one bounded text request and
   must never run in default CI.

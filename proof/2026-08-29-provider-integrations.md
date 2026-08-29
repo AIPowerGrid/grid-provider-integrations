@@ -17,6 +17,11 @@ point-in-time capacity observation, not an uptime promise.
   scoped-key documentation now uses Core's real `account.read` scope, and an
   opt-in AI SDK 7 `streamText` production lane is prepared but has not been run
   without a disposable key.
+- The exact AI SDK and ElizaOS release tarballs also installed and imported
+  successfully from disposable clean consumers with their declared host peers.
+  Both pack and install phases disable lifecycle scripts, and the consumers are
+  deleted after each check. This closes the gap between source-tree tests and
+  the payload developers would actually install from npm.
 - The ElizaOS plugin passed 12 component tests plus a real `AgentRuntime`
   registration/invocation test, type checking, lint, build, and pack
   inspection. Its publish payload contains no runtime dependencies. The
