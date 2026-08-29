@@ -7,7 +7,7 @@
     "node": ">=20"
   },
   "scripts": {
-    "check": "node --check src/aipg-conformance.mjs && node --check src/cli.mjs && node --check src/weekly-proof.mjs && node --check scripts/generate-weekly-proof.mjs && node --check scripts/live-release-gate.mjs && node --check scripts/smoke-packed-package.mjs && node --check scripts/verify-revoked-key.mjs",
+    "check": "node --check src/aipg-conformance.mjs && node --check src/cli.mjs && node --check src/weekly-proof.mjs && node --check scripts/generate-weekly-proof.mjs && node --check scripts/live-release-gate.mjs && node --check scripts/smoke-packed-package.mjs && node --check scripts/verify-revoked-key.mjs && node --check starters/lib/grid-client.mjs && node --check starters/onchain-game-npc/index.mjs && node --check starters/dao-media-pipeline/index.mjs && node --check starters/telegram-agent/index.mjs && node --check starters/nft-media-workflow/index.mjs && node --check starters/wallet-funded-agent/index.mjs",
     "conformance:public": "node src/cli.mjs",
     "proof:weekly": "node scripts/generate-weekly-proof.mjs",
     "test:package:ai-sdk": "node scripts/smoke-packed-package.mjs ai-sdk-aipg",

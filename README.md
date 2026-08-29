@@ -19,6 +19,9 @@ shipping a different hand-written smoke test.
   discovery, chat, streaming, and tool calls through the standard text API.
 - [`n8n-nodes-aipg/`](n8n-nodes-aipg/) - n8n community node for text, image,
   video, and audio workflows with encrypted API-key credentials.
+- [`starters/`](starters/) - runnable on-chain game NPC, DAO media, Telegram,
+  NFT media, and wallet-funded agent examples with quote-before-dispatch cost
+  guards and no wallet keys in the inference process.
 
 Weekly implementation evidence is recorded under [`proof/`](proof/). Each
 report distinguishes local verification, upstream submission, upstream merge,
