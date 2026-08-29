@@ -62,7 +62,7 @@ bun run lint:check
 bun test
 bun run build
 bun audit --production
-npm publish --dry-run --access public
+npm pack --dry-run
 ```
 
 Mock tests never use a real key or spend credits. Before a release, run one

@@ -2,8 +2,8 @@
 
 ## Package
 
-- npm name: `n8n-nodes-aipg`
-- version: `0.1.0`
+- npm name: `@aipowergrid/n8n-nodes-aipg`
+- version: `0.1.1`
 - source: `AIPowerGrid/grid-provider-integrations`, directory
   `n8n-nodes-aipg`
 - license: MIT
@@ -15,7 +15,7 @@
 
 The verified-node intake requires npm publication from GitHub Actions with
 provenance. Publish only through `.github/workflows/publish-n8n.yml` using the
-tag `n8n-nodes-aipg-v0.1.0`. Configure npm Trusted Publishing for:
+tag `n8n-nodes-aipg-v0.1.1`. Configure npm Trusted Publishing for:
 
 - repository owner: `AIPowerGrid`
 - repository: `grid-provider-integrations`

@@ -86,9 +86,10 @@ test("n8n Creator Portal draft stays aligned with the package and workflow", asy
   ]);
 
   assert.equal(packageJson.dependencies, undefined);
+  const releaseTagPrefix = packageJson.name.split("/").at(-1);
   assert.match(
     submission,
-    new RegExp(`${packageJson.name}-v${packageJson.version}`),
+    new RegExp(`${releaseTagPrefix}-v${packageJson.version}`),
   );
   assert.match(submission, /GitHub Actions with\s+provenance/);
   assert.match(workflow, /n8n-nodes-aipg-v\$\(node -p/);

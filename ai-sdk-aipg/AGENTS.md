@@ -48,7 +48,7 @@ contracts; music is an explicit Grid helper because it is not speech synthesis.
 - `npm run typecheck`
 - `npm run lint`
 - `npm run build`
-- `npm publish --dry-run --access public`
+- `npm pack --dry-run`
 - `npm run test:package:ai-sdk` from the repository root - pack, install, and
   import the exact release payload in a disposable clean AI SDK consumer.
 - `AIPG_API_KEY="..." npm run test:e2e:live` - supervised bounded production

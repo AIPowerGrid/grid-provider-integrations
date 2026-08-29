@@ -91,7 +91,7 @@ output, or account balance.
 
 Releases are published only by GitHub Actions with npm provenance. After the
 live gate passes, update the package version and push a matching tag such as
-`n8n-nodes-aipg-v0.1.0`. The root `publish-n8n.yml` workflow rejects any tag
+`n8n-nodes-aipg-v0.1.1`. The root `publish-n8n.yml` workflow rejects any tag
 that does not exactly match `package.json`, reruns tests and lint, and invokes
 n8n's supported release command.
 
