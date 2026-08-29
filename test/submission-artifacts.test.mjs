@@ -26,9 +26,10 @@ test("ElizaOS registry draft follows the package release contract", async () => 
 });
 
 test("AI SDK submission draft targets the package and live modality contract", async () => {
-  const [packageJson, page, readme, pullRequest, workflow] = await Promise.all([
+  const [packageJson, page, indexEntry, readme, pullRequest, workflow] = await Promise.all([
     readJson("ai-sdk-aipg/package.json"),
     read("ai-sdk-aipg/upstream-provider.mdx"),
+    read("ai-sdk-aipg/upstream-index-entry.mdx"),
     read("ai-sdk-aipg/README.md"),
     read("ai-sdk-aipg/UPSTREAM_PR.md"),
     read(".github/workflows/publish-packages.yml"),
@@ -40,7 +41,12 @@ test("AI SDK submission draft targets the package and live modality contract", a
   assert.match(readme, /videoModel\("LTX Director 2\.0"\)/);
   assert.match(page, /`LTX-2\.3` require one inline start frame/);
   assert.match(readme, /`LTX-2\.3` require one inline start-frame file/);
+  assert.equal(
+    indexEntry.trim(),
+    `- [AI Power Grid Provider](/providers/community-providers/aipg) (\`${packageJson.name}\`)`,
+  );
   assert.match(pullRequest, /55-aipg\.mdx/);
+  assert.match(pullRequest, /upstream-index-entry\.mdx/);
   assert.match(workflow, /ai-sdk-provider-v\$\(node -p/);
   assert.match(workflow, /cancel-in-progress: false/);
 });
@@ -103,6 +109,7 @@ test("Open WebUI draft requires upstream consent before a provider page", async 
   assert.match(query, /remote\s+community-operated workers/);
   assert.match(query, /should it remain in our\s+own documentation/);
   assert.match(query, /open-webui\/docs\/discussions\/1364/);
+  assert.match(query, /discussion was closed.*without a\s+comment/s);
   assert.doesNotMatch(query, /partner(ship)?|endorse(ment)?/i);
 });
 

@@ -25,7 +25,8 @@ Adds a community-provider page for `@aipowergrid/ai-sdk-provider`, covering:
 - `content/providers/05-community-providers/55-aipg.mdx`, copied from
   `upstream-provider.mdx`.
 - One AI Power Grid entry in
-  `content/docs/02-foundations/02-providers-and-models.mdx`.
+  `content/docs/02-foundations/02-providers-and-models.mdx`, copied from
+  `upstream-index-entry.mdx` into the existing community-provider list.
 
 This is a documentation-only community-provider listing. It does not add or
 modify a Vercel-owned package.

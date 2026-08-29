@@ -84,8 +84,7 @@ point-in-time capacity observation, not an uptime promise.
 - Open WebUI v0.11.1 discovered the current Grid text-model set through its standard
   OpenAI-compatible connection path. The public guide checker passed, and the
   prepared community tutorial passed Prettier plus a production build inside
-  the current official `open-webui/docs` tree. No upstream PR has been opened
-  before the credentialed runtime gate.
+  the current official `open-webui/docs` tree. No upstream PR has been opened.
 - First-party integration guidance is now published at
   [aipowergrid.io/docs/integrations](https://aipowergrid.io/docs/integrations)
   through [AIPowerGrid/aipg-documentation#13](https://github.com/AIPowerGrid/aipg-documentation/pull/13).
@@ -125,8 +124,9 @@ point-in-time capacity observation, not an uptime promise.
   [CI run 33235265633](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33235265633).
 - The current Open WebUI contribution template rejects provider-listing
   submissions. The AIPG guide remains tested first-party documentation; an
-  upstream tutorial PR is gated on explicit maintainer confirmation rather
-  than being submitted as a promotional drive-by.
+  upstream tutorial PR was not submitted as a promotional drive-by. The scope
+  discussion closed without comment, so the route remains closed unless
+  upstream later gives explicit permission.
 - Grid Core merged normalization for current clients that send
   `max_completion_tokens`, preventing the field from bypassing the metered
   generation cap: [AIPowerGrid/grid-core#63](https://github.com/AIPowerGrid/grid-core/pull/63).
@@ -163,8 +163,8 @@ point-in-time capacity observation, not an uptime promise.
   [AIPowerGrid/grid-openweb-ui#1](https://github.com/AIPowerGrid/grid-openweb-ui/pull/1).
 - Open WebUI documentation scope question:
   [open-webui/docs discussion #1364](https://github.com/open-webui/docs/discussions/1364).
-  No tutorial PR was opened; maintainer confirmation remains required under
-  the current anti-promotion contribution policy.
+  It was closed without comment on August 29, 2026. No tutorial PR was opened;
+  the tested guide remains first-party unless upstream later invites it.
 
 An open pull request is not adoption, endorsement, or a partnership. It becomes
 an upstream integration only if that project accepts and merges it.

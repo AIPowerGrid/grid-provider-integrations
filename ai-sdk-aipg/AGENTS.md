@@ -17,6 +17,8 @@ contracts; music is an explicit Grid helper because it is not speech synthesis.
 - `tests/` - deterministic request/response contract tests plus an explicit
   credentialed production lane. Default tests must not spend credits.
 - `upstream-provider.mdx` - Vercel community-provider documentation draft.
+- `upstream-index-entry.mdx` - exact provider-list entry for the upstream
+  providers-and-models page.
 - `UPSTREAM_PR.md` - AI SDK documentation PR body and release-gate checklist.
 
 ## Local Contracts

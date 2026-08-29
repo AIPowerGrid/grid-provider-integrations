@@ -1,7 +1,10 @@
 # Open WebUI Documentation Scope Question
 
 Posted as [open-webui/docs discussion #1364](https://github.com/open-webui/docs/discussions/1364)
-on 2026-08-29. No tutorial PR has been opened.
+on 2026-08-29. The discussion was closed the same day without a comment or
+invitation to submit. No tutorial PR has been opened; the tested AIPG guide
+remains first-party documentation unless upstream explicitly reopens the
+scope.
 
 ## Title
 

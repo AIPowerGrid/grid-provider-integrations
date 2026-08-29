@@ -16,12 +16,14 @@ WebUI `v0.11.1` container.
 The temporary Open WebUI container was removed after the check. The test used
 an invalid placeholder key and did not submit a generation.
 
-## Release gate
+## Future upstream gate
 
-Before submitting the upstream tutorial, run one low-output streamed chat in
-an unmodified current Open WebUI release with a dedicated `inference.submit`
-test key. Record only version, HTTP outcome, terminal finish status, and timing;
-do not retain the key, prompt, output, credit balance, or worker identity.
+The upstream scope discussion was closed without approval, so no tutorial PR
+will be opened. If a maintainer later invites the contribution, first run one
+low-output streamed chat in an unmodified current Open WebUI release with a
+dedicated `inference.submit` test key. Record only version, HTTP outcome,
+terminal finish status, and timing; do not retain the key, prompt, output,
+credit balance, or worker identity.
 
 The first-party deployment at `chat.aipowergrid.io` proves the same protocol
 path on the AIPG fork, but it does not replace the current-upstream test.
