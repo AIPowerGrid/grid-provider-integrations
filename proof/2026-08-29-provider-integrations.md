@@ -73,6 +73,13 @@ point-in-time capacity observation, not an uptime promise.
   requires active charging and sufficient credit, and enforces a hard `$0.03`
   ceiling before dispatch. The gate itself has not been run without an
   explicitly approved disposable key.
+- Weekly proof copy is now generated from the public network-status, job-total,
+  and payout APIs instead of hand-maintained arithmetic. The generator rejects
+  unknown status schemas and economically active validator states, and it
+  explicitly withholds paid-demand, external-builder, independent-worker, and
+  historical-uptime claims when the public APIs cannot prove them. Its first
+  regenerated snapshot passed 21 root tests and the complete local integration
+  verification suite.
 - Source-ready release and submission contracts now cover the current active
   ElizaOS registry, Vercel AI SDK community-provider docs, LangChain chat
   integration docs, Dify Marketplace package path, and n8n Creator Portal.

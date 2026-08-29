@@ -27,6 +27,10 @@ authority for submission structure and acceptance.
   open release gates, and publication-ready weekly proof copy. Every number in
   a proof post must link to a public source and preserve unavailable metrics as
   explicit gaps rather than estimates.
+- `src/weekly-proof.mjs` plus `scripts/generate-weekly-proof.mjs` - read-only
+  weekly snapshot renderer for public job, capacity, validator, and payout
+  evidence. It deliberately reports paid-demand, operator-independence, and
+  historical-uptime gaps instead of inferring them.
 - Each integration directory also owns source-ready upstream or marketplace
   submission notes. These drafts must preserve the distinction between local
   readiness, registry publication, upstream submission, and upstream
@@ -66,6 +70,9 @@ authority for submission structure and acceptance.
 
 - `npm test`
 - `npm run conformance:public`
+- `npm run proof:weekly` - print a current read-only proof snapshot; pass
+  `-- --output proof/YYYY-MM-DD-weekly-post.md` only when intentionally
+  refreshing the dated artifact.
 - `npm run check`
 - `npm run verify`
 - `AIPG_LIVE_E2E=1 AIPG_API_KEY="..." npm run release:e2e:live` - supervised

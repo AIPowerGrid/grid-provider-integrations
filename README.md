@@ -82,6 +82,21 @@ npm run verify
 The verification command is non-credentialed and does not submit generation
 jobs. Credentialed, credit-spending checks remain explicit release gates.
 
+## Generate an honest weekly proof snapshot
+
+Generate the operational and payout copy directly from the public Grid APIs:
+
+```bash
+npm run proof:weekly
+```
+
+To refresh a dated artifact, pass an explicit output path. The generator reads
+only public network-status, job-total, and payout endpoints. It refuses an
+unknown status schema or economically active validator state, calculates job
+totals itself, and preserves paid-demand, independent-operator, external-builder,
+and historical-uptime metrics as explicit gaps when the public APIs cannot
+prove them.
+
 ## Bounded production release gate
 
 Before publishing a provider package, create a disposable key carrying only

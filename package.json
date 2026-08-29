@@ -7,8 +7,9 @@
     "node": ">=20"
   },
   "scripts": {
-    "check": "node --check src/aipg-conformance.mjs && node --check src/cli.mjs && node --check scripts/live-release-gate.mjs",
+    "check": "node --check src/aipg-conformance.mjs && node --check src/cli.mjs && node --check src/weekly-proof.mjs && node --check scripts/generate-weekly-proof.mjs && node --check scripts/live-release-gate.mjs",
     "conformance:public": "node src/cli.mjs",
+    "proof:weekly": "node scripts/generate-weekly-proof.mjs",
     "release:e2e:live": "node scripts/live-release-gate.mjs",
     "test": "node --test test/*.test.mjs",
     "verify": "node scripts/verify.mjs"
