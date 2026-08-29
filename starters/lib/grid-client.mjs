@@ -78,19 +78,23 @@ export function maxCostUsd(environment = process.env) {
 }
 
 export function assertAffordable({ quote, credits, maximumUsd }) {
-  if (!quote || quote.priced !== true) throw new GridStarterError("Grid returned an unpriced quote");
-  const hasUsd = typeof quote.cost_usd === "number" && Number.isFinite(quote.cost_usd);
-  const hasMicro = typeof quote.cost_micro === "number" && Number.isFinite(quote.cost_micro);
+  const estimate = quote?.estimate;
+  if (!estimate || estimate.priced !== true) {
+    throw new GridStarterError("Grid returned an unpriced quote");
+  }
+  const hasUsd = typeof estimate.cost_usd === "number" && Number.isFinite(estimate.cost_usd);
+  const hasMicro = typeof estimate.cost_micro === "number" && Number.isFinite(estimate.cost_micro);
   if (!hasUsd && !hasMicro) throw new GridStarterError("Grid quote omitted its cost");
-  const costUsd = hasUsd ? quote.cost_usd : quote.cost_micro / 1_000_000;
+  const costUsd = hasUsd ? estimate.cost_usd : estimate.cost_micro / 1_000_000;
   if (costUsd < 0 || costUsd > maximumUsd) {
     throw new GridStarterError(
       `Quoted cost $${costUsd.toFixed(6)} exceeds the $${maximumUsd.toFixed(2)} request limit`,
     );
   }
   const chargingEnabled = quote.charging_enabled ?? credits?.charging_enabled;
-  const spendable = finiteNumber(credits?.total_spendable_usd);
-  if (chargingEnabled === true && spendable < costUsd) {
+  const balanceSufficient = estimate.balance_sufficient;
+  const spendable = finiteNumber(quote.total_spendable_usd ?? credits?.total_spendable_usd);
+  if (chargingEnabled === true && balanceSufficient !== true && spendable < costUsd) {
     throw new GridStarterError("The Grid account does not have enough spendable credit");
   }
   return { costUsd, chargingEnabled: chargingEnabled === true };
@@ -211,8 +215,12 @@ export class GridStarterClient {
 }
 
 export async function preflight(client, quoteRequest, maximumUsd) {
-  const [quote, credits] = await Promise.all([client.quote(quoteRequest), client.credits()]);
-  return { quote, credits, ...assertAffordable({ quote, credits, maximumUsd }) };
+  const quote = await client.quote(quoteRequest);
+  return { quote, ...assertAffordable({ quote, credits: quote, maximumUsd }) };
+}
+
+export function conservativeTokenEstimate(...parts) {
+  return parts.reduce((total, part) => total + new TextEncoder().encode(String(part ?? "")).byteLength, 0);
 }
 
 export function textContent(response) {

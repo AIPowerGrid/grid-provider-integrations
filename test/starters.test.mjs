@@ -4,6 +4,7 @@ import test from "node:test";
 import {
   GridStarterClient,
   assertAffordable,
+  conservativeTokenEstimate,
   mediaReceipt,
 } from "../starters/lib/grid-client.mjs";
 import { runNpc } from "../starters/onchain-game-npc/index.mjs";
@@ -27,9 +28,13 @@ function mockClient() {
   return {
     credits: async () => credits,
     quote: async (request) => ({
-      priced: true,
       charging_enabled: true,
-      cost_usd: request.modality === "text" ? 0.001 : 0.005,
+      total_spendable_usd: 5,
+      estimate: {
+        priced: true,
+        balance_sufficient: true,
+        cost_usd: request.modality === "text" ? 0.001 : 0.005,
+      },
     }),
     text: async () => textResponse,
     image: async () => mediaResponse,
@@ -70,12 +75,12 @@ test("starter client rejects oversized bodies before parsing", async () => {
 
 test("quote guard rejects unpriced, over-budget, and underfunded work", () => {
   assert.throws(
-    () => assertAffordable({ quote: { priced: false }, credits, maximumUsd: 0.02 }),
+    () => assertAffordable({ quote: { estimate: { priced: false } }, credits, maximumUsd: 0.02 }),
     /unpriced/,
   );
   assert.throws(
     () => assertAffordable({
-      quote: { priced: true, charging_enabled: true },
+      quote: { charging_enabled: true, estimate: { priced: true } },
       credits,
       maximumUsd: 0.02,
     }),
@@ -83,7 +88,10 @@ test("quote guard rejects unpriced, over-budget, and underfunded work", () => {
   );
   assert.throws(
     () => assertAffordable({
-      quote: { priced: true, cost_usd: 0.03, charging_enabled: true },
+      quote: {
+        charging_enabled: true,
+        estimate: { priced: true, cost_usd: 0.03, balance_sufficient: true },
+      },
       credits,
       maximumUsd: 0.02,
     }),
@@ -91,12 +99,20 @@ test("quote guard rejects unpriced, over-budget, and underfunded work", () => {
   );
   assert.throws(
     () => assertAffordable({
-      quote: { priced: true, cost_usd: 0.01, charging_enabled: true },
+      quote: {
+        charging_enabled: true,
+        total_spendable_usd: 0,
+        estimate: { priced: true, cost_usd: 0.01, balance_sufficient: false },
+      },
       credits: { total_spendable_usd: 0 },
       maximumUsd: 0.02,
     }),
     /enough spendable/,
   );
+});
+
+test("token estimates conservatively include UTF-8 input bytes", () => {
+  assert.equal(conservativeTokenEstimate("abc", "\u00e9"), 5);
 });
 
 test("media receipts retain job IDs without claiming an anchor", () => {

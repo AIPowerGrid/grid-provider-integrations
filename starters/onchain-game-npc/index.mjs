@@ -3,6 +3,7 @@
 import { pathToFileURL } from "node:url";
 import {
   GridStarterClient,
+  conservativeTokenEstimate,
   maxCostUsd,
   preflight,
   printJson,
@@ -40,7 +41,7 @@ export async function runNpc({ action, environment = process.env, client } = {})
     "Stay in character. Respect the supplied facts. Never invent an on-chain transaction or claim it succeeded.",
     "Reply in at most 120 words with dialogue followed by one short ACTION: line for the game server.",
   ].join("\n");
-  const promptTokens = Math.ceil((system.length + playerAction.length) / 3);
+  const promptTokens = conservativeTokenEstimate(system, `Player action: ${playerAction}`);
   const price = await preflight(api, {
     model,
     modality: "text",

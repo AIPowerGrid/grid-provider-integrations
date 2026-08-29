@@ -4,6 +4,7 @@ import { pathToFileURL } from "node:url";
 import {
   GridStarterClient,
   assertAffordable,
+  conservativeTokenEstimate,
   maxCostUsd,
   printJson,
   requireText,
@@ -37,7 +38,7 @@ export async function runWalletFundedAgent({ environment = process.env, client }
   const budget = maxCostUsd(environment);
   const model = environment.AIPG_TEXT_MODEL || "auto";
   const api = client ?? new GridStarterClient();
-  let credits = await api.credits();
+  const credits = await api.credits();
   const spendable = Number(credits.total_spendable_usd ?? 0);
   if (!Number.isFinite(spendable) || spendable < minimumBalance) {
     throw new Error(
@@ -59,12 +60,14 @@ export async function runWalletFundedAgent({ environment = process.env, client }
     const quote = await api.quote({
       model,
       modality: "text",
-      prompt_tokens: Math.ceil(prompt.length / 3),
+      prompt_tokens: conservativeTokenEstimate(
+        "You are a bounded autonomous planning agent. Do not make network calls, sign transactions, or claim an external action succeeded. Produce concise work a caller can inspect.",
+        prompt,
+      ),
       max_tokens: 512,
       n: 1,
     });
-    credits = await api.credits();
-    const affordable = assertAffordable({ quote, credits, maximumUsd: budget });
+    const affordable = assertAffordable({ quote, credits: quote, maximumUsd: budget });
     if (reservedBudget + affordable.costUsd > budget) {
       throw new Error(`The next step would exceed the $${budget.toFixed(2)} cumulative run limit`);
     }

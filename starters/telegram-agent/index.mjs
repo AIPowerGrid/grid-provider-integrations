@@ -5,6 +5,7 @@ import { createServer } from "node:http";
 import { pathToFileURL } from "node:url";
 import {
   GridStarterClient,
+  conservativeTokenEstimate,
   maxCostUsd,
   preflight,
   requireText,
@@ -12,6 +13,7 @@ import {
 } from "../lib/grid-client.mjs";
 
 const MAX_WEBHOOK_BYTES = 32 * 1024;
+const TELEGRAM_SYSTEM = "You are a concise community assistant. Answer only the user's current message. Never claim that an on-chain action happened.";
 const HELP = `Usage: node starters/telegram-agent/index.mjs
 
 Required environment:
@@ -81,13 +83,13 @@ export function createTelegramAgent({ environment = process.env, client, fetchIm
       await preflight(api, {
         model,
         modality: "text",
-        prompt_tokens: Math.ceil(prompt.length / 3),
+        prompt_tokens: conservativeTokenEstimate(TELEGRAM_SYSTEM, prompt),
         max_tokens: 384,
         n: 1,
       }, maxCostUsd(environment));
       const response = await api.text({
         model,
-        system: "You are a concise community assistant. Answer only the user's current message. Never claim that an on-chain action happened.",
+        system: TELEGRAM_SYSTEM,
         prompt,
         maxTokens: 384,
         temperature: 0.4,
