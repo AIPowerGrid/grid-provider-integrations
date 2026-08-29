@@ -8,7 +8,8 @@ keeps Grid credentials in n8n's encrypted credential store.
 
 ## Local Contracts
 
-- Keep the production API base fixed to `https://api.aipowergrid.io/v1`.
+- Keep the production API base fixed to `https://api.aipowergrid.io/v1` and
+  disable redirects on authenticated requests.
 - Never expose a custom remote base URL or place API keys in node parameters.
 - Discover text models from `/v1/models` and media models from
   `/v1/status/models`; do not hard-code availability claims.

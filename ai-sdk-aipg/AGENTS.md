@@ -23,6 +23,9 @@ contracts; music is an explicit Grid helper because it is not speech synthesis.
 
 - Production requests default to `https://api.aipowergrid.io/v1`; prompt or
   model input must never select an alternate credential destination.
+- Environment-key fallback is allowed only for the canonical production base.
+  Any custom base URL must receive an explicit `apiKey`, so an environment
+  credential cannot follow caller-controlled configuration to another host.
 - Read `AIPG_API_KEY` in server-side environments. Never place a Grid key in a
   browser bundle or prefix it with a public environment-variable convention.
 - Media adapters must verify the selected model is online in the matching

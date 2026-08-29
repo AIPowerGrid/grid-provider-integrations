@@ -128,6 +128,21 @@ function bounded(value: string, max = 300): string {
   return oneLine.length <= max ? oneLine : `${oneLine.slice(0, max)}...`;
 }
 
+function normalizedBaseUrl(value: string): string {
+  const url = new URL(value);
+  const local = ["localhost", "127.0.0.1", "::1"].includes(url.hostname);
+  if (url.protocol !== "https:" && !local) {
+    throw new Error("AIPG baseUrl must use HTTPS unless it is loopback-local");
+  }
+  url.search = "";
+  url.hash = "";
+  return url.toString().replace(/\/+$/, "");
+}
+
+function redact(value: string, secret: string): string {
+  return secret ? value.replaceAll(secret, "[REDACTED]") : value;
+}
+
 function usageFrom(value: unknown): AipgUsage | undefined {
   if (!value || typeof value !== "object") return undefined;
   const usage = value as Record<string, unknown>;
@@ -198,10 +213,11 @@ export class AipgClient {
   private readonly baseUrl: string;
 
   constructor(options: AipgClientOptions) {
-    if (!options.apiKey.trim()) throw new Error("AIPG_API_KEY is required");
-    this.apiKey = options.apiKey;
+    const apiKey = options.apiKey.trim();
+    if (!apiKey) throw new Error("AIPG_API_KEY is required");
+    this.apiKey = apiKey;
     this.fetchImpl = options.fetch ?? globalThis.fetch;
-    this.baseUrl = (options.baseUrl ?? AIPG_BASE_URL).replace(/\/+$/, "");
+    this.baseUrl = normalizedBaseUrl(options.baseUrl ?? AIPG_BASE_URL);
   }
 
   private async request(path: string, init: RequestInit, timeoutMs: number): Promise<Response> {
@@ -213,6 +229,7 @@ export class AipgClient {
         ...(init.body ? { "Content-Type": "application/json" } : {}),
         ...init.headers,
       },
+      redirect: "error",
       signal: init.signal ? AbortSignal.any([init.signal, timeout]) : timeout,
     });
   }
@@ -237,7 +254,7 @@ export class AipgClient {
       // A non-JSON upstream error is still reported with a bounded body.
     }
     return new AipgApiError(
-      `Grid ${path} failed [${response.status}]: ${bounded(detail || response.statusText)}`,
+      `Grid ${path} failed [${response.status}]: ${bounded(redact(detail || response.statusText, this.apiKey))}`,
       response.status,
       response.status === 401 ? "AIPG_AUTH_ERROR" : "AIPG_API_ERROR",
     );

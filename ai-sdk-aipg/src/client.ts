@@ -39,7 +39,14 @@ function normalizedBaseURL(value: string): string {
   return url.toString().replace(/\/+$/, "");
 }
 
-async function errorFrom(response: Response): Promise<AipgApiError> {
+function redact(value: string, secrets: string[]): string {
+  return secrets.reduce(
+    (message, secret) => (secret ? message.replaceAll(secret, "[REDACTED]") : message),
+    value,
+  );
+}
+
+async function errorFrom(response: Response, secrets: string[]): Promise<AipgApiError> {
   let message = `${response.status} ${response.statusText}`.trim();
   const raw = await response.text().catch(() => "");
   try {
@@ -53,7 +60,7 @@ async function errorFrom(response: Response): Promise<AipgApiError> {
   } catch {
     if (raw) message = raw;
   }
-  return new AipgApiError(bounded(message), response.status);
+  return new AipgApiError(bounded(redact(message, secrets)), response.status);
 }
 
 export class AipgClient {
@@ -64,16 +71,22 @@ export class AipgClient {
   readonly timeoutMs: number;
 
   constructor(settings: AipgProviderSettings) {
-    const environmentKey = typeof process !== "undefined" ? process.env?.AIPG_API_KEY : undefined;
-    const apiKey = settings.apiKey ?? environmentKey ?? "";
-    if (!apiKey.trim()) throw new Error("AIPG_API_KEY is required");
+    const baseURL = normalizedBaseURL(settings.baseURL ?? AIPG_BASE_URL);
+    const explicitKey = settings.apiKey?.trim();
+    if (baseURL !== AIPG_BASE_URL && !explicitKey) {
+      throw new Error("A custom AIPG baseURL requires an explicit apiKey");
+    }
+    const environmentKey =
+      typeof process !== "undefined" ? process.env?.AIPG_API_KEY?.trim() : undefined;
+    const apiKey = explicitKey ?? environmentKey ?? "";
+    if (!apiKey) throw new Error("AIPG_API_KEY is required");
     if (
       Object.keys(settings.headers ?? {}).some((name) => name.toLowerCase() === "authorization")
     ) {
       throw new Error("Set the Grid credential with apiKey, not an Authorization header");
     }
     this.apiKey = apiKey;
-    this.baseURL = normalizedBaseURL(settings.baseURL ?? AIPG_BASE_URL);
+    this.baseURL = baseURL;
     this.headers = { ...settings.headers };
     this.fetchImpl = settings.fetch ?? globalThis.fetch;
     this.timeoutMs = settings.timeoutMs ?? 2_100_000;
@@ -94,7 +107,7 @@ export class AipgClient {
       redirect: "error",
       signal,
     });
-    if (!response.ok) throw await errorFrom(response);
+    if (!response.ok) throw await errorFrom(response, [this.apiKey]);
     return (await response.json()) as T;
   }
 

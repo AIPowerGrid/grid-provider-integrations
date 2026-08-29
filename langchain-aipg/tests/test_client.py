@@ -161,6 +161,12 @@ def test_rejects_insecure_remote_base() -> None:
         create_chat_model(api_key=SecretStr("grid_test"), base_url="http://example.com/v1")
 
 
+def test_never_sends_environment_key_to_custom_base(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("AIPG_API_KEY", "grid_environment_secret")
+    with pytest.raises(ValueError, match="requires an explicit api_key"):
+        create_chat_model(base_url="https://example.com/v1")
+
+
 def test_discovers_only_text_models_without_a_key(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.delenv("AIPG_API_KEY", raising=False)
     with _grid_server() as (base_url, state):
@@ -171,10 +177,25 @@ def test_discovers_only_text_models_without_a_key(monkeypatch: pytest.MonkeyPatc
     assert state.catalog_authorization is None
 
 
+def test_public_discovery_does_not_attach_environment_key(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("AIPG_API_KEY", "grid_environment_secret")
+    with _grid_server() as (base_url, state):
+        list_text_models(base_url=base_url)
+    assert state.catalog_authorization is None
+
+
 def test_model_discovery_uses_key_when_supplied() -> None:
     with _grid_server() as (base_url, state):
         list_text_models(api_key=SecretStr("grid_test"), base_url=base_url)
     assert state.catalog_authorization == "Bearer grid_test"
+
+
+def test_chat_clients_refuse_redirects() -> None:
+    model = create_chat_model(api_key=SecretStr("grid_test"))
+    assert model.root_client._client.follow_redirects is False
+    assert model.root_async_client._client.follow_redirects is False
 
 
 def test_invokes_chat_completions() -> None:

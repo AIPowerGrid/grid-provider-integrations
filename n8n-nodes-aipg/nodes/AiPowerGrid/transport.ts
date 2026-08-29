@@ -20,6 +20,7 @@ export async function gridApiRequest(
 	const options: IHttpRequestOptions = {
 		method,
 		url: `${AIPG_API_BASE}${path}`,
+		disableFollowRedirect: true,
 		json: true,
 		timeout,
 	};

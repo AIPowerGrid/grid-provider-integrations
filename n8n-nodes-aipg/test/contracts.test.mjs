@@ -65,6 +65,7 @@ test('authenticates every request through the encrypted n8n credential', async (
 	assert.equal(captured.credentialType, 'aipgApi');
 	assert.equal(captured.options.url, 'https://api.aipowergrid.io/v1/models');
 	assert.equal(captured.options.method, 'GET');
+	assert.equal(captured.options.disableFollowRedirect, true);
 	assert.equal(captured.options.body, undefined);
 });
 
@@ -72,6 +73,7 @@ test('credential test uses an authenticated read-only endpoint', () => {
 	const credential = new AipgApi();
 	assert.equal(credential.test.request.method, 'GET');
 	assert.equal(credential.test.request.url, '/account/credits');
+	assert.equal(credential.test.request.disableFollowRedirect, true);
 	assert.notEqual(credential.test.request.url, '/models');
 });
 

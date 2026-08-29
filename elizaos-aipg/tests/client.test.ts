@@ -22,8 +22,19 @@ describe("AipgClient", () => {
       "http://127.0.0.1/v1/models",
       expect.objectContaining({
         headers: expect.objectContaining({ Authorization: "Bearer test-key" }),
+        redirect: "error",
       }),
     );
+  });
+
+  it("rejects plaintext credentials to a non-loopback host", () => {
+    expect(
+      () =>
+        new AipgClient({
+          apiKey: "test-key",
+          baseUrl: "http://example.com/v1",
+        }),
+    ).toThrow("must use HTTPS");
   });
 
   it("discovers online models across every advertised modality", async () => {
@@ -137,16 +148,20 @@ describe("AipgClient", () => {
     await expect(result.text).rejects.toMatchObject({ code: "AIPG_INCOMPLETE_STREAM" });
   });
 
-  it("bounds provider error text", async () => {
+  it("bounds provider error text and redacts the API key", async () => {
     const client = new AipgClient({
       apiKey: "test-key",
       baseUrl: "http://127.0.0.1/v1",
-      fetch: vi.fn(async () => jsonResponse({ detail: "x".repeat(500) }, 402)),
+      fetch: vi.fn(async () =>
+        jsonResponse({ detail: `upstream echoed test-key ${"x".repeat(500)}` }, 402),
+      ),
     });
     const error = await client.credits().catch((caught) => caught);
 
     expect(error).toBeInstanceOf(AipgApiError);
     expect((error as Error).message.length).toBeLessThan(380);
+    expect((error as Error).message).not.toContain("test-key");
+    expect((error as Error).message).toContain("[REDACTED]");
   });
 
   it("uses current synchronous media routes and wire names", async () => {

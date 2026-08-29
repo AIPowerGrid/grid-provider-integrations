@@ -20,10 +20,16 @@ export AIPG_API_KEY='grid_...'
 Never put this key in browser code, a mobile bundle, a notebook you will share,
 or a command-line argument.
 
+The `AIPG_API_KEY` environment fallback is used only with the canonical
+`https://api.aipowergrid.io/v1` origin. A custom `base_url` is a local testing
+seam and requires an explicit `api_key`; remote plaintext HTTP and redirects
+are rejected so a production credential cannot silently move to another host.
+
 ## Discover models
 
 The client-facing text catalog changes as network capacity changes. Production
-discovery is public, so listing models does not require or expose an API key:
+discovery is public, so listing models does not require or implicitly attach an
+API key:
 
 ```bash
 uv run python examples/chat.py --list-models

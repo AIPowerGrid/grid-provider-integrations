@@ -24,6 +24,7 @@ class AIPGProvider(ModelProvider):
                 f"{API_BASE_URL}/account/credits",
                 headers={"Authorization": f"Bearer {api_key}"},
                 timeout=VALIDATION_TIMEOUT,
+                allow_redirects=False,
             )
         except requests.RequestException as exc:
             logger.warning(

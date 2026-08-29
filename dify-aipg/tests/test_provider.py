@@ -24,8 +24,8 @@ def test_prepared_credentials_are_fixed_and_do_not_mutate_input():
 def test_provider_validation_is_read_only(monkeypatch):
     calls = []
 
-    def fake_get(url, *, headers, timeout):
-        calls.append((url, headers, timeout))
+    def fake_get(url, *, headers, timeout, allow_redirects):
+        calls.append((url, headers, timeout, allow_redirects))
         return SimpleNamespace(status_code=200)
 
     monkeypatch.setattr("provider.aipg.requests.get", fake_get)
@@ -37,6 +37,7 @@ def test_provider_validation_is_read_only(monkeypatch):
             "https://api.aipowergrid.io/v1/account/credits",
             {"Authorization": "Bearer grid_test"},
             (5, 15),
+            False,
         )
     ]
 

@@ -26,6 +26,8 @@ ElizaOS plugin API and uses only documented Grid `/v1` contracts.
 - Production traffic is fixed to `https://api.aipowergrid.io/v1`. A custom
   base URL is a constructor-only test seam and must never be accepted from an
   action prompt or character-controlled parameter.
+- The client rejects plaintext non-loopback bases, refuses redirects, and
+  redacts its credential if an upstream error body echoes it.
 - Read the API key from the runtime `AIPG_API_KEY` setting, then the process
   environment. Never put it in action parameters, logs, errors, or reports.
 - Keys need `inference.submit`; model/credit inspection also needs

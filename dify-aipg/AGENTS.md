@@ -22,6 +22,8 @@ Dify's LLM abstraction represents Grid image, video, or audio jobs.
   generic OpenAI-compatible provider for arbitrary hosts.
 - Credential validation must remain read-only. It may call account metadata but
   must not dispatch inference, reserve credits, or print response bodies.
+- Credential validation must refuse redirects so the bearer key cannot follow
+  an unexpected destination.
 - The key must carry `account.read` and `inference.submit`. Keep it in Dify's
   secret credential store and never place it in examples, logs, or fixtures.
 - Predefined model IDs must remain available in the public `/v1/models`

@@ -22,6 +22,9 @@ not a new LangChain provider package.
 - Keep `https://api.aipowergrid.io/v1` as the production default.
 - API keys come from `AIPG_API_KEY` in examples. Never accept them as CLI
   arguments, print them, or write them to files.
+- Environment-key fallback is allowed only for the canonical production base.
+  Custom bases require an explicit `api_key`; public model discovery attaches
+  no environment key unless the caller supplies one directly.
 - Public model discovery must work without a key. Supplying a key is optional
   and must not change the returned catalog contract.
 - Set `use_responses_api=False` explicitly. LangChain can infer Responses API

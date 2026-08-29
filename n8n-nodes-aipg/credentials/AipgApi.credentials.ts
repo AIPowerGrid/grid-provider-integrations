@@ -44,6 +44,7 @@ export class AipgApi implements ICredentialType {
 			baseURL: 'https://api.aipowergrid.io/v1',
 			url: '/account/credits',
 			method: 'GET',
+			disableFollowRedirect: true,
 		},
 	};
 }

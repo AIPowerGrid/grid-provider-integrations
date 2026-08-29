@@ -26,6 +26,11 @@ Long media jobs can run for several minutes; pass `timeoutMs` to `createAipg`
 only when your deployment needs a tighter deadline, and use request abort
 signals for user cancellation.
 
+The `AIPG_API_KEY` environment fallback is used only with the canonical
+`https://api.aipowergrid.io/v1` origin. A custom `baseURL` is a local testing
+seam and requires an explicit `apiKey`; remote plaintext HTTP and redirects are
+rejected so a production credential cannot silently move to another host.
+
 ## Text
 
 ```ts

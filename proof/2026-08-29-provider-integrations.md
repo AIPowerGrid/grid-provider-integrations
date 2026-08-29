@@ -12,7 +12,7 @@ point-in-time capacity observation, not an uptime promise.
   production. It observed four client-facing text IDs, ten online model
   entries, three concrete text context windows, and six image/video capability
   declarations.
-- The Vercel AI SDK provider passed 14 tests, type checking, lint, build, pack
+- The Vercel AI SDK provider passed 15 tests, type checking, lint, build, pack
   inspection, and a zero-vulnerability production dependency audit. Its
   scoped-key documentation now uses Core's real `account.read` scope, and an
   opt-in AI SDK 7 `streamText` production lane is prepared but has not been run
@@ -22,7 +22,7 @@ point-in-time capacity observation, not an uptime promise.
   Both pack and install phases disable lifecycle scripts, and the consumers are
   deleted after each check. This closes the gap between source-tree tests and
   the payload developers would actually install from npm.
-- The ElizaOS plugin passed 12 component tests plus a real `AgentRuntime`
+- The ElizaOS plugin passed 13 component tests plus a real `AgentRuntime`
   registration/invocation test, type checking, lint, build, and pack
   inspection. Its publish payload contains no runtime dependencies. The
   current ElizaOS host core still brings one high `pdfjs-dist` advisory and
@@ -53,7 +53,7 @@ point-in-time capacity observation, not an uptime promise.
   Artifact `9710084670` contains the package, checksum, and full validator
   report and expires on 2026-09-12; it is build evidence, not a Marketplace
   publication.
-- The LangChain cookbook passed eight local protocol tests through the real
+- The LangChain cookbook passed eleven local protocol tests through the real
   `ChatOpenAI` surface, including invocation, SSE streaming, tool-call decoding,
   public keyless model discovery, lint, format, compile, and a zero-vulnerability
   installed dependency audit. Its opt-in production lane covers bounded invoke,
@@ -66,6 +66,14 @@ point-in-time capacity observation, not an uptime promise.
   loaded the node and registered all four operations in a local editor smoke
   test. A provenance-only GitHub release workflow and an opt-in four-modality
   production gate are prepared but have not published or spent credit.
+- A cross-provider credential-destination audit closed environment-key
+  forwarding and redirect gaps before package release. AI SDK and LangChain
+  environment credentials are now eligible only for the canonical Grid origin;
+  custom test bases require explicit credentials. AI SDK and ElizaOS redact an
+  echoed key from bounded upstream errors, ElizaOS rejects plaintext remote
+  bases, and authenticated Dify, ElizaOS, AI SDK, LangChain, and n8n transports
+  refuse redirects. These are release-boundary controls, not claims that a
+  third-party host is trusted merely because a caller supplied it explicitly.
 - Open WebUI v0.11.1 discovered the current Grid text-model set through its standard
   OpenAI-compatible connection path. The public guide checker passed, and the
   prepared community tutorial passed Prettier plus a production build inside

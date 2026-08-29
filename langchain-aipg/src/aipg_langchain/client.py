@@ -6,9 +6,10 @@ import json
 import os
 from collections.abc import Sequence
 from urllib.parse import urlparse
-from urllib.request import Request, urlopen
+from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 from langchain_openai import ChatOpenAI
+from openai import DefaultAsyncHttpxClient, DefaultHttpxClient
 from pydantic import SecretStr
 
 AIPG_API_BASE = "https://api.aipowergrid.io/v1"
@@ -23,18 +24,16 @@ class ModelDiscoveryError(RuntimeError):
     """Raised when the public model catalog has an invalid shape."""
 
 
+class _NoRedirectHandler(HTTPRedirectHandler):
+    def redirect_request(self, *_args: object, **_kwargs: object) -> None:
+        return None
+
+
 def _resolved_api_key(api_key: SecretStr | None) -> SecretStr:
     resolved_key = api_key or SecretStr(os.environ.get("AIPG_API_KEY", ""))
     if not resolved_key.get_secret_value():
         raise MissingAPIKeyError("Set AIPG_API_KEY to a scoped Grid inference key")
     return resolved_key
-
-
-def _optional_api_key(api_key: SecretStr | None) -> SecretStr | None:
-    if api_key is not None:
-        return api_key
-    value = os.environ.get("AIPG_API_KEY", "")
-    return SecretStr(value) if value else None
 
 
 def _validated_base_url(base_url: str) -> str:
@@ -68,15 +67,14 @@ def list_text_models(
         ValueError: The base URL is unsafe.
     """
     url = f"{_validated_base_url(base_url)}/models"
-    resolved_key = _optional_api_key(api_key)
     headers = {"Accept": "application/json"}
-    if resolved_key is not None:
-        headers["Authorization"] = f"Bearer {resolved_key.get_secret_value()}"
+    if api_key is not None:
+        headers["Authorization"] = f"Bearer {api_key.get_secret_value()}"
     request = Request(  # noqa: S310
         url,
         headers=headers,
     )
-    with urlopen(request, timeout=timeout) as response:  # noqa: S310
+    with build_opener(_NoRedirectHandler).open(request, timeout=timeout) as response:
         payload = json.load(response)
 
     if not isinstance(payload, dict) or payload.get("object") != "list":
@@ -119,6 +117,9 @@ def create_chat_model(
         MissingAPIKeyError: No key is available.
         ValueError: The model, bounds, or base URL is invalid.
     """
+    validated_base_url = _validated_base_url(base_url)
+    if validated_base_url != AIPG_API_BASE and api_key is None:
+        raise ValueError("A custom AIPG base URL requires an explicit api_key")
     resolved_key = _resolved_api_key(api_key)
     if not model or not model.strip():
         raise ValueError("model must not be empty")
@@ -128,10 +129,12 @@ def create_chat_model(
     return ChatOpenAI(
         model=model,
         api_key=resolved_key,
-        base_url=_validated_base_url(base_url),
+        base_url=validated_base_url,
         use_responses_api=False,
         max_tokens=max_tokens,
         timeout=timeout,
         max_retries=2,
         stream_usage=False,
+        http_client=DefaultHttpxClient(follow_redirects=False),
+        http_async_client=DefaultAsyncHttpxClient(follow_redirects=False),
     )

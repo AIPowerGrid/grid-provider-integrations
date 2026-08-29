@@ -60,6 +60,22 @@ describe("AI Power Grid AI SDK provider", () => {
     ).toThrow("with apiKey");
   });
 
+  it("never sends the environment Grid key to a custom base URL", () => {
+    const previous = process.env.AIPG_API_KEY;
+    process.env.AIPG_API_KEY = "grid_environment_secret";
+    try {
+      expect(() => createAipg({ baseURL: "https://example.com/v1" })).toThrow(
+        "requires an explicit apiKey",
+      );
+      expect(() =>
+        createAipg({ apiKey: "grid_explicit_fixture", baseURL: "https://example.com/v1" }),
+      ).not.toThrow();
+    } finally {
+      if (previous === undefined) delete process.env.AIPG_API_KEY;
+      else process.env.AIPG_API_KEY = previous;
+    }
+  });
+
   it("uses the standard AI SDK language model interface", async () => {
     const mock = fixture({
       "/v1/chat/completions": (call) =>
@@ -329,9 +345,10 @@ describe("AI Power Grid AI SDK provider", () => {
     });
   });
 
-  it("bounds API errors and preserves status", async () => {
+  it("bounds API errors, redacts the credential, and preserves status", async () => {
     const mock = fixture({
-      "/v1/account/credits": () => json({ detail: "x".repeat(1000) }, 401),
+      "/v1/account/credits": () =>
+        json({ detail: `upstream echoed grid_test ${"x".repeat(1000)}` }, 401),
     });
     const aipg = createAipg({
       apiKey: "grid_test",
@@ -342,6 +359,8 @@ describe("AI Power Grid AI SDK provider", () => {
     expect(error).toBeInstanceOf(AipgApiError);
     expect(error).toMatchObject({ status: 401 });
     expect((error as Error).message.length).toBeLessThanOrEqual(403);
+    expect((error as Error).message).not.toContain("grid_test");
+    expect((error as Error).message).toContain("[REDACTED]");
   });
 
   it("exposes the canonical non-mutating price quote", async () => {
