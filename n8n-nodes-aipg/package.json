@@ -27,7 +27,11 @@
 		"lint:fix": "n8n-node lint --fix",
 		"test": "npm run build && node --test test/*.test.mjs",
 		"test:e2e:live": "npm run build && node --test test/live.e2e.test.mjs",
+		"release": "n8n-node release",
 		"prepublishOnly": "n8n-node prerelease"
+	},
+	"publishConfig": {
+		"access": "public"
 	},
 	"files": [
 		"dist"

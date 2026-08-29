@@ -1,0 +1,43 @@
+name: Publish n8n node
+
+on:
+  push:
+    tags:
+      - "n8n-nodes-aipg-v*.*.*"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: n8n-nodes-aipg
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: n8n-nodes-aipg/package-lock.json
+      - name: Require tag to match package version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          expected="n8n-nodes-aipg-v$(node -p "require('./package.json').version")"
+          test "$RELEASE_TAG" = "$expected" || {
+            echo "Tag $RELEASE_TAG does not match $expected" >&2
+            exit 1
+          }
+      - run: npm ci
+      - run: npm test
+      - run: npm run lint
+      - name: Publish with npm provenance
+        run: |
+          [ -n "$NPM_TOKEN" ] && npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          npm run release
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

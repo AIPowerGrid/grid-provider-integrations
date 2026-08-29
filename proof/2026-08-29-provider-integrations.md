@@ -29,10 +29,13 @@ point-in-time capacity observation, not an uptime promise.
   installed dependency audit. Its opt-in production lane covers bounded invoke,
   streaming, and forced tool calling but has not been run without a disposable
   key.
-- The n8n node passed strict community-node lint, seven tests, build, pack
-  inspection, and a zero-vulnerability production dependency audit. n8n
-  2.36.8 loaded the node and registered all four operations in a local editor
-  smoke test.
+- The n8n node passed strict community-node lint, nine deterministic tests,
+  build, pack inspection, and a zero-vulnerability production dependency
+  audit. Its credential test now uses authenticated read-only credits instead
+  of the public model catalog, closing a false-positive key check. n8n 2.36.8
+  loaded the node and registered all four operations in a local editor smoke
+  test. A provenance-only GitHub release workflow and an opt-in four-modality
+  production gate are prepared but have not published or spent credit.
 - Open WebUI v0.11.1 discovered current Grid text models through its standard
   OpenAI-compatible connection path. The public guide checker passed, and the
   prepared community tutorial passed Prettier plus a production build inside
