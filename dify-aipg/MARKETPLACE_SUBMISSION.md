@@ -53,7 +53,7 @@ keys remain in Dify's secret provider credential store.
 
 Dify daemon CLI 0.6.10 produced the 20-file runtime package from the public
 source. Its SHA-256 is
-`4a16da4205a278430ff54f39a452243f7d3fac8d4b541593f7362643ec9e1a66`.
+`88c54550bc333fb55c68c9b5a3ea3c8f509368235c5333fc7059c7950d351190`.
 The Marketplace toolkit at commit
 `57a21d1304b1108df3e6b90a15a4f5dd9f0915f9` reported zero blocking failures,
 zero check-execution failures, and no known vulnerabilities across the 46
@@ -61,9 +61,9 @@ pinned lockfile dependencies. It emitted five review-warning categories,
 documented below.
 
 The provenance-only
-[GitHub package run](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33236545496)
-at source commit `0a69e3f` built this exact package on Linux and uploaded
-artifact `9710084670` with its checksum and full validation report. The
+[GitHub package run](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33238108393)
+at source commit `2518636` built this exact package on Linux and uploaded
+artifact `9710523103` with its checksum and full validation report. The
 artifact expires on 2026-09-12 and is not a Marketplace release.
 
 The exact GitHub-built package was uploaded to a clean local Dify Community
@@ -88,7 +88,7 @@ for the plugin release version.
 
 The exact validated package is staged on
 [`halfaipg/dify-plugins:feat/aipg-provider`](https://github.com/halfaipg/dify-plugins/tree/feat/aipg-provider/aipowergrid/aipg)
-at commit `658bfbd`. The branch is three commits ahead of current upstream
+at commit `5f94bde`. The branch is four commits ahead of current upstream
 `main`; together they add, refresh, and correct the path of only
 `aipowergrid/aipg/aipg-0.1.0.difypkg`. It has no open or closed Marketplace PR.
 Staging is not submission or acceptance.

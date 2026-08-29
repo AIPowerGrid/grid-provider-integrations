@@ -34,7 +34,7 @@ point-in-time capacity observation, not an uptime promise.
   at commit `57a21d1304b1108df3e6b90a15a4f5dd9f0915f9` passed its content,
   manifest, README, dependency, binary, OSV, domain, and PR-template checks
   with zero blocking or execution failures. The package SHA-256 is
-  `4a16da4205a278430ff54f39a452243f7d3fac8d4b541593f7362643ec9e1a66`.
+  `88c54550bc333fb55c68c9b5a3ea3c8f509368235c5333fc7059c7950d351190`.
   The exact GitHub-built package installed successfully on a clean local Dify
   Community Edition 1.17.0 stack: the install task succeeded, its local runtime
   reached ready state, and Dify listed provider `aipowergrid/aipg/aipg` with
@@ -47,10 +47,10 @@ point-in-time capacity observation, not an uptime promise.
   GitHub jobs in [CI run 33231584103](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33231584103);
   the earlier `d789ce1` run is superseded because its byte-for-byte comparison
   treated version-dependent `uv` annotations as dependency changes.
-  Current runtime-package commit `0a69e3f` built the exact package on Linux and passed the
+  Current runtime-package commit `2518636` built the exact package on Linux and passed the
   pinned Marketplace toolkit in
-  [run 33236545496](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33236545496).
-  Artifact `9710084670` contains the package, checksum, and full validator
+  [run 33238108393](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33238108393).
+  Artifact `9710523103` contains the package, checksum, and full validator
   report and expires on 2026-09-12; it is build evidence, not a Marketplace
   publication.
 - The LangChain cookbook passed eleven local protocol tests through the real
@@ -169,11 +169,11 @@ an upstream integration only if that project accepts and merges it.
 
 - Dify Marketplace package: the validated artifact is staged at
   [`halfaipg/dify-plugins:feat/aipg-provider`](https://github.com/halfaipg/dify-plugins/tree/feat/aipg-provider/aipowergrid/aipg)
-  on commit `658bfbd`. The branch is three commits ahead of current upstream
+  on commit `5f94bde`. The branch is four commits ahead of current upstream
   `main`; together they add, refresh, and correct the path of only
   `aipowergrid/aipg/aipg-0.1.0.difypkg`. The remotely validated package
   matches SHA-256
-  `4a16da4205a278430ff54f39a452243f7d3fac8d4b541593f7362643ec9e1a66`.
+  `88c54550bc333fb55c68c9b5a3ea3c8f509368235c5333fc7059c7950d351190`.
   No Marketplace PR exists. Credentialed Dify Community Edition and Cloud
   checks plus the Plugin Developer Agreement still gate submission.
 
