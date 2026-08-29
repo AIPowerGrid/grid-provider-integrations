@@ -13,9 +13,12 @@ not a new LangChain provider package.
 - `examples/` - small chat, streaming, and tool-call examples.
 - `tests/` - local HTTP contract tests with no paid or external inference.
 - `pyproject.toml` and `uv.lock` - reproducible Python environment.
-- `upstream-cookbook.mdx` and `UPSTREAM_PR.md` - source-ready LangChain docs
-  contribution and its live-evidence gate. They are not evidence of upstream
-  submission or acceptance.
+- `upstream-cookbook.mdx` - first-party hosted cookbook source; current
+  LangChain policy does not make it eligible as a new hosted integration page.
+- `upstream-index-entry.mdx` and `UPSTREAM_PR.md` - source-ready, one-paragraph
+  compatibility proposal for LangChain's existing Chat Completions API section
+  and its live-evidence gate. They are not evidence of upstream submission or
+  acceptance.
 
 ## Local Contracts
 
@@ -35,6 +38,9 @@ not a new LangChain provider package.
   currently reports modality, not a durable tool-capability contract.
 - Explain that remote community workers may inspect plaintext prompts and
   outputs.
+- Keep the upstream diff to the existing compatibility index. Do not propose a
+  hosted provider page or independent package unless LangChain's eligibility
+  policy changes or maintainers explicitly request one.
 
 ## Verification
 

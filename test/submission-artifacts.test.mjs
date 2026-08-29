@@ -46,7 +46,11 @@ test("AI SDK submission draft targets the package and live modality contract", a
 });
 
 test("LangChain cookbook preserves the compatibility and trust boundaries", async () => {
-  const page = await read("langchain-aipg/upstream-cookbook.mdx");
+  const [page, indexEntry, pullRequest] = await Promise.all([
+    read("langchain-aipg/upstream-cookbook.mdx"),
+    read("langchain-aipg/upstream-index-entry.mdx"),
+    read("langchain-aipg/UPSTREAM_PR.md"),
+  ]);
 
   assert.match(page, /https:\/\/api\.aipowergrid\.io\/v1/);
   assert.match(page, /use_responses_api=False/);
@@ -55,6 +59,17 @@ test("LangChain cookbook preserves the compatibility and trust boundaries", asyn
   assert.match(page, /account\.read/);
   assert.match(page, /model\.stream/);
   assert.match(page, /bind_tools/);
+  assert.match(indexEntry, /ChatOpenAI/);
+  assert.match(indexEntry, /https:\/\/api\.aipowergrid\.io\/v1/);
+  assert.match(indexEntry, /remote community-operated workers/);
+  assert.match(indexEntry, /plaintext remote-worker privacy boundary/);
+  assert.match(pullRequest, /src\/oss\/python\/integrations\/chat\/index\.mdx/);
+  assert.match(pullRequest, /Chat Completions API/);
+  assert.match(pullRequest, /50,000 monthly downloads/);
+  assert.match(
+    pullRequest,
+    /Do not propose\s+`src\/oss\/python\/integrations\/chat\/aipg\.mdx`/,
+  );
 });
 
 test("n8n Creator Portal draft stays aligned with the package and workflow", async () => {

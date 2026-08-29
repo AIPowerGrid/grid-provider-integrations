@@ -56,9 +56,12 @@ point-in-time capacity observation, not an uptime promise.
 - The LangChain cookbook passed eleven local protocol tests through the real
   `ChatOpenAI` surface, including invocation, SSE streaming, tool-call decoding,
   public keyless model discovery, lint, format, compile, and a zero-vulnerability
-  installed dependency audit. Its opt-in production lane covers bounded invoke,
-  streaming, and forced tool calling but has not been run without a disposable
-  key.
+  installed dependency audit. Current LangChain policy does not accept a new
+  hosted guide for an unfeatured integration below 50,000 monthly downloads,
+  so the staged upstream diff is one restrained link in the existing Chat
+  Completions API section while the full cookbook stays first-party. Its opt-in
+  production lane covers bounded invoke, streaming, and forced tool calling but
+  has not been run without a disposable key.
 - The n8n node passed strict community-node lint, nine deterministic tests,
   build, pack inspection, and a zero-vulnerability production dependency
   audit. Its credential test now uses authenticated read-only credits instead
