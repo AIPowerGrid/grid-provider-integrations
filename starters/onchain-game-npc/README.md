@@ -13,4 +13,3 @@ AIPG_API_KEY='grid_...' \
 
 Optional variables: `AIPG_TEXT_MODEL`, `AIPG_MAX_COST_USD`, `NPC_WORLD`, and
 `NPC_MAX_TOKENS`.
-

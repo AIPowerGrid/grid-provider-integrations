@@ -12,4 +12,3 @@ AIPG_API_KEY='grid_...' \
 
 The loop defaults to two model calls, stops after three at most, and quotes
 every step against one cumulative `AIPG_MAX_COST_USD` budget.
-

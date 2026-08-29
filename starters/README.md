@@ -40,4 +40,3 @@ claiming more.
 
 The deployed Grid diamond and JobAnchor addresses are maintained in the
 [smart-contract address registry](https://github.com/AIPowerGrid/aipg-smart-contracts/blob/main/docs/ADDRESSES.md).
-

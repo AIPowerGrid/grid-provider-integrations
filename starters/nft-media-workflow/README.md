@@ -12,4 +12,3 @@ AIPG_API_KEY='grid_...' \
 ```
 
 The default output is `./aipg-nft-output/metadata.json`.
-
