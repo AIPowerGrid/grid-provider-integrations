@@ -78,5 +78,6 @@ test("Open WebUI draft requires upstream consent before a provider page", async 
   assert.match(query, /standard OpenAI connection/);
   assert.match(query, /remote\s+community-operated workers/);
   assert.match(query, /should it remain in our\s+own documentation/);
+  assert.match(query, /open-webui\/docs\/discussions\/1364/);
   assert.doesNotMatch(query, /partner(ship)?|endorse(ment)?/i);
 });

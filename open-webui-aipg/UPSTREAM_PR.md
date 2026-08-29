@@ -22,6 +22,11 @@ provider-specific page is welcome. If they prefer the generic compatibility
 guide, keep the AIPG page first-party and contribute only an accepted generic
 documentation improvement.
 
+The scope question is open as
+[open-webui/docs discussion #1364](https://github.com/open-webui/docs/discussions/1364).
+Do not open this PR draft unless a maintainer answers that the tutorial is in
+scope and the credentialed runtime gate passes.
+
 # Checklist
 
 - [x] I have reviewed the relevant documentation and matched the existing style.

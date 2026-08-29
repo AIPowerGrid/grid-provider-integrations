@@ -1,5 +1,8 @@
 # Open WebUI Documentation Scope Question
 
+Posted as [open-webui/docs discussion #1364](https://github.com/open-webui/docs/discussions/1364)
+on 2026-08-29. No tutorial PR has been opened.
+
 ## Title
 
 Would a tested third-party OpenAI-compatible setup guide be in scope?

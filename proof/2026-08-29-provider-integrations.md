@@ -74,6 +74,10 @@ point-in-time capacity observation, not an uptime promise.
 - LiteLLM documentation: [BerriAI/litellm-docs#1072](https://github.com/BerriAI/litellm-docs/pull/1072).
 - Open WebUI fork documentation correction:
   [AIPowerGrid/grid-openweb-ui#1](https://github.com/AIPowerGrid/grid-openweb-ui/pull/1).
+- Open WebUI documentation scope question:
+  [open-webui/docs discussion #1364](https://github.com/open-webui/docs/discussions/1364).
+  No tutorial PR was opened; maintainer confirmation remains required under
+  the current anti-promotion contribution policy.
 
 An open pull request is not adoption, endorsement, or a partnership. It becomes
 an upstream integration only if that project accepts and merges it.
