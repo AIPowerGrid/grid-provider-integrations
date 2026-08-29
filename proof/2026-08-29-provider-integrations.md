@@ -74,7 +74,9 @@ point-in-time capacity observation, not an uptime promise.
   [CI run 33232941595](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33232941595).
   Every third-party action in CI, packaging, and publication workflows is now
   pinned to a full commit SHA, with a regression test preventing mutable action
-  tags from returning before any npm release.
+  tags from returning before any npm release. The pinned-action and expanded
+  release-contract checks passed all three jobs at commit `4577310` in
+  [CI run 33233661192](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33233661192).
 - The current Open WebUI contribution template rejects provider-listing
   submissions. The AIPG guide remains tested first-party documentation; an
   upstream tutorial PR is gated on explicit maintainer confirmation rather
@@ -94,14 +96,20 @@ point-in-time capacity observation, not an uptime promise.
 ## Submitted upstream
 
 - LiteLLM provider: [BerriAI/litellm#38725](https://github.com/BerriAI/litellm/pull/38725).
-  The failed lint notification for old head `2326088` is superseded. Head
-  `62ab9e5` passed lint, security scans, model validation, and all completed
-  unit shards after correcting output limits. Head `c947cba` additionally
-  prevents a server-managed AIPG credential from being sent to a caller-chosen
-  API base; focused Chat Completions and Responses regression tests pass.
-  Fresh upstream CI, maintainer review, and the contributor license agreement
-  remain required.
+  The failed lint notification for old head `2326088` is superseded. Current
+  head `f492ae7` supports Chat Completions, Responses, and OpenAI-compatible
+  image generation while preventing a server-managed AIPG credential from
+  being sent to a caller-chosen API base. It publishes current image prices of
+  `$0.003` for `z-image-turbo`, `$0.005` for `Krea 2 Turbo`, and `$0.01` for
+  `FLUX.2 Klein 4B FP8`. Seven focused tests, Ruff, the LiteLLM test-quality
+  budget, provider-documentation validation, and both model-map schemas pass
+  locally. Fresh upstream CI is running; maintainer review and the contributor
+  license agreement remain required.
 - LiteLLM documentation: [BerriAI/litellm-docs#1072](https://github.com/BerriAI/litellm-docs/pull/1072).
+  Documentation head `2d3f36a` covers the same text and text-to-image scope,
+  pricing, credential boundary, and community-worker disclosure. The full
+  Docusaurus production build and writing checks pass locally; the hosted
+  preview remains an upstream check.
 - Open WebUI fork documentation correction:
   [AIPowerGrid/grid-openweb-ui#1](https://github.com/AIPowerGrid/grid-openweb-ui/pull/1).
 - Open WebUI documentation scope question:

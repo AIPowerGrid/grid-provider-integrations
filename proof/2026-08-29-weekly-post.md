@@ -30,9 +30,10 @@ and every live model remains below the 3-worker redundancy target.
 
 ### Post 4
 
-Distribution: the LiteLLM provider PR is green and awaiting CLA/review. Dify,
-ElizaOS, AI SDK, LangChain, n8n, and Open WebUI work is tested or source-ready.
-Publication and upstream acceptance are tracked separately.
+Distribution: the LiteLLM provider and docs PRs now cover text and text-to-image
+and are awaiting current-head CI, CLA, and review. Dify, ElizaOS, AI SDK,
+LangChain, n8n, and Open WebUI work is tested or source-ready. Publication and
+upstream acceptance are tracked separately.
 
 https://github.com/AIPowerGrid/grid-provider-integrations
 
