@@ -37,6 +37,23 @@ Grid response, including result URLs and provenance metadata. Their request
 timeouts follow Core's current modality deadlines. Use n8n queue mode and
 worker execution timeouts appropriate for long media jobs.
 
+## Example workflows
+
+- **Support draft:** Manual Trigger -> AI Power Grid (`Generate Text`) ->
+  Slack. Map the incoming support message into `Prompt`, then send
+  `choices[0].message.content` to Slack for review.
+- **Campaign artwork:** Schedule Trigger -> AI Power Grid (`Generate Image`)
+  -> HTTP Request. Generate one image, then download the first returned result
+  URL into n8n binary data for the next publishing step.
+- **Podcast bumper:** Form Trigger -> AI Power Grid (`Generate Audio`) ->
+  cloud storage. Map the submitted style notes into `Music Description`, use a
+  short bounded duration, and store the returned audio URL.
+
+Start with a Manual Trigger while building a workflow. Run one item, inspect
+the Grid response in the output panel, and map only the fields needed by the
+next node. Availability is dynamic, so select a currently advertised model
+instead of relying on an old saved model name.
+
 ## Errors and credits
 
 Grid HTTP errors are surfaced as n8n node errors. Common statuses are:
@@ -89,8 +106,8 @@ output, or account balance.
 
 ## Release
 
-`@aipowergrid/n8n-nodes-aipg@0.1.1` is public with npm provenance from tag
-`n8n-nodes-aipg-v0.1.1`. Future releases publish only through the root
+`@aipowergrid/n8n-nodes-aipg@0.1.2` is public with npm provenance from tag
+`n8n-nodes-aipg-v0.1.2`. Future releases publish only through the root
 `publish-n8n.yml` workflow and its npm OIDC Trusted Publisher. The workflow
 rejects a tag that does not exactly match `package.json`, reruns tests and lint,
 and invokes n8n's supported release command. The one-time bootstrap token is
