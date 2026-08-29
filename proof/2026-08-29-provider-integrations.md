@@ -63,11 +63,16 @@ point-in-time capacity observation, not an uptime promise.
   the current official `open-webui/docs` tree. No upstream PR has been opened
   before the credentialed runtime gate.
 - The public integrations repository's GitHub CI passed the Node, Bun, and
-  Python jobs, including the unauthenticated production conformance run.
+  Python jobs, including the unauthenticated production conformance run. A
+  new supervised release command now preflights ten fixed Dify, AI SDK,
+  ElizaOS, LangChain, and n8n workloads against Core's canonical quote API,
+  requires active charging and sufficient credit, and enforces a hard `$0.03`
+  ceiling before dispatch. The gate itself has not been run without an
+  explicitly approved disposable key.
 - Source-ready release and submission contracts now cover the current active
   ElizaOS registry, Vercel AI SDK community-provider docs, LangChain chat
   integration docs, Dify Marketplace package path, and n8n Creator Portal.
-  Fourteen deterministic root tests keep package names, versions, provenance tags,
+  Eighteen deterministic root tests keep package names, versions, provenance tags,
   trust disclosures, and upstream targets aligned. Commit `43b7e5f` passed all
   three GitHub CI jobs after push. Capability enforcement and live metadata
   drift checks then passed all three jobs at commit `5b9218d` in
@@ -77,6 +82,9 @@ point-in-time capacity observation, not an uptime promise.
   tags from returning before any npm release. The pinned-action and expanded
   release-contract checks passed all three jobs at commit `4577310` in
   [CI run 33233661192](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33233661192).
+  The bounded release gate, its fail-closed quote checks, Dify adapter lane,
+  and child-test anti-drift checks passed all three jobs at commit `51c5b9b` in
+  [CI run 33235265633](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33235265633).
 - The current Open WebUI contribution template rejects provider-listing
   submissions. The AIPG guide remains tested first-party documentation; an
   upstream tutorial PR is gated on explicit maintainer confirmation rather
@@ -97,14 +105,16 @@ point-in-time capacity observation, not an uptime promise.
 
 - LiteLLM provider: [BerriAI/litellm#38725](https://github.com/BerriAI/litellm/pull/38725).
   The failed lint notification for old head `2326088` is superseded. Current
-  head `f492ae7` supports Chat Completions, Responses, and OpenAI-compatible
+  head `5cbe37e` supports Chat Completions, Responses, and OpenAI-compatible
   image generation while preventing a server-managed AIPG credential from
   being sent to a caller-chosen API base. It publishes current image prices of
   `$0.003` for `z-image-turbo`, `$0.005` for `Krea 2 Turbo`, and `$0.01` for
-  `FLUX.2 Klein 4B FP8`. Seven focused tests, Ruff, the LiteLLM test-quality
-  budget, provider-documentation validation, and both model-map schemas pass
-  locally. Fresh upstream CI is running; maintainer review and the contributor
-  license agreement remain required.
+  `FLUX.2 Klein 4B FP8`. Seven focused tests now execute inside LiteLLM's real
+  provider shard; the prior test location passed locally but was outside that
+  CI shard. The replacement run passed the provider shard, lint, security,
+  schemas, documentation, global unit matrix, and Codecov's patch gate at
+  `100%` (16/16 executable diff lines). The long CodSpeed benchmark,
+  maintainer review, and contributor license agreement remain open.
 - LiteLLM documentation: [BerriAI/litellm-docs#1072](https://github.com/BerriAI/litellm-docs/pull/1072).
   Documentation head `2d3f36a` covers the same text and text-to-image scope,
   pricing, credential boundary, and community-worker disclosure. The full
@@ -133,9 +143,10 @@ an upstream integration only if that project accepts and merges it.
 
 ## Release gates still open
 
-- Run one bounded credentialed production check for each package path before
-  marketplace or package-registry publication. These checks spend credits and
-  are deliberately absent from default CI.
+- Run the bounded credentialed production gate, then complete the separate
+  Dify Community Edition and Cloud installation checks before marketplace or
+  package-registry publication. These checks spend credits and are deliberately
+  absent from default CI.
 - Sign the LiteLLM contributor license agreement for PR 38725. This is an
   upstream administrative gate, not a code or CI failure.
 - Publish the first-party packages only after their final tarballs are scanned
