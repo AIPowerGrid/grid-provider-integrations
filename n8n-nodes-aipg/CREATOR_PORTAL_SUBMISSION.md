@@ -3,7 +3,7 @@
 ## Package
 
 - npm name: `@aipowergrid/n8n-nodes-aipg`
-- version: `0.1.1`
+- version: `0.1.2`
 - source: `AIPowerGrid/grid-provider-integrations`, directory
   `n8n-nodes-aipg`
 - license: MIT
@@ -13,8 +13,8 @@
 
 ## Publication path
 
-`@aipowergrid/n8n-nodes-aipg@0.1.1` was published from GitHub Actions with
-provenance on npm using tag `n8n-nodes-aipg-v0.1.1`. Its Trusted Publisher is:
+`@aipowergrid/n8n-nodes-aipg@0.1.2` was published from GitHub Actions with
+provenance on npm using tag `n8n-nodes-aipg-v0.1.2`. Its Trusted Publisher is:
 
 - repository owner: `AIPowerGrid`
 - repository: `grid-provider-integrations`
@@ -25,6 +25,9 @@ instance discovered and loaded all four operations.
 
 ## Creator Portal evidence
 
+- The official `@n8n/scan-community-package` scanner passes the public npm
+  package, its GitHub provenance, the attested TypeScript source, and the
+  shipped JavaScript artifact.
 - `npm run lint`, `npm test`, `npm run build`, and `npm pack --dry-run` pass.
 - The package has no runtime dependencies, as required for verified community
   nodes.
@@ -42,3 +45,21 @@ instance discovered and loaded all four operations.
 
 The package and provenance are public. Creator Portal acceptance is separate
 from package publication.
+
+## Portal submission
+
+Submit `@aipowergrid/n8n-nodes-aipg` at
+[creators.n8n.io/nodes](https://creators.n8n.io/nodes). The current official
+requirements are satisfied:
+
+- scoped package name follows `@<scope>/n8n-nodes-*`
+- `n8n-community-node-package` keyword and `n8n` manifest entries are present
+- public MIT source repository matches npm metadata
+- package has no runtime dependencies or file-system/environment access
+- English README includes credentials, operations, examples, errors, and
+  privacy guidance
+- publication comes from GitHub Actions with npm provenance
+
+The Creator Portal may email an ownership token to the package author or
+maintainer address. Never place that token in source, issues, screenshots, or
+workflow JSON. Portal submission does not require an npm login or npm token.

@@ -1,6 +1,6 @@
 {
 	"name": "@aipowergrid/n8n-nodes-aipg",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "AI Power Grid text, image, video, and audio generation for n8n",
 	"license": "MIT",
 	"homepage": "https://docs.aipowergrid.io",

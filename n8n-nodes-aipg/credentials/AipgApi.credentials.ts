@@ -26,7 +26,7 @@ export class AipgApi implements ICredentialType {
 			typeOptions: { password: true },
 			default: '',
 			required: true,
-			description: 'A server-side Grid key with the inference.submit scope',
+			description: 'A server-side Grid key with account.read and inference.submit scopes',
 		},
 	];
 
