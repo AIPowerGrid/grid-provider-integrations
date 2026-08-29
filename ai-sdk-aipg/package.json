@@ -24,7 +24,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "lint": "biome check src/ tests/",
     "lint:fix": "biome check --write src/ tests/",
-    "test": "vitest run --config ./vitest.config.ts"
+    "test": "vitest run --config ./vitest.config.ts",
+    "test:e2e:live": "AIPG_LIVE_E2E=1 vitest run --config ./vitest.config.ts tests/live.e2e.test.ts"
   },
   "keywords": [
     "ai-sdk",
@@ -68,5 +69,8 @@
     "ai": {
       "optional": true
     }
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

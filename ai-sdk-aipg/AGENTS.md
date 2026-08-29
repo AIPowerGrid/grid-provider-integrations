@@ -14,8 +14,10 @@ contracts; music is an explicit Grid helper because it is not speech synthesis.
 - `src/image-model.ts` - `ImageModelV4` adapter.
 - `src/video-model.ts` - experimental `VideoModelV4` adapter.
 - `src/types.ts` - public model, media, credit, and option types.
-- `tests/` - deterministic request/response contract tests.
+- `tests/` - deterministic request/response contract tests plus an explicit
+  credentialed production lane. Default tests must not spend credits.
 - `upstream-provider.mdx` - Vercel community-provider documentation draft.
+- `UPSTREAM_PR.md` - AI SDK documentation PR body and release-gate checklist.
 
 ## Local Contracts
 
@@ -38,4 +40,6 @@ contracts; music is an explicit Grid helper because it is not speech synthesis.
 - `npm run typecheck`
 - `npm run lint`
 - `npm run build`
-- `npm pack --dry-run`
+- `npm publish --dry-run --access public`
+- `AIPG_API_KEY="..." npm run test:e2e:live` - supervised bounded production
+  stream with a disposable scoped key; never run in default CI.

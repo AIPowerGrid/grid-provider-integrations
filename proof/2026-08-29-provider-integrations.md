@@ -9,7 +9,10 @@ point-in-time capacity observation, not an uptime promise.
 - The public conformance runner passed service discovery, public modality
   status, and missing/invalid credential rejection against production.
 - The Vercel AI SDK provider passed 13 tests, type checking, lint, build, pack
-  inspection, and a zero-vulnerability production dependency audit.
+  inspection, and a zero-vulnerability production dependency audit. Its
+  scoped-key documentation now uses Core's real `account.read` scope, and an
+  opt-in AI SDK 7 `streamText` production lane is prepared but has not been run
+  without a disposable key.
 - The ElizaOS plugin passed 11 component tests plus a real `AgentRuntime`
   registration/invocation test, type checking, lint, build, and pack
   inspection. Its publish payload contains no runtime dependencies. The

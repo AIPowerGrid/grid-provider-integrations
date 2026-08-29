@@ -13,6 +13,7 @@ const checks = [
   ["Vercel AI SDK types", "npm", ["run", "typecheck"], "ai-sdk-aipg"],
   ["Vercel AI SDK lint", "npm", ["run", "lint"], "ai-sdk-aipg"],
   ["Vercel AI SDK build", "npm", ["run", "build"], "ai-sdk-aipg"],
+  ["Vercel AI SDK package", "npm", ["publish", "--dry-run", "--access", "public"], "ai-sdk-aipg"],
   ["ElizaOS tests", "bun", ["run", "test"], "elizaos-aipg"],
   ["ElizaOS types", "bun", ["run", "typecheck"], "elizaos-aipg"],
   ["ElizaOS lint", "bun", ["run", "lint"], "elizaos-aipg"],

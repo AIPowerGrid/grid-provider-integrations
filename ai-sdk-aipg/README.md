@@ -11,7 +11,7 @@ npm install ai @aipowergrid/ai-sdk-provider
 ```
 
 Create a scoped API key in the [Grid Console](https://console.aipowergrid.io/)
-with `inference.submit` for generation and `credits.read` if your application
+with `inference.submit` for generation and `account.read` if your application
 shows balances. Keep it server-side:
 
 ```bash
@@ -133,3 +133,16 @@ economic transparency; they do not make inference private or fully trustless.
 
 This package does not imply a partnership with Vercel. It is a community
 provider maintained by AI Power Grid.
+
+## Release verification
+
+Default tests use local protocol fixtures and never spend credits. Before a
+release, run one bounded streamed request through the real AI SDK runtime with
+a disposable scoped key:
+
+```bash
+AIPG_API_KEY="..." npm run test:e2e:live
+```
+
+The live test records only assertions and timing through the test runner. It
+must never print the key, prompt, generated text, or account balance.
