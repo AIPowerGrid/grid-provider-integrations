@@ -53,9 +53,10 @@ def test_catalog_discovery_is_public_and_read_only(monkeypatch):
     predefined = check_catalog.predefined_models()
     client = check_catalog.client_models()
     online = check_catalog.online_text_contexts()
-    check_catalog.validate_catalog(predefined, client, online)
+    dynamic_candidates = check_catalog.validate_catalog(predefined, client, online)
 
     assert set(predefined) == client
+    assert dynamic_candidates == set()
     assert online == {
         "gpt-oss-120b": 60000,
         "deepseek-v4-flash-nvfp4": 262144,
@@ -78,3 +79,25 @@ def test_catalog_validation_rejects_context_drift():
 
 def test_catalog_validation_does_not_require_router_worker_status():
     check_catalog.validate_catalog({"auto": 60000}, {"auto"}, {})
+
+
+def test_catalog_validation_reports_dynamic_unpriced_models_without_guessing_metadata():
+    dynamic = check_catalog.validate_catalog(
+        {"auto": 60000, "gpt-oss-120b": 60000},
+        {"auto", "gpt-oss-120b", "grid/new-worker-model"},
+        {
+            "gpt-oss-120b": 60000,
+            "grid/new-worker-model": 262144,
+        },
+    )
+
+    assert dynamic == {"grid/new-worker-model"}
+
+
+def test_catalog_validation_rejects_stale_predefined_models():
+    with pytest.raises(SystemExit, match="stale=.*retired-model"):
+        check_catalog.validate_catalog(
+            {"auto": 60000, "retired-model": 8192},
+            {"auto"},
+            {},
+        )

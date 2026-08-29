@@ -24,11 +24,13 @@ Dify's LLM abstraction represents Grid image, video, or audio jobs.
   must not dispatch inference, reserve credits, or print response bodies.
 - The key must carry `account.read` and `inference.submit`. Keep it in Dify's
   secret credential store and never place it in examples, logs, or fixtures.
-- Predefined model IDs must match the public `/v1/models` catalog. Concrete
-  model context windows must match `/v1/status/models`; `auto` is a router and
-  has no worker status row. Static Dify prices may only mirror a reviewed Core
-  price-book entry. Core remains the billing authority, especially for `auto`
-  and models without a stable peg.
+- Predefined model IDs must remain available in the public `/v1/models`
+  catalog. That endpoint is live worker inventory, so newly advertised models
+  are reported as curation candidates rather than copied automatically into a
+  static Dify release. Concrete predefined model context windows must match
+  `/v1/status/models`; `auto` is a router and has no worker status row. Static
+  Dify prices may only mirror a reviewed Core price-book entry. Core remains
+  the billing authority, especially for `auto` and models without a stable peg.
 - Preserve streaming, tools, stop sequences, usage, and provider errors through
   Dify's maintained `OAICompatLargeLanguageModel` adapter.
 - Media must be added as explicit Dify tools with modality-native parameters;

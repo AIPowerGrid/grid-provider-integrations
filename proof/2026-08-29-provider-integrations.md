@@ -22,25 +22,30 @@ point-in-time capacity observation, not an uptime promise.
   inspection. Its publish payload contains no runtime dependencies. The
   current ElizaOS host core still brings one high `pdfjs-dist` advisory and
   one low `elliptic` advisory.
-- The Dify provider passed 12 tests, lint, format, and a public production
-  catalog check covering four client-facing text models and their advertised
+- The Dify provider passed 14 tests, lint, format, and a public production
+  catalog check covering four curated text models and their advertised
   context windows. Dify daemon 0.6.10
   produced a 20-file runtime-only `.difypkg`; the current Marketplace toolkit
   at commit `57a21d1304b1108df3e6b90a15a4f5dd9f0915f9` passed its content,
   manifest, README, dependency, binary, OSV, domain, and PR-template checks
   with zero blocking or execution failures. The package SHA-256 is
-  `8584c6921df683a562dbcded9ad61ae514021ed477ac045ad310c5669bbe252f`.
-  A stale Qwen catalog entry was removed before release. Credentialed Dify
-  Community Edition and Cloud generation tests remain pending, so the package
-  has not been submitted to the Marketplace. Packaging hardening commits
+  `4a16da4205a278430ff54f39a452243f7d3fac8d4b541593f7362643ec9e1a66`.
+  The exact GitHub-built package installed successfully on a clean local Dify
+  Community Edition 1.17.0 stack: the install task succeeded, its local runtime
+  reached ready state, and Dify listed provider `aipowergrid/aipg/aipg` with
+  the four curated text models. The live Grid also advertises
+  `grid/qwen38-flash-next-125b-nvfp4`; that dynamic model remains outside the
+  static package until its Core price and Dify metadata are reviewed.
+  Credentialed Community Edition and Cloud generation tests remain pending, so
+  the package has not been submitted to the Marketplace. Packaging hardening commits
   `d789ce1` and `ab57272` passed the repository's Node, Python, and ElizaOS
   GitHub jobs in [CI run 33231584103](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33231584103);
   the earlier `d789ce1` run is superseded because its byte-for-byte comparison
   treated version-dependent `uv` annotations as dependency changes.
-  Current-head commit `207f623` built the exact package on Linux and passed the
+  Current runtime-package commit `0a69e3f` built the exact package on Linux and passed the
   pinned Marketplace toolkit in
-  [run 33235676943](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33235676943).
-  Artifact `9709835125` contains the package, checksum, and full validator
+  [run 33236545496](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33236545496).
+  Artifact `9710084670` contains the package, checksum, and full validator
   report and expires on 2026-09-12; it is build evidence, not a Marketplace
   publication.
 - The LangChain cookbook passed eight local protocol tests through the real
@@ -112,8 +117,8 @@ point-in-time capacity observation, not an uptime promise.
   provider shard; the prior test location passed locally but was outside that
   CI shard. The replacement run passed the provider shard, lint, security,
   schemas, documentation, global unit matrix, and Codecov's patch gate at
-  `100%` (16/16 executable diff lines). The long CodSpeed benchmark,
-  maintainer review, and contributor license agreement remain open.
+  `100%` (16/16 executable diff lines). The long CodSpeed benchmark also
+  passed. Maintainer review and the contributor license agreement remain open.
 - LiteLLM documentation: [BerriAI/litellm-docs#1072](https://github.com/BerriAI/litellm-docs/pull/1072).
   Documentation head `2d3f36a` covers the same text and text-to-image scope,
   pricing, credential boundary, and community-worker disclosure. The full
@@ -132,12 +137,12 @@ an upstream integration only if that project accepts and merges it.
 ## Staged, not submitted
 
 - Dify Marketplace package: the validated artifact is staged at
-  [`halfaipg/dify-plugins:feat/aipg-provider`](https://github.com/halfaipg/dify-plugins/tree/feat/aipg-provider/AIPowerGrid/aipg)
-  on commit `efd925d`. The branch is two commits ahead of current upstream
-  `main`; together they add and refresh only
-  `AIPowerGrid/aipg/aipg-0.1.0.difypkg`. The remotely validated package
+  [`halfaipg/dify-plugins:feat/aipg-provider`](https://github.com/halfaipg/dify-plugins/tree/feat/aipg-provider/aipowergrid/aipg)
+  on commit `658bfbd`. The branch is three commits ahead of current upstream
+  `main`; together they add, refresh, and correct the path of only
+  `aipowergrid/aipg/aipg-0.1.0.difypkg`. The remotely validated package
   matches SHA-256
-  `8584c6921df683a562dbcded9ad61ae514021ed477ac045ad310c5669bbe252f`.
+  `4a16da4205a278430ff54f39a452243f7d3fac8d4b541593f7362643ec9e1a66`.
   No Marketplace PR exists. Credentialed Dify Community Edition and Cloud
   checks plus the Plugin Developer Agreement still gate submission.
 

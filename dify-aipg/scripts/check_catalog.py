@@ -49,14 +49,13 @@ def validate_catalog(
     predefined: dict[str, int],
     client: set[str],
     online: dict[str, int],
-) -> None:
+) -> set[str]:
     predefined_ids = set(predefined)
-    if predefined_ids != client:
-        missing = sorted(client - predefined_ids)
-        stale = sorted(predefined_ids - client)
-        raise SystemExit(f"catalog drift: missing={missing}, stale={stale}")
+    stale = sorted(predefined_ids - client)
+    if stale:
+        raise SystemExit(f"catalog drift: stale={stale}")
 
-    concrete_models = client - ROUTER_MODELS
+    concrete_models = predefined_ids - ROUTER_MODELS
     missing_status = sorted(concrete_models - set(online))
     context_drift = {
         model: {"dify": predefined[model], "grid": online[model]}
@@ -68,15 +67,18 @@ def validate_catalog(
             f"metadata drift: missing_status={missing_status}, context={context_drift}"
         )
 
+    return client - predefined_ids
+
 
 def main() -> None:
     predefined = predefined_models()
     client = client_models()
     online = online_text_contexts()
-    validate_catalog(predefined, client, online)
+    dynamic_candidates = sorted(validate_catalog(predefined, client, online))
     print(
-        f"Dify metadata matches {len(client)} client-facing Grid text models "
-        f"and {len(client - ROUTER_MODELS)} concrete context windows"
+        f"Dify metadata matches {len(predefined)} curated Grid text models "
+        f"and {len(set(predefined) - ROUTER_MODELS)} concrete context windows; "
+        f"live models awaiting static price/metadata review={dynamic_candidates}"
     )
 
 

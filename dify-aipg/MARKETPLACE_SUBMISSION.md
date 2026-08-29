@@ -2,7 +2,7 @@
 
 ## Plugin information
 
-- **Author**: AIPowerGrid
+- **Author ID**: aipowergrid
 - **Plugin name**: aipg
 - **Version**: 0.1.0
 - **Source repository**: https://github.com/AIPowerGrid/grid-provider-integrations
@@ -53,7 +53,7 @@ keys remain in Dify's secret provider credential store.
 
 Dify daemon CLI 0.6.10 produced the 20-file runtime package from the public
 source. Its SHA-256 is
-`8584c6921df683a562dbcded9ad61ae514021ed477ac045ad310c5669bbe252f`.
+`4a16da4205a278430ff54f39a452243f7d3fac8d4b541593f7362643ec9e1a66`.
 The Marketplace toolkit at commit
 `57a21d1304b1108df3e6b90a15a4f5dd9f0915f9` reported zero blocking failures,
 zero check-execution failures, and no known vulnerabilities across the 46
@@ -61,10 +61,18 @@ pinned lockfile dependencies. It emitted five review-warning categories,
 documented below.
 
 The provenance-only
-[GitHub package run](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33235676943)
-at source commit `207f623` built this exact package on Linux and uploaded
-artifact `9709835125` with its checksum and full validation
-report. The artifact expires after 14 days and is not a Marketplace release.
+[GitHub package run](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33236545496)
+at source commit `0a69e3f` built this exact package on Linux and uploaded
+artifact `9710084670` with its checksum and full validation report. The
+artifact expires on 2026-09-12 and is not a Marketplace release.
+
+The exact GitHub-built package was uploaded to a clean local Dify Community
+Edition 1.17.0 deployment with signature verification disabled only for this
+unsigned development package. The install task completed successfully, the
+plugin runtime reached ready state, and Dify listed provider
+`aipowergrid/aipg/aipg` with its four curated text models. This proves package
+installation and discovery on Community Edition; it does not replace the
+credentialed generation check.
 
 Final credentialed Dify Community Edition and Dify Cloud generation checks
 remain pending. Do not submit this draft until those checks pass and the
@@ -73,16 +81,16 @@ corresponding checkbox above is honestly checked.
 ## Upstream package path
 
 The initial Marketplace PR adds the source and packaged artifact under
-`AIPowerGrid/aipg/` in `langgenius/dify-plugins`. The plugin release version is
+`aipowergrid/aipg/` in `langgenius/dify-plugins`. The plugin release version is
 the top-level `version: 0.1.0` in `manifest.yaml`; `meta.version: 0.0.1` is the
 manifest metadata format used by current Dify plugins and must not be mistaken
 for the plugin release version.
 
 The exact validated package is staged on
-[`halfaipg/dify-plugins:feat/aipg-provider`](https://github.com/halfaipg/dify-plugins/tree/feat/aipg-provider/AIPowerGrid/aipg)
-at commit `efd925d`. The branch is two commits ahead of current upstream
-`main`; together they add and refresh only
-`AIPowerGrid/aipg/aipg-0.1.0.difypkg`. It has no open or closed Marketplace PR.
+[`halfaipg/dify-plugins:feat/aipg-provider`](https://github.com/halfaipg/dify-plugins/tree/feat/aipg-provider/aipowergrid/aipg)
+at commit `658bfbd`. The branch is three commits ahead of current upstream
+`main`; together they add, refresh, and correct the path of only
+`aipowergrid/aipg/aipg-0.1.0.difypkg`. It has no open or closed Marketplace PR.
 Staging is not submission or acceptance.
 
 ## Reviewer notes
@@ -91,6 +99,11 @@ This initial package intentionally exposes text models only. AI Power Grid
 image, video, and audio generation use modality-specific APIs and are not
 misrepresented as Dify LLMs. Static prices mirror named-model Core rates;
 `auto` remains unpriced in Dify because its selected backend can vary.
+The live Grid currently also advertises
+`grid/qwen38-flash-next-125b-nvfp4`; it is intentionally not copied into this
+static package until Core has a reviewed price peg and the Dify metadata is
+reviewed. The catalog check reports such live additions without inventing a
+price, while still failing on stale predefined IDs and context drift.
 
 Dify's static pre-check emits five expected review-warning categories:
 
