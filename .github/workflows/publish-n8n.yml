@@ -9,6 +9,10 @@ permissions:
   contents: read
   id-token: write
 
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -20,6 +24,7 @@ jobs:
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: 24
+          registry-url: https://registry.npmjs.org
           cache: npm
           cache-dependency-path: n8n-nodes-aipg/package-lock.json
       - name: Require tag to match package version
@@ -36,6 +41,7 @@ jobs:
       - run: npm run lint
       - name: Publish with npm provenance
         run: |
+          set -euo pipefail
           [ -n "$NPM_TOKEN" ] && npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
           npm run release
         env:

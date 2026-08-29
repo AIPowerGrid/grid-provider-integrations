@@ -150,9 +150,12 @@ an upstream integration only if that project accepts and merges it.
 - Sign the LiteLLM contributor license agreement for PR 38725. This is an
   upstream administrative gate, not a code or CI failure.
 - Publish the first-party packages only after their final tarballs are scanned
-  and their registry names are confirmed. Provenance-only GitHub release paths
-  are prepared for the AI SDK, ElizaOS, and n8n packages; no release tag has
-  been created.
+  and their registry names are confirmed. The names are available and the
+  inspected tarballs contain only their intended compiled payloads, docs,
+  licenses, icons, and metadata. The serialized GitHub release paths pin the
+  npm registry and produce provenance, but the unpublished packages still need
+  a one-time short-lived `NPM_TOKEN` bootstrap before their Trusted Publishers
+  can be attached and the token removed. No release tag has been created.
 - ElizaOS should update the inherited PDF and elliptic dependency paths in its
   host core; this plugin cannot safely override peer internals.
 

@@ -101,3 +101,12 @@ identity. Revoke the disposable key immediately after the run.
 
 This package-level gate does not replace Dify Community Edition and Cloud UI
 installation checks, npm provenance, or upstream review.
+
+The three npm package names are currently unpublished. Bootstrap each first
+publication with a short-lived, package-scoped `NPM_TOKEN` stored as the
+repository secret of the same name. After npm has created the package, attach
+the `AIPowerGrid/grid-provider-integrations` repository and the matching
+publish workflow as its Trusted Publisher, remove the token secret, and use
+OIDC-only releases thereafter. Never publish locally: the tag workflows are
+serialized, require the tag to match `package.json`, and produce npm
+provenance tied to the release commit.

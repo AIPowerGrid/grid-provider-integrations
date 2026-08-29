@@ -22,6 +22,7 @@ test("ElizaOS registry draft follows the package release contract", async () => 
   assert.equal(entry.kind, "plugin");
   assert.ok(packageJson.keywords.includes("elizaos"));
   assert.match(workflow, /plugin-aipg-v\$\(node -p/);
+  assert.match(workflow, /registry-url: https:\/\/registry\.npmjs\.org/);
 });
 
 test("AI SDK submission draft targets the package and live modality contract", async () => {
@@ -41,6 +42,7 @@ test("AI SDK submission draft targets the package and live modality contract", a
   assert.match(readme, /`LTX-2\.3` require one inline start-frame file/);
   assert.match(pullRequest, /55-aipg\.mdx/);
   assert.match(workflow, /ai-sdk-provider-v\$\(node -p/);
+  assert.match(workflow, /cancel-in-progress: false/);
 });
 
 test("LangChain cookbook preserves the compatibility and trust boundaries", async () => {
@@ -69,6 +71,8 @@ test("n8n Creator Portal draft stays aligned with the package and workflow", asy
   );
   assert.match(submission, /GitHub Actions with\s+provenance/);
   assert.match(workflow, /n8n-nodes-aipg-v\$\(node -p/);
+  assert.match(workflow, /registry-url: https:\/\/registry\.npmjs\.org/);
+  assert.match(workflow, /cancel-in-progress: false/);
 });
 
 test("Open WebUI draft requires upstream consent before a provider page", async () => {
