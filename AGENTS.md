@@ -24,7 +24,9 @@ authority for submission structure and acceptance.
 - `n8n-nodes-aipg/` - native n8n community node for Grid text, image, video,
   and audio generation.
 - `proof/` - dated evidence reports that separate tests, submissions, merges,
-  and open release gates.
+  open release gates, and publication-ready weekly proof copy. Every number in
+  a proof post must link to a public source and preserve unavailable metrics as
+  explicit gaps rather than estimates.
 - Each integration directory also owns source-ready upstream or marketplace
   submission notes. These drafts must preserve the distinction between local
   readiness, registry publication, upstream submission, and upstream
