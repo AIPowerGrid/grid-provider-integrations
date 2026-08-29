@@ -33,6 +33,12 @@ point-in-time capacity observation, not an uptime promise.
   GitHub jobs in [CI run 33231584103](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33231584103);
   the earlier `d789ce1` run is superseded because its byte-for-byte comparison
   treated version-dependent `uv` annotations as dependency changes.
+  Provenance workflow commit `1955ea6` then built the same package hash on
+  Linux and passed the pinned Marketplace toolkit in
+  [run 33231812829](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33231812829).
+  Artifact `9708709842` contains the package, checksum, and full validator
+  report and expires on 2026-09-12; it is build evidence, not a Marketplace
+  publication.
 - The LangChain cookbook passed eight local protocol tests through the real
   `ChatOpenAI` surface, including invocation, SSE streaming, tool-call decoding,
   public keyless model discovery, lint, format, compile, and a zero-vulnerability
@@ -91,6 +97,17 @@ point-in-time capacity observation, not an uptime promise.
 
 An open pull request is not adoption, endorsement, or a partnership. It becomes
 an upstream integration only if that project accepts and merges it.
+
+## Staged, not submitted
+
+- Dify Marketplace package: the validated artifact is staged at
+  [`halfaipg/dify-plugins:feat/aipg-provider`](https://github.com/halfaipg/dify-plugins/tree/feat/aipg-provider/AIPowerGrid/aipg)
+  on commit `b39dafc`. The branch is exactly one commit ahead of current
+  upstream `main`, adds only `AIPowerGrid/aipg/aipg-0.1.0.difypkg`, and the
+  remotely downloaded package matches SHA-256
+  `18c85afae228de891d03e53944a2f49b70178ffb42a4b846e3fc0fc7edf6c674`.
+  No Marketplace PR exists. Credentialed Dify Community Edition and Cloud
+  checks plus the Plugin Developer Agreement still gate submission.
 
 ## Release gates still open
 

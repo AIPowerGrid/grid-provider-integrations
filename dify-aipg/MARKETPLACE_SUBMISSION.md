@@ -60,6 +60,12 @@ zero check-execution failures, and no known vulnerabilities across the 46
 pinned lockfile dependencies. It emitted five review-warning categories,
 documented below.
 
+The provenance-only
+[GitHub package run](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33231812829)
+at source commit `1955ea6` independently reproduced the same package hash on
+Linux and uploaded artifact `9708709842` with its checksum and full validation
+report. The artifact expires after 14 days and is not a Marketplace release.
+
 Final credentialed Dify Community Edition and Dify Cloud generation checks
 remain pending. Do not submit this draft until those checks pass and the
 corresponding checkbox above is honestly checked.
@@ -71,6 +77,12 @@ The initial Marketplace PR adds the source and packaged artifact under
 the top-level `version: 0.1.0` in `manifest.yaml`; `meta.version: 0.0.1` is the
 manifest metadata format used by current Dify plugins and must not be mistaken
 for the plugin release version.
+
+The exact validated package is staged on
+[`halfaipg/dify-plugins:feat/aipg-provider`](https://github.com/halfaipg/dify-plugins/tree/feat/aipg-provider/AIPowerGrid/aipg)
+at commit `b39dafc`. The branch is one commit ahead of current upstream `main`,
+adds only `AIPowerGrid/aipg/aipg-0.1.0.difypkg`, and has no open or closed
+Marketplace PR. Staging is not submission or acceptance.
 
 ## Reviewer notes
 
