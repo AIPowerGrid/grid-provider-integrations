@@ -137,15 +137,18 @@ ambiguous and fails closed.
 This package-level gate does not replace Dify Community Edition and Cloud UI
 installation checks, npm provenance, or upstream review.
 
-The three npm package names are currently unpublished. Bootstrap each first
-publication with a short-lived, package-scoped `NPM_TOKEN` stored as the
-repository secret of the same name. After npm has created the package, attach
-the `AIPowerGrid/grid-provider-integrations` repository and the matching
-publish workflow as its Trusted Publisher, remove the token secret, and use
-OIDC-only releases thereafter. Never publish locally: the tag workflows are
-serialized, require the tag to match `package.json`, reject release commits
-that are not already on `main`, and produce npm provenance tied to the release
-commit.
+The three provider packages are public on npm:
+
+- `@aipowergrid/ai-sdk-provider@0.1.0`
+- `@aipowergrid/plugin-aipg@0.1.0`
+- `@aipowergrid/n8n-nodes-aipg@0.1.1`
+
+Each package trusts only its matching GitHub Actions workflow through npm OIDC.
+The one-time bootstrap token and both repository `NPM_TOKEN` secrets were
+removed after first publication. Never publish locally or restore a long-lived
+registry token: the tag workflows are serialized, require the tag to match
+`package.json`, reject release commits that are not already on `main`, and
+produce npm provenance tied to the release commit.
 
 The publication workflows deliberately disable `setup-node` package-manager
 caching. Release jobs carry OIDC permission, and restoring a writable package

@@ -6,8 +6,8 @@ The active elizaOS community registry now lives inside
 
 ## Upstream change
 
-After `@aipowergrid/plugin-aipg@0.1.0` is published and installed from npm in
-a clean agent project:
+`@aipowergrid/plugin-aipg@0.1.0` is published with npm provenance and passed
+the clean packed-package import plus bounded production gate. To submit it:
 
 1. Run `elizaos plugins submit . --dry-run` from this package.
 2. Compare its output with `upstream-registry-entry.json`.
@@ -37,5 +37,5 @@ bun run --cwd packages/registry typecheck
 - No API key, prompt, output, account balance, media URL, or worker identity is
   retained in the evidence record.
 
-Do not open the registry PR before the npm package exists. The registry
-`version` field describes the published version it was reviewed against.
+The registry `version` field describes the published version it was reviewed
+against. Registry acceptance remains separate from npm publication.

@@ -89,13 +89,9 @@ output, or account balance.
 
 ## Release
 
-Releases are published only by GitHub Actions with npm provenance. After the
-live gate passes, update the package version and push a matching tag such as
-`n8n-nodes-aipg-v0.1.1`. The root `publish-n8n.yml` workflow rejects any tag
-that does not exactly match `package.json`, reruns tests and lint, and invokes
-n8n's supported release command.
-
-Configure npm Trusted Publishing for the `AIPowerGrid/grid-provider-integrations`
-repository and the `publish-n8n.yml` workflow. `NPM_TOKEN` is only a fallback
-for the initial package publication if npm cannot attach a trusted publisher to
-an unpublished package.
+`@aipowergrid/n8n-nodes-aipg@0.1.1` is public with npm provenance from tag
+`n8n-nodes-aipg-v0.1.1`. Future releases publish only through the root
+`publish-n8n.yml` workflow and its npm OIDC Trusted Publisher. The workflow
+rejects a tag that does not exactly match `package.json`, reruns tests and lint,
+and invokes n8n's supported release command. The one-time bootstrap token is
+revoked; do not restore a registry token.
