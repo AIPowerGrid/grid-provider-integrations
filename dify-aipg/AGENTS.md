@@ -11,6 +11,8 @@ Dify's LLM abstraction represents Grid image, video, or audio jobs.
 - `provider/` - provider credentials, read-only validation, and Dify schema.
 - `models/llm/` - OpenAI-compatible invocation adapter and predefined models.
 - `_assets/` - official AIPG provider icon.
+- `requirements.txt` - lock-derived runtime export consumed by the official
+  Dify packager. Regenerate it from `uv.lock`; do not edit pins by hand.
 - `tests/` - credential-boundary, schema, and adapter tests.
 
 ## Local Contracts
@@ -37,8 +39,16 @@ Dify's LLM abstraction represents Grid image, video, or audio jobs.
 - `UV_CACHE_DIR=/tmp/aipg-dify-uv uv run ruff check .`
 - `UV_CACHE_DIR=/tmp/aipg-dify-uv uv run python scripts/check_catalog.py`
 
-Packaging requires the current Dify daemon CLI and `uv` 0.12 or newer. The
-CLI's dependency exporter is incompatible with the old workspace `uv` 0.5.
+Packaging requires the current Dify daemon CLI. The checked-in
+`requirements.txt` is intentional: daemon CLI 0.6.10 otherwise invokes an
+export syntax that is incompatible with the workspace `uv` 0.5. Regenerate it
+from the frozen lock before packaging:
+
+```bash
+UV_CACHE_DIR=/tmp/aipg-dify-uv uv export --frozen --offline \
+  --format requirements-txt --no-group dev --no-emit-project --no-hashes \
+  --no-header --output-file requirements.txt
+```
 
 The catalog check is public and read-only. A real Dify generation requires a
 separately approved scoped key and is not part of the default suite.

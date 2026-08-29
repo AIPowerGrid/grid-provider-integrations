@@ -51,9 +51,18 @@ keys remain in Dify's secret provider credential store.
 
 ## Local validation
 
-Pending final credentialed Dify Community Edition and Dify Cloud checks. Do not
-submit this draft until those checks pass and this sentence is replaced with
-the exact commands, versions, and structural results.
+Dify daemon CLI 0.6.10 produced the 20-file runtime package from the public
+source. Its SHA-256 is
+`18c85afae228de891d03e53944a2f49b70178ffb42a4b846e3fc0fc7edf6c674`.
+The Marketplace toolkit at commit
+`57a21d1304b1108df3e6b90a15a4f5dd9f0915f9` reported zero blocking failures,
+zero check-execution failures, and no known vulnerabilities across the 46
+pinned lockfile dependencies. It emitted five review-warning categories,
+documented below.
+
+Final credentialed Dify Community Edition and Dify Cloud generation checks
+remain pending. Do not submit this draft until those checks pass and the
+corresponding checkbox above is honestly checked.
 
 ## Upstream package path
 
@@ -70,7 +79,7 @@ image, video, and audio generation use modality-specific APIs and are not
 misrepresented as Dify LLMs. Static prices mirror named-model Core rates;
 `auto` remains unpriced in Dify because its selected backend can vary.
 
-Dify's static pre-check emits three expected review warnings:
+Dify's static pre-check emits five expected review-warning categories:
 
 - `tiktoken` in the generated `requirements.txt` resembles a secret-field name
   to the generic scanner; it is a pinned public Python dependency.
@@ -81,3 +90,9 @@ Dify's static pre-check emits three expected review warnings:
   credential dictionary internally. The plugin never returns or logs that
   dictionary; its `_invoke`, validation, and token-count methods return only
   the upstream adapter result.
+- The access-domain scan finds the fixed `api.aipowergrid.io` domain and one
+  runtime-built call address. The only runtime base URL is the same fixed
+  constant; users cannot configure another host.
+- The dependency scanner reports that it examined 46 pinned `uv.lock`
+  dependencies and found no known vulnerabilities. This is informational, not
+  a vulnerability finding.

@@ -21,8 +21,14 @@ point-in-time capacity observation, not an uptime promise.
 - The Dify provider passed nine tests, lint, format, and a public production
   catalog check covering four client-facing text models. Dify daemon 0.6.10
   produced a 20-file runtime-only `.difypkg`; the current Marketplace toolkit
-  passed its content, manifest, README, dependency, binary, OSV, domain, and
-  PR-template checks. A stale Qwen catalog entry was removed before release.
+  at commit `57a21d1304b1108df3e6b90a15a4f5dd9f0915f9` passed its content,
+  manifest, README, dependency, binary, OSV, domain, and PR-template checks
+  with zero blocking or execution failures. The package SHA-256 is
+  `18c85afae228de891d03e53944a2f49b70178ffb42a4b846e3fc0fc7edf6c674`;
+  an independent repeat build produced the same bytes.
+  A stale Qwen catalog entry was removed before release. Credentialed Dify
+  Community Edition and Cloud generation tests remain pending, so the package
+  has not been submitted to the Marketplace.
 - The LangChain cookbook passed eight local protocol tests through the real
   `ChatOpenAI` surface, including invocation, SSE streaming, tool-call decoding,
   public keyless model discovery, lint, format, compile, and a zero-vulnerability

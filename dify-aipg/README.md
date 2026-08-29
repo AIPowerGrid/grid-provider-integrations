@@ -46,4 +46,14 @@ UV_CACHE_DIR=/tmp/aipg-dify-uv uv run python scripts/check_catalog.py
 
 The default test suite uses fakes and never spends credits. The catalog check
 reads the public client-facing text-model list and does not require a key.
-Packaging with Dify daemon CLI 0.6.10 requires `uv` 0.12 or newer.
+
+The checked-in `requirements.txt` is the frozen runtime-only export from
+`uv.lock`. It lets Dify daemon CLI 0.6.10 package the plugin consistently even
+when the local `uv` version does not support the CLI's dependency-export
+syntax. Regenerate it before packaging whenever `uv.lock` changes:
+
+```bash
+UV_CACHE_DIR=/tmp/aipg-dify-uv uv export --frozen --offline \
+  --format requirements-txt --no-group dev --no-emit-project --no-hashes \
+  --no-header --output-file requirements.txt
+```

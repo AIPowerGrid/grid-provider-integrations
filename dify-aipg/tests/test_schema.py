@@ -1,5 +1,7 @@
 from decimal import Decimal
+import os
 from pathlib import Path
+import subprocess
 
 import yaml
 
@@ -62,3 +64,32 @@ def test_only_reviewed_named_models_have_nonzero_static_prices():
     assert prices["gpt-oss-120b"] == (Decimal("0.075"), Decimal("0.30"))
     assert prices["deepseek-v4-flash-nvfp4"] == (Decimal("0.07"), Decimal("0.14"))
     assert prices["Smollm-135m"] == (Decimal("0.005"), Decimal("0.01"))
+
+
+def test_packager_requirements_match_frozen_runtime_lock():
+    env = os.environ.copy()
+    env.setdefault("UV_CACHE_DIR", "/tmp/aipg-dify-uv")
+    exported = subprocess.run(
+        [
+            "uv",
+            "export",
+            "--frozen",
+            "--offline",
+            "--format",
+            "requirements-txt",
+            "--no-group",
+            "dev",
+            "--no-emit-project",
+            "--no-hashes",
+            "--no-header",
+        ],
+        cwd=ROOT,
+        env=env,
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+
+    assert (ROOT / "requirements.txt").read_text(encoding="utf-8") == exported
+    assert "pytest==" not in exported
+    assert "ruff==" not in exported
