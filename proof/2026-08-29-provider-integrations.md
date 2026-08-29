@@ -18,12 +18,14 @@ point-in-time capacity observation, not an uptime promise.
   was removed before release.
 - The LangChain cookbook passed eight local protocol tests, lint, format,
   compile, and a zero-vulnerability installed dependency audit.
-- The n8n node passed strict community-node lint, seven tests, build,
-  prerelease validation, pack inspection, and a zero-vulnerability production
-  dependency audit. n8n 2.36.8 loaded the node and registered all four
-  operations in a local editor smoke test.
+- The n8n node passed strict community-node lint, seven tests, build, pack
+  inspection, and a zero-vulnerability production dependency audit. n8n
+  2.36.8 loaded the node and registered all four operations in a local editor
+  smoke test.
 - Open WebUI v0.11.1 discovered current Grid text models through its standard
   OpenAI-compatible connection path. The public guide checker passed.
+- The public integrations repository's GitHub CI passed the Node, Bun, and
+  Python jobs, including the unauthenticated production conformance run.
 - Grid Core merged normalization for current clients that send
   `max_completion_tokens`, preventing the field from bypassing the metered
   generation cap: [AIPowerGrid/grid-core#63](https://github.com/AIPowerGrid/grid-core/pull/63).
@@ -31,9 +33,13 @@ point-in-time capacity observation, not an uptime promise.
 ## Submitted upstream
 
 - LiteLLM provider: [BerriAI/litellm#38725](https://github.com/BerriAI/litellm/pull/38725).
-  All completed CI checks were green at the time of this report; maintainer
-  review and the CLA status remained pending.
+  All CI checks, including lint, security scans, unit shards, and benchmarks,
+  were green at the time of this report; maintainer review remained required.
 - LiteLLM documentation: [BerriAI/litellm-docs#1072](https://github.com/BerriAI/litellm-docs/pull/1072).
+- Open WebUI fork documentation correction:
+  [AIPowerGrid/grid-openweb-ui#1](https://github.com/AIPowerGrid/grid-openweb-ui/pull/1).
+- Marketing capability-claim correction:
+  [halfaipg/aipg-website#16](https://github.com/halfaipg/aipg-website/pull/16).
 
 An open pull request is not adoption, endorsement, or a partnership. It becomes
 an upstream integration only if that project accepts and merges it.
