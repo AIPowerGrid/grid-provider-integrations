@@ -152,7 +152,8 @@ point-in-time capacity observation, not an uptime promise.
   CI shard. The replacement run passed the provider shard, lint, security,
   schemas, documentation, global unit matrix, and Codecov's patch gate at
   `100%` (16/16 executable diff lines). The long CodSpeed benchmark also
-  passed. Maintainer review and the contributor license agreement remain open.
+  passed. The contributor license agreement was accepted on August 29, 2026;
+  ordinary maintainer review is the only remaining merge gate.
 - LiteLLM documentation: [BerriAI/litellm-docs#1072](https://github.com/BerriAI/litellm-docs/pull/1072).
   Documentation head `2d3f36a` covers the same text and text-to-image scope,
   pricing, credential boundary, and community-worker disclosure. The full
@@ -186,8 +187,6 @@ an upstream integration only if that project accepts and merges it.
   Dify Community Edition and Cloud installation checks before marketplace or
   package-registry publication. These checks spend credits and are deliberately
   absent from default CI.
-- Sign the LiteLLM contributor license agreement for PR 38725. This is an
-  upstream administrative gate, not a code or CI failure.
 - Publish the first-party packages only after their final tarballs are scanned
   and their registry names are confirmed. The names are available and the
   inspected tarballs contain only their intended compiled payloads, docs,
