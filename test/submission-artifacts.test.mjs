@@ -67,9 +67,16 @@ test("n8n Creator Portal draft stays aligned with the package and workflow", asy
 });
 
 test("Open WebUI draft requires upstream consent before a provider page", async () => {
-  const pullRequest = await read("open-webui-aipg/UPSTREAM_PR.md");
+  const [pullRequest, query] = await Promise.all([
+    read("open-webui-aipg/UPSTREAM_PR.md"),
+    read("open-webui-aipg/MAINTAINER_QUERY.md"),
+  ]);
 
   assert.match(pullRequest, /maintainer confirms/);
   assert.match(pullRequest, /anti-promotion contribution standard/);
   assert.match(pullRequest, /Do not open a\s+drive-by documentation PR/);
+  assert.match(query, /standard OpenAI connection/);
+  assert.match(query, /remote\s+community-operated workers/);
+  assert.match(query, /should it remain in our\s+own documentation/);
+  assert.doesNotMatch(query, /partner(ship)?|endorse(ment)?/i);
 });

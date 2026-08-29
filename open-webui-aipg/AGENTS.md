@@ -36,6 +36,9 @@ than provider-specific modules.
   Obtain maintainer confirmation through an issue or discussion before opening
   an AIPG-specific tutorial PR. Keep the tested guide first-party if upstream
   prefers only generic compatibility documentation.
+- `MAINTAINER_QUERY.md` is the exact public scope question. Keep it factual,
+  avoid traffic-seeking language, and update it if the posted discussion is
+  edited so the repository remains the reviewable source.
 
 ## Verification
 
