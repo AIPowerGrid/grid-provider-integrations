@@ -20,6 +20,9 @@ keeps Grid credentials in n8n's encrypted credential store.
   surfaced to n8n so workflow error branches can handle them.
 - Credential validation must call an authenticated, read-only endpoint. Public
   model discovery cannot prove that a key is valid.
+- `CREATOR_PORTAL_SUBMISSION.md` owns the current provenance and verified-node
+  intake checklist. A prepared checklist is not npm publication or Creator
+  Portal acceptance.
 
 ## Verification
 

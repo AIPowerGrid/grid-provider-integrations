@@ -55,6 +55,14 @@ Pending final credentialed Dify Community Edition and Dify Cloud checks. Do not
 submit this draft until those checks pass and this sentence is replaced with
 the exact commands, versions, and structural results.
 
+## Upstream package path
+
+The initial Marketplace PR adds the source and packaged artifact under
+`AIPowerGrid/aipg/` in `langgenius/dify-plugins`. The plugin release version is
+the top-level `version: 0.1.0` in `manifest.yaml`; `meta.version: 0.0.1` is the
+manifest metadata format used by current Dify plugins and must not be mistaken
+for the plugin release version.
+
 ## Reviewer notes
 
 This initial package intentionally exposes text models only. AI Power Grid

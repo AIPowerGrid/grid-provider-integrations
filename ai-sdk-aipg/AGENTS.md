@@ -33,6 +33,9 @@ contracts; music is an explicit Grid helper because it is not speech synthesis.
   accepts inline base64/data URIs, not arbitrary fetch URLs.
 - Keep upstream provider docs factual: remote community workers can inspect
   plaintext inputs unless a separately documented confidential tier is used.
+- The intended upstream contribution is docs-only: one community-provider MDX
+  page and one provider-list entry. Publish and production-test the external
+  package before opening that PR.
 
 ## Verification
 

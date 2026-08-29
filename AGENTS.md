@@ -11,7 +11,9 @@ authority for submission structure and acceptance.
 ## Ownership
 
 - `src/` - dependency-free AIPG API conformance runner and CLI.
-- `test/` - deterministic mock-server coverage for the conformance contract.
+- `test/` - deterministic mock-server coverage for the conformance contract
+  plus release-contract checks keeping packages, workflows, and submission
+  drafts aligned.
 - `dify-aipg/` - native Dify model-provider plugin for Grid text inference.
 - `elizaos-aipg/` - ElizaOS model/action plugin for Grid text, image, video,
   and music generation.
@@ -23,6 +25,10 @@ authority for submission structure and acceptance.
   and audio generation.
 - `proof/` - dated evidence reports that separate tests, submissions, merges,
   and open release gates.
+- Each integration directory also owns source-ready upstream or marketplace
+  submission notes. These drafts must preserve the distinction between local
+  readiness, registry publication, upstream submission, and upstream
+  acceptance.
 - Future integration folders must have their own `AGENTS.md`, package metadata,
   upstream source reference, tests, and submission notes.
 

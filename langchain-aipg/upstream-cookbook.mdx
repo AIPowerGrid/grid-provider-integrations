@@ -1,0 +1,137 @@
+---
+title: "AI Power Grid integration"
+description: "Use AI Power Grid text models through LangChain Python's OpenAI-compatible chat client."
+integration:
+  name: AI Power Grid
+  pypi: langchain-openai
+  stream: true
+  tool_calling: true
+  structured_output: false
+  multimodal: false
+---
+
+[AI Power Grid](https://aipowergrid.io/) exposes an OpenAI-compatible text
+endpoint backed by remote community-operated workers. LangChain uses the
+existing `ChatOpenAI` integration with a custom `base_url`; no additional
+provider package is required.
+
+Model availability follows connected workers. Discover the current catalog
+instead of hard-coding a backend for a long-lived application.
+
+## Setup
+
+Install the maintained OpenAI integration:
+
+```bash
+pip install -qU langchain-openai
+```
+
+Create a scoped key in the
+[Grid Console](https://console.aipowergrid.io/dashboard/api-key). Generation
+requires `inference.submit`; add `account.read` when the application reads
+credit summaries or quotes.
+
+```python
+import getpass
+import os
+
+if not os.environ.get("AIPG_API_KEY"):
+    os.environ["AIPG_API_KEY"] = getpass.getpass("AI Power Grid API key: ")
+```
+
+Keep the key server-side. Do not place it in browser code, prompts, notebooks
+that will be shared, or public environment variables.
+
+## Model discovery
+
+The production model catalog is public and uses the OpenAI list shape:
+
+```python
+import json
+from urllib.request import Request, urlopen
+
+request = Request(
+    "https://api.aipowergrid.io/v1/models",
+    headers={"Accept": "application/json"},
+)
+with urlopen(request, timeout=20) as response:
+    catalog = json.load(response)
+
+text_models = [
+    row["id"]
+    for row in catalog["data"]
+    if "text" in row.get("input_modalities", [])
+]
+```
+
+Catalog presence is current capacity evidence, not an uptime guarantee.
+
+## Instantiation
+
+Set `use_responses_api=False` explicitly. This prevents LangChain from
+inferring a different endpoint from a model name.
+
+```python
+from langchain_openai import ChatOpenAI
+
+model = ChatOpenAI(
+    model="gpt-oss-120b",
+    api_key=os.environ["AIPG_API_KEY"],
+    base_url="https://api.aipowergrid.io/v1",
+    use_responses_api=False,
+    max_tokens=256,
+    timeout=120,
+    max_retries=2,
+)
+```
+
+## Invocation
+
+```python
+response = model.invoke("Explain distributed inference in two sentences.")
+print(response.text)
+```
+
+## Streaming
+
+```python
+for chunk in model.stream("Give three names for an AI image application."):
+    print(chunk.text, end="", flush=True)
+```
+
+Treat a truncated stream or worker failure as an error. Do not present partial
+content as a completed response.
+
+## Tool calling
+
+Tool support depends on the selected backend. Use a currently tested,
+tool-capable model rather than assuming every catalog entry supports tools.
+
+```python
+from langchain_core.tools import tool
+
+@tool
+def multiply(left: int, right: int) -> int:
+    """Multiply two integers."""
+    return left * right
+
+tool_model = model.bind_tools([multiply], tool_choice=multiply.name)
+result = tool_model.invoke("Use the tool to multiply 17 by 23.")
+```
+
+## Credits and errors
+
+Grid returns ordinary HTTP failures through `ChatOpenAI`. Applications should
+handle invalid credentials, insufficient credits, unavailable models, rate
+limits, timeouts, and worker failures. Use the Grid quote and credit endpoints
+as the billing authority rather than copying a price into application code.
+
+## Trust boundary
+
+Grid routes requests to remote community-operated workers. A worker may be
+able to inspect plaintext prompts and outputs. Do not send secrets, personal
+data, regulated content, or confidential source code unless a separately
+verified confidential-compute deployment meets the application's needs.
+
+This cookbook is maintained by AI Power Grid and does not imply a partnership
+with or endorsement by LangChain.

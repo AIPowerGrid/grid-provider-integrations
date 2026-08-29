@@ -13,6 +13,9 @@ not a new LangChain provider package.
 - `examples/` - small chat, streaming, and tool-call examples.
 - `tests/` - local HTTP contract tests with no paid or external inference.
 - `pyproject.toml` and `uv.lock` - reproducible Python environment.
+- `upstream-cookbook.mdx` and `UPSTREAM_PR.md` - source-ready LangChain docs
+  contribution and its live-evidence gate. They are not evidence of upstream
+  submission or acceptance.
 
 ## Local Contracts
 

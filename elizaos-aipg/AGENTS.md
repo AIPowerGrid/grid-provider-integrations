@@ -17,6 +17,9 @@ ElizaOS plugin API and uses only documented Grid `/v1` contracts.
 - `tests/` - mocked wire-contract tests, a real `AgentRuntime` registration
   lane, and an explicit credentialed production lane. Default tests must never
   use a real API key or spend credits.
+- `upstream-registry-entry.json` and `REGISTRY_SUBMISSION.md` - source-ready
+  draft for the active in-monorepo elizaOS community registry. The entry is
+  not proof of npm publication or registry acceptance.
 
 ## Local Contracts
 
@@ -37,6 +40,9 @@ ElizaOS plugin API and uses only documented Grid `/v1` contracts.
   community-operated workers selected by Grid Core.
 - Do not imply an ElizaOS partnership or upstream acceptance until the package
   is actually accepted in the ElizaOS registry.
+- The active registry target is `elizaOS/eliza` `develop`, under
+  `packages/registry/entries/third-party/`. Do not submit to the archived
+  `elizaos-plugins/registry` repository.
 
 ## Verification
 

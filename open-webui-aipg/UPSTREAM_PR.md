@@ -6,16 +6,27 @@ documents personal versus shared credentials, model discovery, streaming and
 error behavior, and the remote community-worker trust boundary. It adds no
 provider-specific code, logo, dependency, or endorsement claim.
 
-# Related issue or discussion
+# Policy gate
 
-None. The contribution documents the standard connection path verified against
-Open WebUI 0.11.1 and the public AI Power Grid API. Do not submit this draft
-until the credentialed runtime test is complete.
+Open WebUI's current PR template rejects contributions whose primary purpose is
+to list or promote a provider. An AIPG-specific tutorial can reasonably be
+read that way even when the content is technically accurate. Do not open a
+drive-by documentation PR.
+
+After the credentialed runtime test passes, open a narrowly scoped upstream
+issue or discussion first. Explain the concrete operator problem this guide
+solves: personal versus shared credentials, streaming failures, model
+discovery, and the privacy boundary of a remote community-worker endpoint.
+Only open the tutorial PR if an Open WebUI maintainer confirms that a
+provider-specific page is welcome. If they prefer the generic compatibility
+guide, keep the AIPG page first-party and contribute only an accepted generic
+documentation improvement.
 
 # Checklist
 
 - [x] I have reviewed the relevant documentation and matched the existing style.
-- [x] This PR meets Open WebUI's contribution standards: it is accurate, relevant to users, narrowly scoped, maintainable, and not promotional content, advertising, lead generation, SEO placement, or a request to list a product, service, provider, integration, gateway, tool, or company primarily for visibility.
+- [ ] A maintainer has confirmed that this provider-specific tutorial is in
+      scope under Open WebUI's anti-promotion contribution standard.
 - [x] I understand that PRs that do not meet these standards may be closed without review and will not be merged. Repeated, low-quality, off-topic, promotional, or intentionally misleading submissions may result in the contributor being blocked from future participation in Open WebUI repositories.
 
 # Notes for reviewers

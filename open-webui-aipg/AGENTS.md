@@ -32,6 +32,10 @@ than provider-specific modules.
   workers. Do not claim private/confidential inference.
 - Upstream instructions and UI labels must be checked against the current
   `open-webui/docs` and `open-webui/open-webui` default branches before a PR.
+- The current upstream PR template rejects provider-listing contributions.
+  Obtain maintainer confirmation through an issue or discussion before opening
+  an AIPG-specific tutorial PR. Keep the tested guide first-party if upstream
+  prefers only generic compatibility documentation.
 
 ## Verification
 
