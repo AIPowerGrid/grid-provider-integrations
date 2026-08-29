@@ -7,13 +7,14 @@ describe.runIf(process.env.AIPG_LIVE_E2E === "1")("AIPG AI SDK production runtim
     const apiKey = process.env.AIPG_API_KEY?.trim();
     if (!apiKey) throw new Error("AIPG_API_KEY is required for the explicit live E2E lane");
     const provider = createAipg({ apiKey, timeoutMs: 90_000 });
+    const model = process.env.AIPG_E2E_SMALL_MODEL || "Smollm-135m";
 
     const [models, credits] = await Promise.all([provider.listTextModels(), provider.credits()]);
-    expect(models.some((model) => model.id === "auto")).toBe(true);
+    expect(models.some(({ id }) => id === model)).toBe(true);
     expect(credits).toBeTypeOf("object");
 
     const result = streamText({
-      model: provider("auto"),
+      model: provider(model),
       prompt: "Reply with one short word.",
       maxOutputTokens: 8,
     });

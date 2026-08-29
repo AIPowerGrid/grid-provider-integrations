@@ -7,9 +7,10 @@ describe.runIf(process.env.AIPG_LIVE_E2E === "1")("AIPG production runtime", () 
   it("discovers models and completes one bounded stream through AgentRuntime", async () => {
     const apiKey = process.env.AIPG_API_KEY?.trim();
     if (!apiKey) throw new Error("AIPG_API_KEY is required for the explicit live E2E lane");
+    const model = process.env.AIPG_E2E_SMALL_MODEL || "Smollm-135m";
     const runtime = await createRuntime({
       plugins: [aipgPlugin],
-      settings: { AIPG_API_KEY: apiKey },
+      settings: { AIPG_API_KEY: apiKey, AIPG_TEXT_LARGE_MODEL: model },
     });
 
     try {

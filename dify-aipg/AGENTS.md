@@ -40,6 +40,9 @@ Dify's LLM abstraction represents Grid image, video, or audio jobs.
 - `UV_CACHE_DIR=/tmp/aipg-dify-uv uv run pytest`
 - `UV_CACHE_DIR=/tmp/aipg-dify-uv uv run ruff check .`
 - `UV_CACHE_DIR=/tmp/aipg-dify-uv uv run python scripts/check_catalog.py`
+- `AIPG_LIVE_E2E=1 AIPG_API_KEY="..." UV_CACHE_DIR=/tmp/aipg-dify-uv uv run pytest -q tests/test_live_e2e.py`
+  - supervised credential validation plus one bounded Dify-adapter stream with
+    a disposable scoped key; never run in default CI.
 
 Packaging requires the current Dify daemon CLI. The checked-in
 `requirements.txt` is intentional: daemon CLI 0.6.10 otherwise invokes an

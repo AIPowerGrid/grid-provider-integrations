@@ -36,9 +36,12 @@ function liveContext() {
 	};
 }
 
-function firstModel(options, label, preferred) {
-	assert.ok(options.length > 0, `no compatible ${label} model is currently online`);
-	return options.find((option) => option.value === preferred)?.value ?? options[0].value;
+function requiredModel(options, label, preferred) {
+	assert.ok(
+		options.some((option) => option.value === preferred),
+		`bounded ${label} canary ${preferred} is not currently online`,
+	);
+	return preferred;
 }
 
 function assertResult(payload, label) {
@@ -52,14 +55,18 @@ test(
 		const context = liveContext();
 		await gridApiRequest.call(context, 'GET', '/account/credits');
 
-		const textModel = firstModel(await getTextModels.call(context), 'text', 'Smollm-135m');
-		const imageModel = firstModel(await getImageModels.call(context), 'image', 'z-image-turbo');
-		const videoModel = firstModel(
+		const textModel = requiredModel(
+			await getTextModels.call(context),
+			'text',
+			process.env.AIPG_E2E_SMALL_MODEL || 'Smollm-135m',
+		);
+		const imageModel = requiredModel(await getImageModels.call(context), 'image', 'z-image-turbo');
+		const videoModel = requiredModel(
 			await getVideoModels.call(context),
 			'video',
 			'LTX Director 2.0',
 		);
-		const audioModel = firstModel(
+		const audioModel = requiredModel(
 			await getAudioModels.call(context),
 			'audio',
 			'ace-step-v1.5-xl-turbo',

@@ -16,12 +16,13 @@ pytestmark = pytest.mark.skipif(
 
 
 def _model():
-    return create_chat_model("gpt-oss-120b", max_tokens=24, timeout=90)
+    model = os.environ.get("AIPG_E2E_TOOL_MODEL", "gpt-oss-120b")
+    return create_chat_model(model, max_tokens=24, timeout=90)
 
 
 def test_live_langchain_invoke_stream_and_tool_call() -> None:
     """Prove the three advertised LangChain paths without exposing model content."""
-    assert "gpt-oss-120b" in list_text_models()
+    assert os.environ.get("AIPG_E2E_TOOL_MODEL", "gpt-oss-120b") in list_text_models()
 
     answer = _model().invoke("Reply with the single word ready.")
     assert answer.text.strip()

@@ -46,6 +46,12 @@ authority for submission structure and acceptance.
 - A real generation requires both a key and the explicit `--live-text` flag.
   Keep its prompt and output bound small and never imply one run proves uptime,
   quality, billing, privacy, or every modality.
+- The cross-package production gate requires `AIPG_LIVE_E2E=1` and reads
+  `AIPG_API_KEY` only from the environment. It quotes every bounded workload
+  before dispatch, refuses unpriced or non-charging work, enforces a hard
+  three-cent ceiling, and verifies spend moved within that ceiling without
+  printing balances or generated content. Do not weaken the ceiling or add a
+  workload without updating its quote and release-contract test.
 - Record only structural evidence and timing. Do not persist prompts, generated
   content, account balances, worker identities, or response headers.
 - Integrations must use documented `/v1` interfaces and scoped keys. Do not
@@ -62,6 +68,9 @@ authority for submission structure and acceptance.
 - `npm run conformance:public`
 - `npm run check`
 - `npm run verify`
+- `AIPG_LIVE_E2E=1 AIPG_API_KEY="..." npm run release:e2e:live` - supervised
+  five-integration production gate using a disposable `account.read` +
+  `inference.submit` key; never run in default CI.
 
 ## Child DOX Index
 

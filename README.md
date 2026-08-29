@@ -81,3 +81,23 @@ npm run verify
 
 The verification command is non-credentialed and does not submit generation
 jobs. Credentialed, credit-spending checks remain explicit release gates.
+
+## Bounded production release gate
+
+Before publishing a provider package, create a disposable key carrying only
+`account.read` and `inference.submit`, enable charging for that account, and
+run the five-integration gate:
+
+```bash
+AIPG_LIVE_E2E=1 AIPG_API_KEY='...' npm run release:e2e:live
+```
+
+The gate quotes ten fixed requests before dispatching, requires sufficient
+credit and active charging, and refuses to exceed a hard `$0.03` ceiling. It
+then exercises Dify, AI SDK, ElizaOS, LangChain, and n8n in sequence and checks
+that spend changed within the preflight bound. It does not print or persist the
+key, account balances, prompts, generated content, response headers, or worker
+identity. Revoke the disposable key immediately after the run.
+
+This package-level gate does not replace Dify Community Edition and Cloud UI
+installation checks, npm provenance, or upstream review.

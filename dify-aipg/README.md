@@ -46,6 +46,17 @@ UV_CACHE_DIR=/tmp/aipg-dify-uv uv run python scripts/check_catalog.py
 
 The default test suite uses fakes and never spends credits. The catalog check
 reads the public client-facing text-model list and does not require a key.
+The opt-in package release check validates the credential and completes one
+bounded stream through Dify's maintained adapter:
+
+```bash
+AIPG_LIVE_E2E=1 AIPG_API_KEY='...' \
+  UV_CACHE_DIR=/tmp/aipg-dify-uv uv run pytest -q tests/test_live_e2e.py
+```
+
+Use a disposable key carrying only `account.read` and `inference.submit`, then
+revoke it. This adapter-level proof does not replace installation tests in
+Dify Community Edition and Dify Cloud.
 
 The checked-in `requirements.txt` is the frozen runtime-only export from
 `uv.lock`. It lets Dify daemon CLI 0.6.10 package the plugin consistently even

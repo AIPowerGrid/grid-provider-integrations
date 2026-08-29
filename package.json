@@ -7,8 +7,9 @@
     "node": ">=20"
   },
   "scripts": {
-    "check": "node --check src/aipg-conformance.mjs && node --check src/cli.mjs",
+    "check": "node --check src/aipg-conformance.mjs && node --check src/cli.mjs && node --check scripts/live-release-gate.mjs",
     "conformance:public": "node src/cli.mjs",
+    "release:e2e:live": "node scripts/live-release-gate.mjs",
     "test": "node --test test/*.test.mjs",
     "verify": "node scripts/verify.mjs"
   },
