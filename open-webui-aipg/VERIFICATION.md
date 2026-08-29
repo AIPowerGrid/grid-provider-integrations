@@ -1,0 +1,27 @@
+# Verification
+
+Checked 2026-08-28 against AI Power Grid production and the unmodified Open
+WebUI `v0.11.1` container.
+
+## Passed without spending
+
+- Grid `GET /v1/models` returned a valid OpenAI list with `auto` and four live
+  concrete text models.
+- An unauthenticated chat request returned `401` before generation dispatch.
+- Browser preflight for `Authorization` and `Content-Type` succeeded, which is
+  required by Open WebUI Direct Connections.
+- Open WebUI `v0.11.1` started healthy with the Grid base URL and discovered
+  all five Grid text model ids through its own `/api/models` aggregation path.
+
+The temporary Open WebUI container was removed after the check. The test used
+an invalid placeholder key and did not submit a generation.
+
+## Release gate
+
+Before submitting the upstream tutorial, run one low-output streamed chat in
+an unmodified current Open WebUI release with a dedicated `inference.submit`
+test key. Record only version, HTTP outcome, terminal finish status, and timing;
+do not retain the key, prompt, output, credit balance, or worker identity.
+
+The first-party deployment at `chat.aipowergrid.io` proves the same protocol
+path on the AIPG fork, but it does not replace the current-upstream test.

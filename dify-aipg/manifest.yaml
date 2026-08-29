@@ -1,0 +1,44 @@
+author: AIPowerGrid
+contact: half@aipowergrid.io
+created_at: "2026-08-28T00:00:00Z"
+description:
+  en_US: Community-operated text inference through AI Power Grid.
+icon: aipg.svg
+icon_dark: aipg.svg
+label:
+  en_US: AI Power Grid
+meta:
+  arch:
+    - amd64
+    - arm64
+  runner:
+    entrypoint: main
+    language: python
+    version: "3.12"
+  minimum_dify_version: 1.0.0
+  version: 0.0.1
+name: aipg
+network:
+  domains:
+    - api.aipowergrid.io
+plugins:
+  models:
+    - provider/aipg.yaml
+resource:
+  memory: 268435456
+  permission:
+    model:
+      enabled: true
+      llm: true
+      moderation: false
+      rerank: false
+      speech2text: false
+      text_embedding: false
+      tts: false
+    tool:
+      enabled: false
+privacy: PRIVACY.md
+repo: https://github.com/AIPowerGrid/grid-provider-integrations
+type: plugin
+verified: false
+version: 0.1.0

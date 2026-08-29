@@ -1,0 +1,72 @@
+{
+  "name": "@aipowergrid/ai-sdk-provider",
+  "version": "0.1.0",
+  "description": "Vercel AI SDK provider for AI Power Grid text, image, video, and music generation",
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "biome check src/ tests/",
+    "lint:fix": "biome check --write src/ tests/",
+    "test": "vitest run --config ./vitest.config.ts"
+  },
+  "keywords": [
+    "ai-sdk",
+    "vercel-ai-sdk",
+    "aipg",
+    "ai-power-grid",
+    "openai-compatible",
+    "image-generation",
+    "video-generation",
+    "music-generation"
+  ],
+  "license": "MIT",
+  "author": "AI Power Grid",
+  "homepage": "https://aipowergrid.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AIPowerGrid/grid-provider-integrations.git",
+    "directory": "ai-sdk-aipg"
+  },
+  "bugs": {
+    "url": "https://github.com/AIPowerGrid/grid-provider-integrations/issues"
+  },
+  "dependencies": {
+    "@ai-sdk/openai-compatible": "^3.0.40",
+    "@ai-sdk/provider": "^4.0.8"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.8",
+    "@types/node": "^24.0.0",
+    "ai": "^7.0.84",
+    "typescript": "^6.0.0",
+    "vitest": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "peerDependencies": {
+    "ai": ">=7 <8"
+  },
+  "peerDependenciesMeta": {
+    "ai": {
+      "optional": true
+    }
+  }
+}

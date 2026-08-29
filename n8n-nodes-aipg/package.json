@@ -1,0 +1,57 @@
+{
+	"name": "n8n-nodes-aipg",
+	"version": "0.1.0",
+	"description": "AI Power Grid text, image, video, and audio generation for n8n",
+	"license": "MIT",
+	"homepage": "https://docs.aipowergrid.io",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n",
+		"aipg",
+		"ai-power-grid",
+		"generative-ai"
+	],
+	"author": {
+		"name": "AI Power Grid",
+		"email": "admin@aipowergrid.io"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AIPowerGrid/grid-provider-integrations.git",
+		"directory": "n8n-nodes-aipg"
+	},
+	"scripts": {
+		"build": "n8n-node build",
+		"dev": "n8n-node dev",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"test": "npm run build && node --test test/*.test.mjs",
+		"prepublishOnly": "n8n-node prerelease"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"strict": true,
+		"credentials": [
+			"dist/credentials/AipgApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/AiPowerGrid/AiPowerGrid.node.js"
+		]
+	},
+	"devDependencies": {
+		"@n8n/node-cli": "0.45.5",
+		"eslint": "9.39.4",
+		"prettier": "3.8.3",
+		"typescript": "5.9.3"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	},
+	"engines": {
+		"node": ">=22.0.0"
+	},
+	"packageManager": "npm@11.17.0"
+}

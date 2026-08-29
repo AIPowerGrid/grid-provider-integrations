@@ -1,0 +1,43 @@
+---
+title: AI Power Grid
+description: Use community-operated text and media models through AI Power Grid.
+---
+
+# AI Power Grid Provider
+
+The [AI Power Grid](https://aipowergrid.io/) community provider offers text,
+image, video, and music generation through remote community-operated workers.
+
+## Setup
+
+Install the provider and the AI SDK:
+
+```bash
+npm install ai @aipowergrid/ai-sdk-provider
+```
+
+Create a scoped key in the [Grid Console](https://console.aipowergrid.io/) and
+store it in the server-side `AIPG_API_KEY` environment variable. Do not expose
+the key in browser code.
+
+## Text generation
+
+```ts
+import { generateText } from "ai";
+import { aipg } from "@aipowergrid/ai-sdk-provider";
+
+const { text } = await generateText({
+  model: aipg("auto"),
+  prompt: "What makes an inference network decentralized?",
+});
+```
+
+The package also supplies `aipg.imageModel()`, the experimental
+`aipg.videoModel()`, `aipg.generateMusic()`, online-model discovery, and a
+credit-summary helper. See the package README for modality-specific inputs,
+streaming, error behavior, and privacy limitations.
+
+AI Power Grid routes requests to remote community workers. The worker executing
+a request may be able to inspect its plaintext input and output. This community
+provider is maintained by AI Power Grid and does not imply a partnership with
+Vercel.

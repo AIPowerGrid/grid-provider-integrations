@@ -1,0 +1,68 @@
+{
+  "name": "@aipowergrid/plugin-aipg",
+  "version": "0.1.0",
+  "description": "ElizaOS plugin for AI Power Grid text, image, video, and music generation",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "biome check src/ tests/",
+    "lint:fix": "biome check --write src/ tests/",
+    "test": "vitest run --config ./vitest.config.ts"
+  },
+  "keywords": [
+    "elizaos",
+    "plugin",
+    "aipg",
+    "ai-power-grid",
+    "openai-compatible",
+    "image-generation",
+    "video-generation",
+    "music-generation"
+  ],
+  "license": "MIT",
+  "author": "AI Power Grid",
+  "homepage": "https://aipowergrid.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AIPowerGrid/grid-provider-integrations.git",
+    "directory": "elizaos-aipg"
+  },
+  "bugs": {
+    "url": "https://github.com/AIPowerGrid/grid-provider-integrations/issues"
+  },
+  "peerDependencies": {
+    "@elizaos/core": ">=1.7.2 <3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.5.8",
+    "@elizaos/core": "1.7.2",
+    "@types/node": "^24.0.0",
+    "typescript": "^6.0.0",
+    "vitest": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "elizaos": {
+    "plugin": {
+      "displayName": "AI Power Grid",
+      "category": "model-provider"
+    }
+  }
+}

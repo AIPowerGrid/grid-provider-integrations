@@ -1,0 +1,16 @@
+{
+  "name": "@aipowergrid/provider-integrations",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "check": "node --check src/aipg-conformance.mjs && node --check src/cli.mjs",
+    "conformance:public": "node src/cli.mjs",
+    "test": "node --test test/*.test.mjs",
+    "verify": "node scripts/verify.mjs"
+  },
+  "license": "MIT"
+}

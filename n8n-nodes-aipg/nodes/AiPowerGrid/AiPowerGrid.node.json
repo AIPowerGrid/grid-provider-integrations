@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-aipg.aiPowerGrid",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["AI"],
+	"resources": {
+		"credentialDocumentation": [
+			{
+				"url": "https://console.aipowergrid.io/dashboard/api-key"
+			}
+		],
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.aipowergrid.io"
+			}
+		]
+	}
+}

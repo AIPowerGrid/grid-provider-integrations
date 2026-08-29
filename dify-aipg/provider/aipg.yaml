@@ -1,0 +1,38 @@
+background: "#111111"
+configurate_methods:
+  - predefined-model
+description:
+  en_US: Community-operated text inference through AI Power Grid.
+extra:
+  python:
+    model_sources:
+      - models/llm/llm.py
+    provider_source: provider/aipg.py
+help:
+  title:
+    en_US: Create a scoped AI Power Grid API key
+  url:
+    en_US: https://console.aipowergrid.io/dashboard/api-key
+icon_large:
+  en_US: aipg.svg
+icon_small:
+  en_US: aipg.svg
+label:
+  en_US: AI Power Grid
+models:
+  llm:
+    position: models/llm/_position.yaml
+    predefined:
+      - models/llm/*.yaml
+provider: aipg
+provider_credential_schema:
+  credential_form_schemas:
+    - label:
+        en_US: API Key
+      placeholder:
+        en_US: Enter a key with account.read and inference.submit scopes
+      required: true
+      type: secret-input
+      variable: api_key
+supported_model_types:
+  - llm

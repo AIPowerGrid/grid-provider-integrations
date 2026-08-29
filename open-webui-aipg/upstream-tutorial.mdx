@@ -1,0 +1,78 @@
+---
+sidebar_position: 35
+title: "AI Power Grid"
+---
+
+:::warning Community integration
+
+AI Power Grid is a third-party remote inference network. It is not operated or
+endorsed by Open WebUI. Requests leave your Open WebUI deployment and are
+processed by remote, community-operated workers.
+
+:::
+
+AI Power Grid exposes an OpenAI-compatible text API. No Function, Pipe, or
+provider-specific plugin is required.
+
+## Create a scoped key
+
+Create an API key in the [AI Power Grid developer console](https://console.aipowergrid.io/dashboard/api-key)
+with the `inference.submit` scope. Do not use worker, validator, owner, or
+unrestricted credentials for chat traffic.
+
+## Option 1: Direct Connection
+
+Direct Connections are preferable on multi-user instances because each user
+supplies their own Grid key and uses their own credit balance.
+
+1. An administrator enables **Settings > Admin > Connections > Direct
+   Connections**.
+2. Open **User Settings > Connections** and select **Add Connection**.
+3. Add an **OpenAI** connection with:
+
+   | Setting      | Value                           |
+   | ------------ | ------------------------------- |
+   | **Base URL** | `https://api.aipowergrid.io/v1` |
+   | **API Key**  | Your scoped Grid API key        |
+
+4. Save the connection and select a discovered model. The `auto` model lets
+   Grid route the request to an available text worker.
+
+The key is stored in the browser's local storage for Direct Connections. Treat
+the browser profile as sensitive and do not configure the key on a shared
+device.
+
+## Option 2: Admin Connection
+
+For a trusted or single-user instance:
+
+1. Go to **Settings > Admin > Connections**.
+2. Under **Manage OpenAI API Connections**, select **Add Connection**.
+3. Use the same Base URL and scoped API key shown above.
+4. Leave **Provider** set to **Default** and save.
+
+An admin connection shares one provider key, Grid account, and credit balance
+with every Open WebUI user allowed to use it. Do not put a funded service key
+behind an open public instance without separate rate limits and abuse controls.
+
+## Verify the connection
+
+Open WebUI calls `GET /v1/models` and should discover the text models currently
+served by connected Grid workers. Model availability changes with worker
+presence; a model disappearing from the selector does not necessarily indicate
+an Open WebUI failure.
+
+Start a short chat with `auto`, then confirm that streamed text reaches a normal
+terminal response. Authentication and credit errors from Grid are surfaced as
+provider errors; check that the key still has `inference.submit` and sufficient
+credits before changing Open WebUI settings.
+
+## Supported surface
+
+This connection supports Grid text chat through the standard OpenAI-compatible
+model and chat-completions endpoints. Grid's image, video, and music generation
+use separate native endpoints and are not exposed by this Open WebUI
+connection.
+
+Do not send secrets or assume confidential inference. For current API behavior,
+pricing, and model availability, consult the [AI Power Grid documentation](https://docs.aipowergrid.io/).
