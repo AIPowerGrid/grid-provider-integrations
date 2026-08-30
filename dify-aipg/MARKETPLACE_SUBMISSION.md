@@ -101,11 +101,11 @@ This initial package intentionally exposes text models only. AI Power Grid
 image, video, and audio generation use modality-specific APIs and are not
 misrepresented as Dify LLMs. Static prices mirror named-model Core rates;
 `auto` remains unpriced in Dify because its selected backend can vary.
-The live Grid currently also advertises
-`qwen38-flash-next-125b-nvfp4`; it is intentionally not copied into this
-static package until Core has a reviewed price peg and the Dify metadata is
-reviewed. The catalog check reports such live additions without inventing a
-price, while still failing on stale predefined IDs and context drift.
+The live Grid currently also advertises `Smollm-135m` and
+`qwen38-flash-next-125b-nvfp4`; they are intentionally not copied into this
+static package until Core has reviewed price pegs and their Dify metadata is
+reviewed. The catalog check reports such live additions without inventing
+prices, while still failing on stale predefined IDs and context drift.
 
 Dify's static pre-check emits five expected review-warning categories:
 

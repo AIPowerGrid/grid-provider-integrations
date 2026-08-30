@@ -43,8 +43,12 @@ instance discovered and loaded all four operations.
 - Documentation states that plaintext requests may be inspected by remote
   community workers and makes no n8n partnership claim.
 
-The package and provenance are public. Creator Portal acceptance is separate
-from package publication.
+The package and provenance are public. It was submitted to the Creator Portal
+on 2026-08-30. The package's portal page is
+[`/nodes/@aipowergrid%2Fn8n-nodes-aipg/integration`](https://creators.n8n.io/nodes/@aipowergrid%2Fn8n-nodes-aipg/integration).
+At submission time, the portal reported **Automated Review: In Progress**.
+Submission and automated review are not Creator Portal acceptance, manual
+approval, or n8n endorsement.
 
 ### Reverification on 2026-08-30
 
@@ -59,8 +63,8 @@ from package publication.
 
 ## Portal field pack
 
-Use the Creator Portal's current field names as the authority. The values below
-are prepared submission copy, not evidence that a form was submitted.
+The values below are the copy used for the submitted package. The Creator
+Portal's current field names and package status remain authoritative.
 
 - **npm package:** `@aipowergrid/n8n-nodes-aipg`
 - **Display name:** `AI Power Grid`
@@ -87,7 +91,7 @@ confidential inference in the submission.
 
 ## Portal submission
 
-Submit `@aipowergrid/n8n-nodes-aipg` at
+`@aipowergrid/n8n-nodes-aipg` was submitted through
 [creators.n8n.io/nodes](https://creators.n8n.io/nodes). The current official
 requirements are satisfied:
 

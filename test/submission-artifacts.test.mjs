@@ -78,7 +78,7 @@ test("LangChain cookbook preserves the compatibility and trust boundaries", asyn
   );
 });
 
-test("n8n Creator Portal draft stays aligned with the package and workflow", async () => {
+test("n8n Creator Portal submission stays aligned with the package and workflow", async () => {
   const [packageJson, submission, workflow] = await Promise.all([
     readJson("n8n-nodes-aipg/package.json"),
     read("n8n-nodes-aipg/CREATOR_PORTAL_SUBMISSION.md"),
@@ -92,6 +92,9 @@ test("n8n Creator Portal draft stays aligned with the package and workflow", asy
     new RegExp(`${releaseTagPrefix}-v${packageJson.version}`),
   );
   assert.match(submission, /GitHub Actions with\s+provenance/);
+  assert.match(submission, /Automated Review: In Progress/);
+  assert.match(submission, /not Creator Portal acceptance/);
+  assert.match(submission, /@aipowergrid%2Fn8n-nodes-aipg\/integration/);
   assert.match(workflow, /n8n-nodes-aipg-v\$\(node -p/);
   assert.match(workflow, /registry-url: https:\/\/registry\.npmjs\.org/);
   assert.match(workflow, /cancel-in-progress: false/);
