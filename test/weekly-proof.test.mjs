@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { Buffer } from "node:buffer";
 import { createServer } from "node:http";
 import test from "node:test";
 import {
@@ -111,6 +112,84 @@ const fixture = {
   },
 };
 
+const packageSources = {
+  "@aipowergrid/ai-sdk-provider": {
+    repository: "AIPowerGrid/grid-provider-integrations",
+    tag: "ai-sdk-provider-v0.1.0",
+    workflow: ".github/workflows/publish-packages.yml",
+  },
+  "@aipowergrid/plugin-aipg": {
+    repository: "AIPowerGrid/grid-provider-integrations",
+    tag: "plugin-aipg-v0.1.0",
+    workflow: ".github/workflows/publish-packages.yml",
+  },
+  "@aipowergrid/n8n-nodes-aipg": {
+    repository: "AIPowerGrid/n8n-nodes-aipg",
+    tag: "n8n-nodes-aipg-v0.1.3",
+    workflow: ".github/workflows/publish.yml",
+  },
+};
+
+function packageIntegrity(item) {
+  return `sha512-${Buffer.from(`fixture:${item.name}@${item.version}`).toString("base64")}`;
+}
+
+function provenanceDocument(item, { repository, digest } = {}) {
+  const source = packageSources[item.name];
+  const integrityDigest = Buffer.from(
+    packageIntegrity(item).slice("sha512-".length),
+    "base64",
+  ).toString("hex");
+  const resolvedRepository = repository || source.repository;
+  const statement = {
+    subject: [
+      {
+        name: `pkg:npm/${item.name.replace("@", "%40")}@${item.version}`,
+        digest: { sha512: digest || integrityDigest },
+      },
+    ],
+    predicateType: "https://slsa.dev/provenance/v1",
+    predicate: {
+      buildDefinition: {
+        buildType:
+          "https://slsa-framework.github.io/github-actions-buildtypes/workflow/v1",
+        externalParameters: {
+          workflow: {
+            ref: `refs/tags/${source.tag}`,
+            repository: `https://github.com/${resolvedRepository}`,
+            path: source.workflow,
+          },
+        },
+        internalParameters: { github: { event_name: "push" } },
+        resolvedDependencies: [
+          {
+            uri: `git+https://github.com/${source.repository}@refs/tags/${source.tag}`,
+            digest: { gitCommit: "a".repeat(40) },
+          },
+        ],
+      },
+      runDetails: {
+        builder: { id: "https://github.com/actions/runner/github-hosted" },
+      },
+    },
+  };
+  return {
+    attestations: [
+      {
+        predicateType: "https://slsa.dev/provenance/v1",
+        bundle: {
+          dsseEnvelope: {
+            payloadType: "application/vnd.in-toto+json",
+            payload: Buffer.from(JSON.stringify(statement)).toString("base64"),
+            signatures: [{ sig: "fixture-signature" }],
+          },
+          verificationMaterial: { tlogEntries: [{}] },
+        },
+      },
+    ],
+  };
+}
+
 test("weekly proof derives arithmetic and preserves trust boundaries", () => {
   const markdown = renderWeeklyProof(fixture);
 
@@ -197,11 +276,18 @@ test("weekly proof refuses unsupported schemas and economic validators", () => {
 test("weekly proof fetches only the reviewed public evidence endpoints", async () => {
   const requested = [];
   let omitProvenance = false;
+  let wrongProvenanceRepository = false;
+  let wrongProvenanceDigest = false;
   const server = createServer((request, response) => {
     requested.push(request.url);
     const packageDocument = fixture.distribution.packages.find(
       (item) =>
         request.url === `/npm/${encodeURIComponent(item.name)}/${item.version}`,
+    );
+    const attestationPackage = fixture.distribution.packages.find(
+      (item) =>
+        request.url ===
+        `/npm/-/npm/v1/attestations/${encodeURIComponent(item.name)}@${item.version}`,
     );
     const pullRequestDocument = fixture.distribution.pullRequests.find(
       (item) =>
@@ -225,7 +311,7 @@ test("weekly proof fetches only the reviewed public evidence endpoints", async (
                         : "git+https://github.com/AIPowerGrid/grid-provider-integrations.git",
                   },
                   dist: {
-                    integrity: "sha512-fixture",
+                    integrity: packageIntegrity(packageDocument),
                     attestations: omitProvenance
                       ? undefined
                       : {
@@ -235,6 +321,15 @@ test("weekly proof fetches only the reviewed public evidence endpoints", async (
                         },
                   },
                 }
+              : attestationPackage
+                ? provenanceDocument(attestationPackage, {
+                    repository: wrongProvenanceRepository
+                      ? "attacker/example"
+                      : undefined,
+                    digest: wrongProvenanceDigest
+                      ? "0".repeat(128)
+                      : undefined,
+                  })
               : pullRequestDocument
                 ? {
                     number: pullRequestDocument.number,
@@ -271,6 +366,9 @@ test("weekly proof fetches only the reviewed public evidence endpoints", async (
       "/npm/%40aipowergrid%2Fai-sdk-provider/0.1.0",
       "/npm/%40aipowergrid%2Fn8n-nodes-aipg/0.1.3",
       "/npm/%40aipowergrid%2Fplugin-aipg/0.1.0",
+      "/npm/-/npm/v1/attestations/%40aipowergrid%2Fai-sdk-provider@0.1.0",
+      "/npm/-/npm/v1/attestations/%40aipowergrid%2Fn8n-nodes-aipg@0.1.3",
+      "/npm/-/npm/v1/attestations/%40aipowergrid%2Fplugin-aipg@0.1.0",
       "/v1/payouts/public",
       "/v1/stats/totals",
       "/v1/status/network",
@@ -285,6 +383,30 @@ test("weekly proof fetches only the reviewed public evidence endpoints", async (
           githubApiUrl: `${localBase}/github`,
         }),
       /npm provenance is missing/,
+    );
+
+    omitProvenance = false;
+    wrongProvenanceRepository = true;
+    await assert.rejects(
+      () =>
+        generateWeeklyProof({
+          baseUrl: localBase,
+          npmRegistryUrl: `${localBase}/npm`,
+          githubApiUrl: `${localBase}/github`,
+        }),
+      /npm provenance workflow mismatch/,
+    );
+
+    wrongProvenanceRepository = false;
+    wrongProvenanceDigest = true;
+    await assert.rejects(
+      () =>
+        generateWeeklyProof({
+          baseUrl: localBase,
+          npmRegistryUrl: `${localBase}/npm`,
+          githubApiUrl: `${localBase}/github`,
+        }),
+      /npm provenance subject or digest mismatch/,
     );
   } finally {
     await new Promise((resolve, reject) =>

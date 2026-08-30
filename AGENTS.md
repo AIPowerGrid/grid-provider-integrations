@@ -43,6 +43,11 @@ acceptance.
 - `src/weekly-proof.mjs` plus `scripts/generate-weekly-proof.mjs` - read-only
   weekly snapshot renderer for public job, capacity, validator, and payout
   evidence plus exact npm provenance and current upstream pull-request states.
+  Package provenance evidence must bind the registry integrity digest to the
+  DSSE subject and the expected GitHub repository, release tag, workflow, push
+  event, source revision, hosted builder, and transparency-log entry. This is a
+  fail-closed identity check over npm's registry evidence, not a local
+  replacement for npm/Sigstore cryptographic verification.
   Submitted provider evidence includes the Dify marketplace review; an omitted
   required integration is a failing evidence contract, not an unpublished gap.
   It deliberately reports paid-demand, operator-independence, and
