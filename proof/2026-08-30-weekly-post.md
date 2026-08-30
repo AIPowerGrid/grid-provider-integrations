@@ -1,6 +1,6 @@
 # AI Power Grid Weekly Proof Post - 2026-08-30
 
-Snapshot captured at `2026-08-30T16:48:05.501Z` from the public Grid API.
+Snapshot captured at `2026-08-30T20:32:51.060Z` from the public Grid API.
 
 ## Thread copy
 
@@ -8,21 +8,21 @@ Snapshot captured at `2026-08-30T16:48:05.501Z` from the public Grid API.
 
 AIPG proof snapshot, Aug 30:
 
-66,611 jobs recorded all time; 3,482 in the current 24h window. 8 workers are online across 11 text, image, video, and audio routes.
+67,625 jobs recorded all time; 4,231 in the current 24h window. 9 workers are online across 12 text, image, video, and audio routes.
 
 Live status: https://api.aipowergrid.io/v1/status/network
 
 ### Post 2
 
-Worker payouts: 69,901.733 AIPG across 1,355 on-chain Base payouts to 8 payout addresses.
+Worker payouts: 70,657.2829 AIPG across 1,366 on-chain Base payouts to 8 payout addresses.
 
 Verify the transactions: https://console.aipowergrid.io/transparency
 
 ### Post 3
 
-Validator preview: 8 participants, 601 assignments, 96.3% agreement.
+Validator preview: 8 participants, 616 assignments, 96.7% agreement.
 
-Limits: no economic authority; 0 independently verified operators; 11/11 live routes below the 3-worker redundancy target.
+Limits: no economic authority; 0 independently verified operators; 12/12 live routes below the 3-worker redundancy target.
 
 Run a worker or validator: https://aipowergrid.io/run
 
@@ -62,9 +62,9 @@ Metrics we will not fake: charging mode=allowlist; global=false. The public API 
 
 ## Calculation record
 
-- All-time jobs: `65,520 text + 23 3d + 107 video + 781 image + 180 audio = 66,611`.
-- Current day-window jobs: `3,468 text + 14 image = 3,482`.
-- Agreement display: `0.9631578947368421`, rounded to `96.3%`.
+- All-time jobs: `66,523 text + 23 3d + 107 video + 789 image + 183 audio = 67,625`.
+- Current day-window jobs: `4,210 text + 18 image + 3 audio = 4,231`.
+- Agreement display: `0.9671848013816926`, rounded to `96.7%`.
 - Charging mode: `allowlist`; global charging: `false`.
 - Public incident-history availability: `false`.
 - Published package evidence: `@aipowergrid/ai-sdk-provider@0.1.0, @aipowergrid/plugin-aipg@0.1.0, @aipowergrid/n8n-nodes-aipg@0.1.3`.
