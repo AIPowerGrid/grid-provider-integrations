@@ -75,9 +75,10 @@ plugin runtime reached ready state, and Dify listed provider
 installation and discovery on Community Edition; it does not replace the
 credentialed generation check.
 
-Final credentialed Dify Community Edition and Dify Cloud generation checks
-remain pending. Do not submit this draft until those checks pass and the
-corresponding checkbox above is honestly checked.
+The exact artifact passed a credentialed Dify Cloud generation through `Auto
+Router`, after which the disposable scoped key was revoked. Credentialed Dify
+Community Edition generation remains pending. Do not submit this draft until
+that check passes and the corresponding checkbox above is honestly checked.
 
 ## Upstream package path
 

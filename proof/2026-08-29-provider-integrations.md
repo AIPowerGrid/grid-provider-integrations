@@ -149,17 +149,18 @@ point-in-time capacity observation, not an uptime promise.
 
 - LiteLLM provider: [BerriAI/litellm#38725](https://github.com/BerriAI/litellm/pull/38725).
   The failed lint notification for old head `2326088` is superseded. Current
-  head `5cbe37e` supports Chat Completions, Responses, and OpenAI-compatible
+  head `cb7295a` supports Chat Completions, Responses, and OpenAI-compatible
   image generation while preventing a server-managed AIPG credential from
   being sent to a caller-chosen API base. It publishes current image prices of
   `$0.003` for `z-image-turbo`, `$0.005` for `Krea 2 Turbo`, and `$0.01` for
   `FLUX.2 Klein 4B FP8`. Seven focused tests now execute inside LiteLLM's real
   provider shard; the prior test location passed locally but was outside that
-  CI shard. The replacement run passed the provider shard, lint, security,
-  schemas, documentation, global unit matrix, and Codecov's patch gate at
-  `100%` (16/16 executable diff lines). The long CodSpeed benchmark also
-  passed. The contributor license agreement was accepted on August 29, 2026;
-  ordinary maintainer review is the only remaining merge gate.
+  CI shard. The branch was merged with current upstream staging after that
+  base advanced. The refreshed run passed all 77 reported checks, including
+  the provider shard, lint, security, schemas, documentation, the global unit
+  matrix, Codecov's patch gate, and CodSpeed. The contributor license agreement
+  was accepted on August 29, 2026; ordinary maintainer review is the only
+  remaining merge gate.
 - LiteLLM documentation: [BerriAI/litellm-docs#1072](https://github.com/BerriAI/litellm-docs/pull/1072).
   Documentation head `2d3f36a` covers the same text and text-to-image scope,
   pricing, credential boundary, and community-worker disclosure. The full
@@ -168,13 +169,21 @@ point-in-time capacity observation, not an uptime promise.
 - elizaOS registry: [elizaOS/eliza#29964](https://github.com/elizaOS/eliza/pull/29964).
   Head `8d17be009` adds the published `@aipowergrid/plugin-aipg@0.1.0`
   package to the community registry and regenerates its committed wire index.
-  The upstream registry validator and generator pass; ordinary maintainer
-  review and hosted checks remain acceptance gates.
+  The upstream registry validator and generator pass. Multiple independent
+  reviews approved the metadata and verified the published package; an
+  upstream maintainer still controls acceptance and merge.
+- Vercel AI SDK community-provider documentation:
+  [vercel/ai#20003](https://github.com/vercel/ai/pull/20003). Head `22b0e4f`
+  documents the published `@aipowergrid/ai-sdk-provider@0.1.0` package and its
+  remote community-worker boundary. The security, agent-review, and code-owner
+  checks pass. The fork cannot produce Vercel's private preview, and ordinary
+  maintainer review remains the merge gate.
 - LangChain documentation: [langchain-ai/docs#5770](https://github.com/langchain-ai/docs/pull/5770).
   Head `af422919` adds one restrained paragraph to the existing Chat
   Completions compatibility section. It links to the tested cookbook and
-  discloses the remote community-worker plaintext boundary. Hosted checks and
-  ordinary maintainer review remain acceptance gates.
+  discloses the remote community-worker plaintext boundary. All hosted checks
+  pass, and the requested Python integration reviewer has been tagged;
+  ordinary maintainer review remains the acceptance gate.
 - Open WebUI fork documentation correction:
   [AIPowerGrid/grid-openweb-ui#1](https://github.com/AIPowerGrid/grid-openweb-ui/pull/1).
 - Open WebUI documentation scope question:
@@ -197,20 +206,24 @@ an upstream integration only if that project accepts and merges it.
   No Marketplace PR exists. The credentialed Dify Cloud check passed with this
   artifact. Credentialed Community Edition generation and the Plugin Developer
   Agreement still gate submission.
+- n8n Creator Portal: `@aipowergrid/n8n-nodes-aipg@0.1.2` is published with
+  npm provenance and passes n8n's community-package scanner. The submission
+  record is ready, but no Creator Portal submission has been made. A creator
+  account login and any emailed ownership challenge remain external gates.
 
 ## Release gates still open
 
 - Complete the credentialed Dify Community Edition generation check before
   Marketplace submission. The direct provider and Cloud production lanes
   passed, but neither substitutes for the remaining Community Edition check.
-- Submit the published AI SDK and n8n packages to their upstream
-  provider catalogs. npm publication is complete: `@aipowergrid/ai-sdk-provider@0.1.0`,
+- Submit the published n8n package through the Creator Portal. npm publication
+  is complete: `@aipowergrid/ai-sdk-provider@0.1.0`,
   `@aipowergrid/plugin-aipg@0.1.0`, and
-  `@aipowergrid/n8n-nodes-aipg@0.1.1` were released by GitHub Actions with
+  `@aipowergrid/n8n-nodes-aipg@0.1.2` were released by GitHub Actions with
   provenance. Their npm OIDC Trusted Publishers are attached, both repository
   `NPM_TOKEN` secrets are absent, and the one-time bootstrap token is revoked.
-  The elizaOS package is submitted for registry review; registry publication
-  is not upstream acceptance.
+  The AI SDK documentation and elizaOS registry entries are submitted for
+  review; open submissions are not upstream acceptance.
 - elizaOS should update the inherited PDF and elliptic dependency paths in its
   host core; this plugin cannot safely override peer internals.
 
