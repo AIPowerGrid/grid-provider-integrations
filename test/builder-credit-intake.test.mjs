@@ -19,6 +19,8 @@ test("builder-credit intake stays bounded and collects no account secrets", asyn
     "$20 - working public demo with documented setup",
     "expire 60 days after issuance",
     "one grant per account and campaign",
+    "community-operated workers that can inspect plaintext prompts and outputs",
+    "use non-sensitive test data",
     "labels:",
     "builder-credits",
     "project_url",
@@ -33,6 +35,10 @@ test("builder-credit intake stays bounded and collects no account secrets", asyn
   );
   assert.match(form, /Do not include API keys[\s\S]*Grid account ID/i);
   assert.match(form, /submitting this issue does not guarantee a grant/i);
+  assert.match(
+    form,
+    /community-operated workers[\s\S]*inspect plaintext prompts and outputs/i,
+  );
 });
 
 test("builder-credit applications enter the maintainer triage queue", async () => {

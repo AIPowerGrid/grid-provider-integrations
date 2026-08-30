@@ -33,6 +33,16 @@ Builder-facing setup instructions and publication status are live at
 The public page treats compatibility, first-party tests, package publication,
 and upstream acceptance as separate states.
 
+## Builder credits
+
+Builders shipping a public integration or demo can
+[apply for $5-$20 of bounded service credit](https://github.com/AIPowerGrid/grid-provider-integrations/issues/new?template=builder-credits.yml).
+Applications are public and manually reviewed; account linkage stays private.
+Review is not issuance: credits are granted only while the promotional spend
+rail is active, expire after 60 days, and cannot be transferred, withdrawn, or
+exchanged for cash or tokens. Requests may be processed by community-operated
+workers, so funded tests must use non-sensitive data.
+
 ## Public conformance
 
 Requires Node.js 20 or newer. The default run does not require a key and does
