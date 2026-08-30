@@ -28,11 +28,24 @@ def test_live_dify_validation_and_stream() -> None:
     provider.validate_provider_credentials(credentials)
 
     llm = AIPGLargeLanguageModel([])
-    chunks = llm._invoke(
-        model=model,
-        credentials=credentials,
-        prompt_messages=[UserPromptMessage(content="Reply with one short word.")],
-        model_parameters={"max_tokens": 8},
-        stream=True,
+    chunks = list(
+        llm._invoke(
+            model=model,
+            credentials=credentials,
+            prompt_messages=[UserPromptMessage(content="Reply with one short word.")],
+            model_parameters={"max_tokens": 8},
+            stream=True,
+        )
     )
-    assert sum(1 for _ in chunks) > 0
+    content = "".join(
+        chunk.delta.message.content
+        for chunk in chunks
+        if isinstance(chunk.delta.message.content, str)
+    ).strip()
+    assert content, "Dify adapter stream contained no generated text"
+
+    terminal = chunks[-1].delta
+    assert terminal.finish_reason, "Dify adapter stream had no terminal finish reason"
+    assert terminal.usage is not None, "Dify adapter stream had no terminal usage"
+    assert terminal.usage.total_tokens > 0
+    assert terminal.usage.completion_tokens > 0
