@@ -46,9 +46,15 @@ instance discovered and loaded all four operations.
 The package and provenance are public. It was submitted to the Creator Portal
 on 2026-08-30. The package's portal page is
 [`/nodes/@aipowergrid%2Fn8n-nodes-aipg/integration`](https://creators.n8n.io/nodes/@aipowergrid%2Fn8n-nodes-aipg/integration).
-At submission time, the portal reported **Automated Review: In Progress**.
-Submission and automated review are not Creator Portal acceptance, manual
-approval, or n8n endorsement.
+The automated review later reported **Changes Required** with one finding:
+`Can't find credential file in repo`. The credential source exists at
+`n8n-nodes-aipg/credentials/AipgApi.credentials.ts` in npm's attested source
+commit, while the published package contains
+`dist/credentials/AipgApi.credentials.js`. The npm metadata uses the standard
+`repository.directory: n8n-nodes-aipg` monorepo field. Do not resubmit or claim
+acceptance until the repository-location issue is corrected in a new package
+release and the automated review passes. Submission and automated review are
+not Creator Portal acceptance, manual approval, or n8n endorsement.
 
 ### Reverification on 2026-08-30
 

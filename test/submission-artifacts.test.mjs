@@ -92,7 +92,9 @@ test("n8n Creator Portal submission stays aligned with the package and workflow"
     new RegExp(`${releaseTagPrefix}-v${packageJson.version}`),
   );
   assert.match(submission, /GitHub Actions with\s+provenance/);
-  assert.match(submission, /Automated Review: In Progress/);
+  assert.match(submission, /automated review.*Changes Required/is);
+  assert.match(submission, /Can't find credential file in repo/);
+  assert.match(submission, /repository\.directory: n8n-nodes-aipg/);
   assert.match(submission, /not Creator Portal acceptance/);
   assert.match(submission, /@aipowergrid%2Fn8n-nodes-aipg\/integration/);
   assert.match(workflow, /n8n-nodes-aipg-v\$\(node -p/);
