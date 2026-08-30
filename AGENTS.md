@@ -36,8 +36,10 @@ authority for submission structure and acceptance.
   after manual selection.
 - `src/weekly-proof.mjs` plus `scripts/generate-weekly-proof.mjs` - read-only
   weekly snapshot renderer for public job, capacity, validator, and payout
-  evidence. It deliberately reports paid-demand, operator-independence, and
-  historical-uptime gaps instead of inferring them.
+  evidence plus exact npm provenance and current upstream pull-request states.
+  It deliberately reports paid-demand, operator-independence, and
+  historical-uptime gaps instead of inferring them, and fails closed when
+  published integration evidence drifts.
 - `scripts/smoke-packed-package.mjs` - installs the exact AI SDK or ElizaOS
   tarball into a disposable clean consumer with its declared host peer, imports
   the public package name, and removes the consumer afterward.
