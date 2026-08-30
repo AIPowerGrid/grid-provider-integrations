@@ -47,8 +47,10 @@ point-in-time capacity observation, not an uptime promise.
   The exact artifact also installed in Dify Cloud, accepted a disposable
   scoped Grid key, exposed the three curated models, and completed one bounded
   production generation through `Auto Router`; the key was revoked
-  immediately afterward. Credentialed Community Edition generation remains
-  pending, so the package has not been submitted to the Marketplace. The final
+  immediately afterward. The same artifact then completed a credentialed
+  generation in Dify Community Edition. It was submitted to the Marketplace as
+  [langgenius/dify-plugins#2986](https://github.com/langgenius/dify-plugins/pull/2986)
+  and remains open for maintainer review. The final
   provenance-only [package run 33274264650](https://github.com/AIPowerGrid/grid-provider-integrations/actions/runs/33274264650)
   built this exact package on Linux and passed the pinned Marketplace toolkit.
   Its short-lived artifact contains the package, checksum, and full validator
@@ -64,13 +66,16 @@ point-in-time capacity observation, not an uptime promise.
   local execution of the emitted arguments. The live pass also found that the
   production edge rejects Python's generic `urllib` user agent; discovery now
   sends the fixed non-identifying `aipg-langchain/0.1` identifier.
-- The n8n node passed strict community-node lint, nine deterministic tests,
+- The n8n node passed strict community-node lint, eleven deterministic tests,
   build, pack inspection, and a zero-vulnerability production dependency
   audit. Its credential test now uses authenticated read-only credits instead
   of the public model catalog, closing a false-positive key check. n8n 2.36.8
   loaded the node and registered all four operations in a local editor smoke
   test. Its production transport then passed text, image, one-second video, and
-  ten-second audio generation through the real Grid.
+  ten-second audio generation through the real Grid. Version `0.1.3` was
+  submitted through the Creator Portal with an uncut production demonstration
+  of direct text generation and an AI-agent tool call. The portal now reports
+  **Under Review**; this is not n8n acceptance or endorsement.
 - A cross-provider credential-destination audit closed environment-key
   forwarding and redirect gaps before package release. AI SDK and LangChain
   environment credentials are now eligible only for the canonical Grid origin;
@@ -184,6 +189,11 @@ point-in-time capacity observation, not an uptime promise.
   discloses the remote community-worker plaintext boundary. All hosted checks
   pass, and the requested Python integration reviewer has been tagged;
   ordinary maintainer review remains the acceptance gate.
+- Dify Marketplace: [langgenius/dify-plugins#2986](https://github.com/langgenius/dify-plugins/pull/2986).
+  Head `caf265e8` contains only the validated AIPG package. The exact artifact
+  passed credentialed generation in Dify Cloud and Community Edition before
+  submission. The pull request is open and mergeable; ordinary maintainer
+  review remains the acceptance gate.
 - Open WebUI fork documentation correction:
   [AIPowerGrid/grid-openweb-ui#1](https://github.com/AIPowerGrid/grid-openweb-ui/pull/1).
 - Open WebUI documentation scope question:
@@ -194,32 +204,31 @@ point-in-time capacity observation, not an uptime promise.
 An open pull request is not adoption, endorsement, or a partnership. It becomes
 an upstream integration only if that project accepts and merges it.
 
-## Staged, not submitted
+## Submitted for platform review
 
-- Dify Marketplace package: the validated artifact is staged at
+- Dify Marketplace package: the validated artifact was submitted from
   [`halfaipg/dify-plugins:feat/aipg-provider`](https://github.com/halfaipg/dify-plugins/tree/feat/aipg-provider/aipowergrid/aipg)
-  on commit `5f94bde`. The branch is four commits ahead of current upstream
-  `main`; together they add, refresh, and correct the path of only
+  on commit `caf265e8`. The branch adds only
   `aipowergrid/aipg/aipg-0.1.0.difypkg`. The remotely validated package
   matches SHA-256
   `6b656f2add99cd108c0dac814b8a841d51939b4e159eeeef8eea2a49ebf8b744`.
-  No Marketplace PR exists. The credentialed Dify Cloud check passed with this
-  artifact. Credentialed Community Edition generation and the Plugin Developer
-  Agreement still gate submission.
-- n8n Creator Portal: `@aipowergrid/n8n-nodes-aipg@0.1.2` is published with
-  npm provenance and passes n8n's community-package scanner. The submission
-  record is ready, but no Creator Portal submission has been made. A creator
-  account login and any emailed ownership challenge remain external gates.
+  Credentialed Dify Cloud and Community Edition checks passed with this
+  artifact. Marketplace pull request `#2986` is open for maintainer review.
+- n8n Creator Portal: `@aipowergrid/n8n-nodes-aipg@0.1.3` is published with
+  npm provenance and passes n8n's community-package scanner and automated
+  portal review. The required uncut demonstration video was uploaded on
+  August 30, 2026, and the portal status is **Under Review**. Approval remains
+  an external n8n decision.
 
-## Release gates still open
+## External review gates still open
 
-- Complete the credentialed Dify Community Edition generation check before
-  Marketplace submission. The direct provider and Cloud production lanes
-  passed, but neither substitutes for the remaining Community Edition check.
-- Submit the published n8n package through the Creator Portal. npm publication
+- Obtain maintainer acceptance for the open LiteLLM provider and docs, Dify
+  Marketplace, Vercel AI SDK docs, ElizaOS registry, and LangChain docs pull
+  requests. Open and mergeable is not accepted.
+- Complete n8n Creator Portal manual review. npm publication
   is complete: `@aipowergrid/ai-sdk-provider@0.1.0`,
   `@aipowergrid/plugin-aipg@0.1.0`, and
-  `@aipowergrid/n8n-nodes-aipg@0.1.2` were released by GitHub Actions with
+  `@aipowergrid/n8n-nodes-aipg@0.1.3` were released by GitHub Actions with
   provenance. Their npm OIDC Trusted Publishers are attached, both repository
   `NPM_TOKEN` secrets are absent, and the one-time bootstrap token is revoked.
   The AI SDK documentation and elizaOS registry entries are submitted for
