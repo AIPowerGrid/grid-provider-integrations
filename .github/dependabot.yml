@@ -4,10 +4,6 @@ updates:
     directory: /ai-sdk-aipg
     schedule:
       interval: weekly
-  - package-ecosystem: npm
-    directory: /n8n-nodes-aipg
-    schedule:
-      interval: weekly
   - package-ecosystem: pip
     directory: /dify-aipg
     schedule:

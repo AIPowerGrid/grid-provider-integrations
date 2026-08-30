@@ -2,23 +2,24 @@ const DEFAULT_BASE_URL = "https://api.aipowergrid.io";
 const DEFAULT_TIMEOUT_MS = 15_000;
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org";
 const DEFAULT_GITHUB_API_URL = "https://api.github.com";
-const INTEGRATION_REPOSITORY = "AIPowerGrid/grid-provider-integrations";
-
 const RELEASED_PACKAGES = [
   {
     label: "Vercel AI SDK",
     name: "@aipowergrid/ai-sdk-provider",
     version: "0.1.0",
+    repository: "AIPowerGrid/grid-provider-integrations",
   },
   {
     label: "ElizaOS",
     name: "@aipowergrid/plugin-aipg",
     version: "0.1.0",
+    repository: "AIPowerGrid/grid-provider-integrations",
   },
   {
     label: "n8n",
     name: "@aipowergrid/n8n-nodes-aipg",
-    version: "0.1.2",
+    version: "0.1.3",
+    repository: "AIPowerGrid/n8n-nodes-aipg",
   },
 ];
 
@@ -154,7 +155,7 @@ function verifiedPackageEvidence(document, expected) {
     `npm provenance is missing for ${expected.name}`,
   );
   assertion(
-    String(document?.repository?.url || "").includes(INTEGRATION_REPOSITORY),
+    String(document?.repository?.url || "").includes(expected.repository),
     `npm repository mismatch for ${expected.name}`,
   );
   return {

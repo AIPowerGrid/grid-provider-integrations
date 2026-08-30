@@ -4,9 +4,10 @@
 
 Reusable conformance tooling and source packages for making AI Power Grid a
 native, reviewed provider in third-party AI frameworks. This workspace is the
-staging ground for Dify, ElizaOS, Vercel AI SDK, LiteLLM, Open WebUI,
-LangChain, and n8n contributions; upstream repositories remain the final
-authority for submission structure and acceptance.
+staging ground for Dify, ElizaOS, Vercel AI SDK, LiteLLM, Open WebUI, and
+LangChain contributions, plus evidence for the dedicated n8n package;
+upstream repositories remain the final authority for submission structure and
+acceptance.
 
 ## Ownership
 
@@ -21,8 +22,9 @@ authority for submission structure and acceptance.
   draft for the standard OpenAI-compatible connection path.
 - `ai-sdk-aipg/` - Vercel AI SDK v7 provider for text, image, video, and music.
 - `langchain-aipg/` - tested LangChain Python cookbook for Grid text models.
-- `n8n-nodes-aipg/` - native n8n community node for Grid text, image, video,
-  and audio generation.
+- `AIPowerGrid/n8n-nodes-aipg` - dedicated canonical repository for the native
+  n8n community node. This monorepo tracks its public npm evidence only; do not
+  recreate or publish an n8n package from here.
 - `starters/` - five dependency-free Web3 application examples sharing a
   fixed-origin, quote-gated Grid client. Wallet funding stays out of the
   inference process and receipt IDs are never mislabeled as on-chain proofs.
@@ -99,7 +101,7 @@ authority for submission structure and acceptance.
 - `npm run check`
 - `npm run verify`
 - `AIPG_LIVE_E2E=1 AIPG_API_KEY="..." npm run release:e2e:live` - supervised
-  five-integration production gate using a disposable `account.read` +
+  four-integration production gate using a disposable `account.read` +
   `inference.submit` key; never run in default CI.
 - `AIPG_API_KEY="..." npm run release:key:verify-revoked` - after revocation,
   prove the disposable key fails with `401`, then unset it from the shell.
@@ -115,7 +117,5 @@ authority for submission structure and acceptance.
   package, tests, and community-provider documentation draft.
 - [langchain-aipg/AGENTS.md](langchain-aipg/AGENTS.md) - LangChain cookbook,
   model discovery helper, and local protocol tests.
-- [n8n-nodes-aipg/AGENTS.md](n8n-nodes-aipg/AGENTS.md) - n8n node contracts,
-  credentials, model discovery, and release verification.
 - [starters/AGENTS.md](starters/AGENTS.md) - runnable Web3 application examples
   and their shared security/billing boundary.
