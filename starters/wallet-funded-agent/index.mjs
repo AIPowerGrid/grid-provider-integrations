@@ -19,7 +19,7 @@ Environment:
   AGENT_TASK            bounded task (required)
   AGENT_STEPS           1-3, default: 2
   AIPG_MIN_BALANCE_USD  minimum balance before starting, default: 0.05
-  AIPG_MAX_COST_USD     cumulative run ceiling, default: 0.02
+  AIPG_MAX_COST_USD     cumulative accepted quote limit, default: 0.02
   AIPG_TEXT_MODEL       default: auto`;
 
 export async function runWalletFundedAgent({ environment = process.env, client } = {}) {

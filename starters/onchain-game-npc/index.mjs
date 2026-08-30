@@ -17,7 +17,7 @@ const HELP = `Usage: node starters/onchain-game-npc/index.mjs "PLAYER ACTION"
 Environment:
   AIPG_API_KEY       scoped Grid key (required)
   AIPG_TEXT_MODEL    default: auto
-  AIPG_MAX_COST_USD  hard request ceiling, default: 0.02
+  AIPG_MAX_COST_USD  maximum accepted preflight quote, default: 0.02
   NPC_NAME           default: Mara the bridge keeper
   NPC_WORLD          short world context
   NPC_MAX_TOKENS     64-800, default: 320`;

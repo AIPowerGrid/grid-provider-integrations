@@ -24,10 +24,14 @@ ask for a wallet private key.
 | [NFT media workflow](nft-media-workflow/) | `NFT_NAME='Grid Genesis' NFT_PROMPT='...' node starters/nft-media-workflow/index.mjs` | An application can generate media and write portable metadata without placing a minting key in the generator. |
 | [Wallet-funded agent](wallet-funded-agent/) | `AGENT_TASK='Summarize the governance proposal' node starters/wallet-funded-agent/index.mjs` | An agent can check one universal balance, quote its action, and stop before overspending. |
 
-Each command quotes before dispatch and respects `AIPG_MAX_COST_USD` (default
-`0.02`). The wallet-funded example also respects `AIPG_MIN_BALANCE_USD`
-(default `0.05`). Generated files go to an explicitly selected output directory
-and contain no credentials.
+Each command quotes before dispatch and rejects a quote above
+`AIPG_MAX_COST_USD` (default `0.02`). The quote is non-mutating and is not bound
+to the later request, so the Core submission route remains authoritative if a
+balance or operator-controlled price changes between those calls. Treat this as
+a client preflight guard, not a transactionally enforced spending allowance.
+The wallet-funded example also respects `AIPG_MIN_BALANCE_USD` (default `0.05`).
+Generated files go to an explicitly selected output directory and contain no
+credentials.
 
 ## Base and provenance
 
