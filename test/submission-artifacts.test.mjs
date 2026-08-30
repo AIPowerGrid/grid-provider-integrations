@@ -149,7 +149,8 @@ test("Dify package workflow is provenance-only and supply-chain pinned", async (
     `${author}/${name}:${version}@${"a".repeat(64)}`,
     /^(?:[a-z0-9_-]{1,64}\/)?[a-z0-9_-]{1,255}:[0-9]{1,4}(?:\.[0-9]{1,4}){1,3}(?:-\w{1,16})?@[a-f0-9]{32,64}$/,
   );
-  assert.match(submission, /credentialed Dify Community Edition and Dify Cloud/i);
+  assert.match(submission, /passed a credentialed Dify Cloud generation/i);
+  assert.match(submission, /Credentialed Dify\s+Community Edition generation remains pending/i);
   assert.doesNotMatch(workflow, /id-token: write|secrets\.|npm publish|marketplace.*upload/i);
 });
 
