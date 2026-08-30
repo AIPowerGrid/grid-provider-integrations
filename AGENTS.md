@@ -36,6 +36,10 @@ acceptance.
   builder-credit pilot. It collects only public project evidence; account IDs
   and all credentials stay out of issues and are exchanged privately only
   after manual selection.
+- `BUILDER_CREDIT_REVIEW.md` - maintainer triage, selection, private handoff,
+  issuance, and completion contract for that pilot. Applications are
+  discoverable through the `builder-credits` label; the public issue never
+  carries account or administrative grant identifiers.
 - `src/weekly-proof.mjs` plus `scripts/generate-weekly-proof.mjs` - read-only
   weekly snapshot renderer for public job, capacity, validator, and payout
   evidence plus exact npm provenance and current upstream pull-request states.
