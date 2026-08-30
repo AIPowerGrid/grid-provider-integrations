@@ -12,8 +12,8 @@ authority for submission structure and acceptance.
 
 - `src/` - dependency-free AIPG API conformance runner and CLI.
 - `test/` - deterministic mock-server coverage for the conformance contract
-  plus release-contract checks keeping packages, workflows, and submission
-  drafts aligned.
+  plus release-contract and builder-intake checks keeping packages, workflows,
+  public forms, and submission drafts aligned.
 - `dify-aipg/` - native Dify model-provider plugin for Grid text inference.
 - `elizaos-aipg/` - ElizaOS model/action plugin for Grid text, image, video,
   and music generation.
@@ -30,6 +30,10 @@ authority for submission structure and acceptance.
   open release gates, and publication-ready weekly proof copy. Every number in
   a proof post must link to a public source and preserve unavailable metrics as
   explicit gaps rather than estimates.
+- `.github/ISSUE_TEMPLATE/builder-credits.yml` - public intake for the bounded
+  builder-credit pilot. It collects only public project evidence; account IDs
+  and all credentials stay out of issues and are exchanged privately only
+  after manual selection.
 - `src/weekly-proof.mjs` plus `scripts/generate-weekly-proof.mjs` - read-only
   weekly snapshot renderer for public job, capacity, validator, and payout
   evidence. It deliberately reports paid-demand, operator-independence, and
@@ -78,6 +82,10 @@ authority for submission structure and acceptance.
   privileged release job.
 - Publication workflows must fetch full Git history and prove the tagged
   release commit is already reachable from `origin/main` before publishing.
+- Builder-credit applications must request the smallest useful `$5-$20` tier,
+  fund only a public integration or demo, expire after 60 days, and promise no
+  cash, token, reimbursement, or automatic eligibility. Never collect account
+  IDs, API keys, login tokens, seed phrases, or wallet private keys in issues.
 
 ## Verification
 
