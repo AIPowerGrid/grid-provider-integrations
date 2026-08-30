@@ -90,7 +90,7 @@ for the plugin release version.
 
 The exact validated package is staged on
 [`halfaipg/dify-plugins:feat/aipg-provider`](https://github.com/halfaipg/dify-plugins/tree/feat/aipg-provider/aipowergrid/aipg)
-at commit `5f94bde`. The branch is four commits ahead of current upstream
+at commit `caf265e8`. The branch is five commits ahead of current upstream
 `main`; together they add, refresh, and correct the path of only
 `aipowergrid/aipg/aipg-0.1.0.difypkg`. It has no open or closed Marketplace PR.
 Staging is not submission or acceptance.
