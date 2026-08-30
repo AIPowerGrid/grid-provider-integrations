@@ -136,6 +136,10 @@ test("Dify package workflow is provenance-only and supply-chain pinned", async (
   );
   assert.match(submission, /completed a streamed 109-token request/i);
   assert.match(submission, /returned HTTP 401/i);
+  assert.match(submission, /\[x\] I have read and comply with the Plugin Developer Agreement/);
+  assert.match(submission, /Marketplace PR #2986/);
+  assert.match(submission, /open and awaiting required maintainer review/i);
+  assert.match(submission, /Submission is not\s+Marketplace acceptance/i);
   assert.doesNotMatch(submission, /generation remains pending/i);
   assert.doesNotMatch(workflow, /id-token: write|secrets\.|npm publish|marketplace.*upload/i);
 });
