@@ -13,6 +13,7 @@ import {
 } from "../lib/grid-client.mjs";
 
 const MAX_WEBHOOK_BYTES = 32 * 1024;
+const MAX_RECENT_UPDATES = 1_000;
 const TELEGRAM_SYSTEM = "You are a concise community assistant. Answer only the user's current message. Never claim that an on-chain action happened.";
 const HELP = `Usage: node starters/telegram-agent/index.mjs
 
@@ -22,12 +23,26 @@ Required environment:
   TELEGRAM_WEBHOOK_SECRET
   TELEGRAM_ALLOWED_CHAT_IDS  comma-separated numeric chat IDs
 
-Optional: PORT (default 8788), AIPG_TEXT_MODEL, AIPG_MAX_COST_USD`;
+Optional:
+  TELEGRAM_ALLOWED_USER_IDS  comma-separated numeric sender IDs; require for shared chats
+  PORT                       default: 8788
+  AIPG_TEXT_MODEL
+  AIPG_MAX_COST_USD          maximum accepted preflight quote, default: 0.02`;
 
 function safeEqual(left, right) {
   const a = Buffer.from(String(left ?? ""));
   const b = Buffer.from(String(right ?? ""));
   return a.length === b.length && a.length > 0 && timingSafeEqual(a, b);
+}
+
+function numericIdSet(value, name, { required = true } = {}) {
+  const source = String(value ?? "").trim();
+  if (!source && !required) return new Set();
+  const entries = requireText(source, name, 2_000).split(",").map((item) => item.trim());
+  if (entries.some((item) => !/^-?\d+$/.test(item))) {
+    throw new Error(`${name} must contain only comma-separated numeric IDs`);
+  }
+  return new Set(entries);
 }
 
 async function readWebhook(request) {
@@ -62,22 +77,41 @@ export function createTelegramAgent({ environment = process.env, client, fetchIm
     256,
   );
   if (webhookSecret.length < 16) throw new Error("TELEGRAM_WEBHOOK_SECRET must be at least 16 characters");
-  const allowed = new Set(
-    requireText(environment.TELEGRAM_ALLOWED_CHAT_IDS, "TELEGRAM_ALLOWED_CHAT_IDS", 2_000)
-      .split(",")
-      .map((value) => value.trim())
-      .filter((value) => /^-?\d+$/.test(value)),
+  const allowedChats = numericIdSet(environment.TELEGRAM_ALLOWED_CHAT_IDS, "TELEGRAM_ALLOWED_CHAT_IDS");
+  const allowedUsers = numericIdSet(
+    environment.TELEGRAM_ALLOWED_USER_IDS,
+    "TELEGRAM_ALLOWED_USER_IDS",
+    { required: false },
   );
-  if (allowed.size === 0) throw new Error("TELEGRAM_ALLOWED_CHAT_IDS contains no valid chat IDs");
   const api = client ?? new GridStarterClient({ fetchImpl });
   const model = environment.AIPG_TEXT_MODEL || "auto";
   const inFlightChats = new Set();
+  const recentUpdateIds = new Set();
+
+  function rememberUpdate(updateId) {
+    if (!Number.isSafeInteger(updateId)) return true;
+    const key = String(updateId);
+    if (recentUpdateIds.has(key)) return false;
+    recentUpdateIds.add(key);
+    if (recentUpdateIds.size > MAX_RECENT_UPDATES) {
+      recentUpdateIds.delete(recentUpdateIds.values().next().value);
+    }
+    return true;
+  }
 
   async function processUpdate(update) {
     const message = update?.message;
     const chatId = String(message?.chat?.id ?? "");
+    const userId = String(message?.from?.id ?? "");
     const prompt = typeof message?.text === "string" ? message.text.trim() : "";
-    if (!allowed.has(chatId) || !prompt || prompt.length > 2_000 || inFlightChats.has(chatId)) return;
+    if (
+      !allowedChats.has(chatId)
+      || (allowedUsers.size > 0 && !allowedUsers.has(userId))
+      || !prompt
+      || prompt.length > 2_000
+      || inFlightChats.has(chatId)
+      || !rememberUpdate(update?.update_id)
+    ) return;
     inFlightChats.add(chatId);
     try {
       await preflight(api, {

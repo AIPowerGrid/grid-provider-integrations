@@ -72,7 +72,7 @@ function finiteNumber(value, fallback = 0) {
 export function maxCostUsd(environment = process.env) {
   const value = Number(environment.AIPG_MAX_COST_USD ?? "0.02");
   if (!Number.isFinite(value) || value <= 0 || value > 1) {
-    throw new Error("AIPG_MAX_COST_USD must be greater than 0 and at most 1");
+    throw new Error("AIPG_MAX_COST_USD quote limit must be greater than 0 and at most 1");
   }
   return value;
 }
@@ -245,6 +245,9 @@ export function mediaReceipt(response) {
     throw new GridStarterError("Grid returned no HTTPS media URL", 502);
   }
   const jobId = typeof response?.grid?.job_id === "string" ? response.grid.job_id : undefined;
+  if (!jobId) {
+    throw new GridStarterError("Grid returned media without a job receipt ID", 502);
+  }
   return {
     url,
     seed: Number.isInteger(item.seed) ? item.seed : undefined,

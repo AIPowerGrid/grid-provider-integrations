@@ -126,6 +126,10 @@ test("media receipts retain job IDs without claiming an anchor", () => {
     () => mediaReceipt({ data: [{ url: "http://insecure.example/file" }] }),
     /HTTPS media URL/,
   );
+  assert.throws(
+    () => mediaReceipt({ data: [{ url: "https://media.example/file" }], grid: {} }),
+    /job receipt ID/,
+  );
 });
 
 test("NPC starter quotes, generates, and emits an application receipt", async () => {
@@ -213,6 +217,7 @@ test("Telegram starter authenticates and restricts chats before Grid dispatch", 
       TELEGRAM_BOT_TOKEN: "123:telegram-secret",
       TELEGRAM_WEBHOOK_SECRET: webhookSecret,
       TELEGRAM_ALLOWED_CHAT_IDS: "42",
+      TELEGRAM_ALLOWED_USER_IDS: "7",
       AIPG_MAX_COST_USD: "0.02",
     },
     client,
@@ -238,7 +243,10 @@ test("Telegram starter authenticates and restricts chats before Grid dispatch", 
         "content-type": "application/json",
         "x-telegram-bot-api-secret-token": webhookSecret,
       },
-      body: JSON.stringify({ update_id: 1, message: { chat: { id: 42 }, text: "hello" } }),
+      body: JSON.stringify({
+        update_id: 1,
+        message: { chat: { id: 42 }, from: { id: 7 }, text: "hello" },
+      }),
     });
     assert.equal(accepted.status, 202);
     await Promise.race([
@@ -247,6 +255,36 @@ test("Telegram starter authenticates and restricts chats before Grid dispatch", 
     ]);
     assert.equal(generated, 1);
     assert.deepEqual(telegramBody, { chat_id: "42", text: "FINAL: Build it carefully." });
+
+    const replay = await fetch(`http://127.0.0.1:${port}/telegram`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-telegram-bot-api-secret-token": webhookSecret,
+      },
+      body: JSON.stringify({
+        update_id: 1,
+        message: { chat: { id: 42 }, from: { id: 7 }, text: "hello again" },
+      }),
+    });
+    assert.equal(replay.status, 202);
+    await new Promise((resolve) => setTimeout(resolve, 20));
+    assert.equal(generated, 1, "a replayed update must not dispatch paid work twice");
+
+    const wrongUser = await fetch(`http://127.0.0.1:${port}/telegram`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "x-telegram-bot-api-secret-token": webhookSecret,
+      },
+      body: JSON.stringify({
+        update_id: 2,
+        message: { chat: { id: 42 }, from: { id: 99 }, text: "spend credits" },
+      }),
+    });
+    assert.equal(wrongUser.status, 202);
+    await new Promise((resolve) => setTimeout(resolve, 20));
+    assert.equal(generated, 1, "a disallowed sender must not dispatch paid work");
   } finally {
     await new Promise((resolve, reject) => server.close((error) => (error ? reject(error) : resolve())));
   }

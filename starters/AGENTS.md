@@ -23,7 +23,9 @@ inference hot path.
   arguments, URLs, generated artifacts, or logs.
 - Production traffic is fixed to `https://api.aipowergrid.io`; alternate URLs
   are loopback-only test seams.
-- Quote before paid work and enforce a caller-controlled maximum cost.
+- Quote before paid work and reject estimates above a caller-controlled limit.
+  The quote endpoint is non-mutating, so do not describe that client-side check
+  as a server-enforced spending allowance.
 - Wallet funding is a cold-path user action through the Console. These
   examples never accept wallet private keys or sign transactions.
 - A `grid.job_id` is a Grid receipt identifier. Do not claim it is anchored on

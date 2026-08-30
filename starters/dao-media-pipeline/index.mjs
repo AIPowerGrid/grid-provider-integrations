@@ -21,7 +21,7 @@ Environment:
   AIPG_MEDIA_MODEL   optional model override
   AIPG_IMAGE_SIZE    default: 1024x1024
   DAO_MEDIA_SECONDS  default: 4 video, 30 audio
-  AIPG_MAX_COST_USD  hard request ceiling, default: 0.02`;
+  AIPG_MAX_COST_USD  maximum accepted preflight quote, default: 0.02`;
 
 export async function runDaoMedia({ environment = process.env, client } = {}) {
   const proposal = requireText(environment.DAO_PROPOSAL, "DAO_PROPOSAL", 2_000);

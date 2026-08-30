@@ -22,7 +22,7 @@ Environment:
   NFT_DESCRIPTION    optional public description
   NFT_OUTPUT_DIR     default: ./aipg-nft-output
   AIPG_IMAGE_MODEL   default: Krea 2 Turbo
-  AIPG_MAX_COST_USD  hard request ceiling, default: 0.02`;
+  AIPG_MAX_COST_USD  maximum accepted preflight quote, default: 0.02`;
 
 export async function runNftWorkflow({ environment = process.env, client, write = true } = {}) {
   const name = requireText(environment.NFT_NAME, "NFT_NAME", 160);
