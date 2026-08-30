@@ -1,3 +1,5 @@
+import { Buffer } from "node:buffer";
+
 const DEFAULT_BASE_URL = "https://api.aipowergrid.io";
 const DEFAULT_TIMEOUT_MS = 15_000;
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org";
@@ -8,18 +10,24 @@ const RELEASED_PACKAGES = [
     name: "@aipowergrid/ai-sdk-provider",
     version: "0.1.0",
     repository: "AIPowerGrid/grid-provider-integrations",
+    tag: "ai-sdk-provider-v0.1.0",
+    workflow: ".github/workflows/publish-packages.yml",
   },
   {
     label: "ElizaOS",
     name: "@aipowergrid/plugin-aipg",
     version: "0.1.0",
     repository: "AIPowerGrid/grid-provider-integrations",
+    tag: "plugin-aipg-v0.1.0",
+    workflow: ".github/workflows/publish-packages.yml",
   },
   {
     label: "n8n",
     name: "@aipowergrid/n8n-nodes-aipg",
     version: "0.1.3",
     repository: "AIPowerGrid/n8n-nodes-aipg",
+    tag: "n8n-nodes-aipg-v0.1.3",
+    workflow: ".github/workflows/publish.yml",
   },
 ];
 
@@ -140,7 +148,32 @@ async function requestJson(baseUrl, endpoint, timeoutMs, extraHeaders = {}) {
   }
 }
 
-function verifiedPackageEvidence(document, expected) {
+function decodeProvenancePayload(attestations, expected) {
+  const attestation = attestations?.attestations?.find(
+    (item) => item?.predicateType === "https://slsa.dev/provenance/v1",
+  );
+  assertion(attestation, `npm SLSA attestation is missing for ${expected.name}`);
+  const envelope = attestation.bundle?.dsseEnvelope;
+  assertion(
+    envelope?.payloadType === "application/vnd.in-toto+json" &&
+      typeof envelope?.payload === "string" &&
+      Array.isArray(envelope?.signatures) &&
+      envelope.signatures.some((item) => typeof item?.sig === "string" && item.sig),
+    `npm SLSA envelope is invalid for ${expected.name}`,
+  );
+  assertion(
+    Array.isArray(attestation.bundle?.verificationMaterial?.tlogEntries) &&
+      attestation.bundle.verificationMaterial.tlogEntries.length > 0,
+    `npm transparency-log evidence is missing for ${expected.name}`,
+  );
+  try {
+    return JSON.parse(Buffer.from(envelope.payload, "base64").toString("utf8"));
+  } catch {
+    throw new Error(`npm SLSA payload is invalid for ${expected.name}`);
+  }
+}
+
+function verifiedPackageEvidence(document, attestations, expected) {
   assertion(
     document?.name === expected.name,
     `npm package name mismatch for ${expected.name}`,
@@ -162,6 +195,48 @@ function verifiedPackageEvidence(document, expected) {
   assertion(
     String(document?.repository?.url || "").includes(expected.repository),
     `npm repository mismatch for ${expected.name}`,
+  );
+  const provenance = decodeProvenancePayload(attestations, expected);
+  const integrityDigest = Buffer.from(
+    document.dist.integrity.slice("sha512-".length),
+    "base64",
+  ).toString("hex");
+  const expectedSubject = `pkg:npm/${expected.name.replace("@", "%40")}@${expected.version}`;
+  assertion(
+    provenance?.subject?.some(
+      (item) =>
+        item?.name === expectedSubject && item?.digest?.sha512 === integrityDigest,
+    ),
+    `npm provenance subject or digest mismatch for ${expected.name}`,
+  );
+  assertion(
+    provenance?.predicateType === "https://slsa.dev/provenance/v1",
+    `npm provenance predicate mismatch for ${expected.name}`,
+  );
+  const build = provenance?.predicate?.buildDefinition;
+  const workflow = build?.externalParameters?.workflow;
+  assertion(
+    build?.buildType ===
+      "https://slsa-framework.github.io/github-actions-buildtypes/workflow/v1" &&
+      workflow?.repository === `https://github.com/${expected.repository}` &&
+      workflow?.ref === `refs/tags/${expected.tag}` &&
+      workflow?.path === expected.workflow &&
+      build?.internalParameters?.github?.event_name === "push",
+    `npm provenance workflow mismatch for ${expected.name}`,
+  );
+  assertion(
+    build?.resolvedDependencies?.some(
+      (item) =>
+        item?.uri ===
+          `git+https://github.com/${expected.repository}@refs/tags/${expected.tag}` &&
+        /^[0-9a-f]{40}$/.test(item?.digest?.gitCommit || ""),
+    ),
+    `npm provenance source revision mismatch for ${expected.name}`,
+  );
+  assertion(
+    provenance?.predicate?.runDetails?.builder?.id ===
+      "https://github.com/actions/runner/github-hosted",
+    `npm provenance builder mismatch for ${expected.name}`,
   );
   return {
     ...expected,
@@ -454,7 +529,14 @@ export async function generateWeeklyProof(options = {}) {
     options.githubApiUrl || DEFAULT_GITHUB_API_URL,
   );
   const timeoutMs = options.timeoutMs || DEFAULT_TIMEOUT_MS;
-  const [network, totals, payouts, packageDocuments, pullRequestDocuments] =
+  const [
+    network,
+    totals,
+    payouts,
+    packageDocuments,
+    packageAttestations,
+    pullRequestDocuments,
+  ] =
     await Promise.all([
       requestJson(baseUrl, "/v1/status/network", timeoutMs),
       requestJson(baseUrl, "/v1/stats/totals", timeoutMs),
@@ -464,6 +546,15 @@ export async function generateWeeklyProof(options = {}) {
           requestJson(
             npmRegistryUrl,
             `/${encodeURIComponent(item.name)}/${item.version}`,
+            timeoutMs,
+          ),
+        ),
+      ),
+      Promise.all(
+        RELEASED_PACKAGES.map((item) =>
+          requestJson(
+            npmRegistryUrl,
+            `/-/npm/v1/attestations/${encodeURIComponent(item.name)}@${item.version}`,
             timeoutMs,
           ),
         ),
@@ -484,7 +575,11 @@ export async function generateWeeklyProof(options = {}) {
     ]);
   const distribution = {
     packages: packageDocuments.map((document, index) =>
-      verifiedPackageEvidence(document, RELEASED_PACKAGES[index]),
+      verifiedPackageEvidence(
+        document,
+        packageAttestations[index],
+        RELEASED_PACKAGES[index],
+      ),
     ),
     pullRequests: pullRequestDocuments.map((document, index) =>
       verifiedPullRequestEvidence(document, UPSTREAM_PULL_REQUESTS[index]),
