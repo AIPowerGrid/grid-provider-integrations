@@ -1,0 +1,87 @@
+name: Builder credit application
+description: Apply for $5-$20 of expiring Grid service credit for a public integration or demo.
+title: "[Builder credits]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        AI Power Grid offers a small, manually reviewed credit pilot for builders shipping public integrations and demos. Applications are public. Do not include API keys, login tokens, private customer data, seed phrases, wallet private keys, or your Grid account ID.
+
+        A submitted application is not a grant. Selected builders receive private account-link instructions after review. Credits are nontransferable, nonwithdrawable, limited to one grant per account and campaign, and expire 60 days after issuance.
+
+  - type: input
+    id: project_url
+    attributes:
+      label: Public project URL
+      description: Link to the repository, deployed demo, or other public project evidence.
+      placeholder: https://github.com/your-org/your-project
+    validations:
+      required: true
+
+  - type: dropdown
+    id: grant_tier
+    attributes:
+      label: Requested grant
+      description: Choose the smallest tier that can prove the proposed deliverable.
+      options:
+        - $5 - prototype or compatibility proof
+        - $10 - public integration or reusable example
+        - $20 - working public demo with documented setup
+    validations:
+      required: true
+
+  - type: dropdown
+    id: modalities
+    attributes:
+      label: Grid capabilities
+      description: Select every capability the project will exercise.
+      multiple: true
+      options:
+        - Text or tool calling
+        - Image generation
+        - Video generation
+        - Audio or music generation
+        - Model discovery, quotes, or credit inspection
+    validations:
+      required: true
+
+  - type: textarea
+    id: deliverable
+    attributes:
+      label: What will you ship?
+      description: Describe one concrete public deliverable and how someone else will run or inspect it.
+      placeholder: I will add an AIPG provider to... The finished proof will be...
+    validations:
+      required: true
+
+  - type: textarea
+    id: usage_plan
+    attributes:
+      label: Test plan and expected usage
+      description: Explain the models or modalities you will test, the approximate number of requests, and how you will keep costs bounded.
+      placeholder: I expect to run approximately... I will use quote-before-dispatch and cap...
+    validations:
+      required: true
+
+  - type: textarea
+    id: existing_work
+    attributes:
+      label: Existing work
+      description: Link relevant code, issues, screenshots, or demos. Write "new project" when no work exists yet.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Pilot terms
+      options:
+        - label: I understand that selection is manual and submitting this issue does not guarantee a grant.
+          required: true
+        - label: I will publish the funded integration, example, or demo and document how AIPG is used.
+          required: true
+        - label: I understand that credits are service-only, nontransferable, nonwithdrawable, expire after 60 days, and are limited to one grant per account and campaign.
+          required: true
+        - label: I have not posted secrets, API keys, private customer data, seed phrases, wallet private keys, or my Grid account ID in this issue.
+          required: true
+
