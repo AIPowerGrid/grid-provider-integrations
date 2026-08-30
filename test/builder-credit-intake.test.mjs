@@ -19,6 +19,8 @@ test("builder-credit intake stays bounded and collects no account secrets", asyn
     "$20 - working public demo with documented setup",
     "expire 60 days after issuance",
     "one grant per account and campaign",
+    "labels:",
+    "builder-credits",
     "project_url",
     "required: true",
   ]) {
@@ -33,3 +35,8 @@ test("builder-credit intake stays bounded and collects no account secrets", asyn
   assert.match(form, /submitting this issue does not guarantee a grant/i);
 });
 
+test("builder-credit applications enter the maintainer triage queue", async () => {
+  const form = await readFile(TEMPLATE, "utf8");
+
+  assert.match(form, /^labels:\s*\n\s+- builder-credits\s*$/m);
+});

@@ -1,6 +1,8 @@
 name: Builder credit application
 description: Apply for $5-$20 of expiring Grid service credit for a public integration or demo.
 title: "[Builder credits]: "
+labels:
+  - builder-credits
 body:
   - type: markdown
     attributes:
@@ -84,4 +86,3 @@ body:
           required: true
         - label: I have not posted secrets, API keys, private customer data, seed phrases, wallet private keys, or my Grid account ID in this issue.
           required: true
-
