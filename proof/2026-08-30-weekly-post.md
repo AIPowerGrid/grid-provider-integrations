@@ -1,6 +1,6 @@
 # AI Power Grid Weekly Proof Post - 2026-08-30
 
-Snapshot captured at `2026-08-30T02:01:41.899Z` from the public Grid API.
+Snapshot captured at `2026-08-30T09:49:44.909Z` from the public Grid API.
 
 ## Thread copy
 
@@ -8,19 +8,19 @@ Snapshot captured at `2026-08-30T02:01:41.899Z` from the public Grid API.
 
 AIPG proof snapshot, Aug 30:
 
-64,472 jobs recorded all time; 4,833 in the current 24h window. 8 workers are online across 11 text, image, video, and audio routes.
+65,575 jobs recorded all time; 4,032 in the current 24h window. 8 workers are online across 11 text, image, video, and audio routes.
 
 Live status: https://api.aipowergrid.io/v1/status/network
 
 ### Post 2
 
-Worker payouts: 67,760.0777 AIPG across 1,318 on-chain Base payouts to 8 payout addresses.
+Worker payouts: 68,947.0207 AIPG across 1,338 on-chain Base payouts to 8 payout addresses.
 
 Verify the transactions: https://console.aipowergrid.io/transparency
 
 ### Post 3
 
-Validator preview: 7 participants, 570 assignments, 96.3% agreement.
+Validator preview: 7 participants, 595 assignments, 96.3% agreement.
 
 Limits: no economic authority; 0 independently verified operators; 11/11 live routes below the 3-worker redundancy target.
 
@@ -28,7 +28,7 @@ Limits: no economic authority; 0 independently verified operators; 11/11 live ro
 
 Distribution shipped: Vercel AI SDK, ElizaOS, n8n packages are public on npm with provenance.
 
-Upstream reviews: LiteLLM open; Vercel AI SDK open; ElizaOS registry open; LangChain docs open.
+Upstream reviews: LiteLLM open; Dify marketplace open; Vercel AI SDK open; ElizaOS registry open; LangChain docs open.
 
 https://github.com/AIPowerGrid/grid-provider-integrations
 
@@ -49,8 +49,9 @@ Metrics we will not fake: charging mode=allowlist; global=false. The public API 
   https://github.com/AIPowerGrid/grid-provider-integrations
 - npm @aipowergrid/ai-sdk-provider@0.1.0 with provenance: https://www.npmjs.com/package/@aipowergrid/ai-sdk-provider
 - npm @aipowergrid/plugin-aipg@0.1.0 with provenance: https://www.npmjs.com/package/@aipowergrid/plugin-aipg
-- npm @aipowergrid/n8n-nodes-aipg@0.1.2 with provenance: https://www.npmjs.com/package/@aipowergrid/n8n-nodes-aipg
+- npm @aipowergrid/n8n-nodes-aipg@0.1.3 with provenance: https://www.npmjs.com/package/@aipowergrid/n8n-nodes-aipg
 - LiteLLM PR (open): https://github.com/BerriAI/litellm/pull/38725
+- Dify marketplace PR (open): https://github.com/langgenius/dify-plugins/pull/2986
 - Vercel AI SDK PR (open): https://github.com/vercel/ai/pull/20003
 - ElizaOS registry PR (open): https://github.com/elizaOS/eliza/pull/29964
 - LangChain docs PR (open): https://github.com/langchain-ai/docs/pull/5770
@@ -59,13 +60,13 @@ Metrics we will not fake: charging mode=allowlist; global=false. The public API 
 
 ## Calculation record
 
-- All-time jobs: `63,381 text + 23 3d + 107 video + 781 image + 180 audio = 64,472`.
-- Current day-window jobs: `4,816 text + 1 video + 15 image + 1 audio = 4,833`.
-- Agreement display: `0.9630314232902033`, rounded to `96.3%`.
+- All-time jobs: `64,484 text + 23 3d + 107 video + 781 image + 180 audio = 65,575`.
+- Current day-window jobs: `4,015 text + 1 video + 15 image + 1 audio = 4,032`.
+- Agreement display: `0.9628318584070796`, rounded to `96.3%`.
 - Charging mode: `allowlist`; global charging: `false`.
 - Public incident-history availability: `false`.
-- Published package evidence: `@aipowergrid/ai-sdk-provider@0.1.0, @aipowergrid/plugin-aipg@0.1.0, @aipowergrid/n8n-nodes-aipg@0.1.2`.
-- Upstream pull-request states: `LiteLLM open; Vercel AI SDK open; ElizaOS registry open; LangChain docs open`.
+- Published package evidence: `@aipowergrid/ai-sdk-provider@0.1.0, @aipowergrid/plugin-aipg@0.1.0, @aipowergrid/n8n-nodes-aipg@0.1.3`.
+- Upstream pull-request states: `LiteLLM open; Dify marketplace open; Vercel AI SDK open; ElizaOS registry open; LangChain docs open`.
 
 This is a point-in-time operational and ledger snapshot. It is not an uptime
 promise, a paid-demand claim, proof of operator independence, or evidence of

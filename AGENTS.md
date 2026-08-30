@@ -43,6 +43,8 @@ acceptance.
 - `src/weekly-proof.mjs` plus `scripts/generate-weekly-proof.mjs` - read-only
   weekly snapshot renderer for public job, capacity, validator, and payout
   evidence plus exact npm provenance and current upstream pull-request states.
+  Submitted provider evidence includes the Dify marketplace review; an omitted
+  required integration is a failing evidence contract, not an unpublished gap.
   It deliberately reports paid-demand, operator-independence, and
   historical-uptime gaps instead of inferring them, and fails closed when
   published integration evidence drifts.

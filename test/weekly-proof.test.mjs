@@ -76,6 +76,14 @@ const fixture = {
         mergedAt: null,
       },
       {
+        label: "Dify marketplace",
+        repository: "langgenius/dify-plugins",
+        number: 2986,
+        url: "https://github.com/langgenius/dify-plugins/pull/2986",
+        state: "open",
+        mergedAt: null,
+      },
+      {
         label: "Vercel AI SDK",
         repository: "vercel/ai",
         number: 20003,
@@ -126,7 +134,7 @@ test("weekly proof derives arithmetic and preserves trust boundaries", () => {
   );
   assert.match(
     markdown,
-    /LiteLLM open; Vercel AI SDK open; ElizaOS registry open; LangChain docs open/,
+    /LiteLLM open; Dify marketplace open; Vercel AI SDK open; ElizaOS registry open; LangChain docs open/,
   );
   assert.match(
     markdown,
@@ -254,6 +262,7 @@ test("weekly proof fetches only the reviewed public evidence endpoints", async (
       "/github/repos/BerriAI/litellm/pulls/38725",
       "/github/repos/elizaOS/eliza/pulls/29964",
       "/github/repos/langchain-ai/docs/pulls/5770",
+      "/github/repos/langgenius/dify-plugins/pulls/2986",
       "/github/repos/vercel/ai/pulls/20003",
       "/npm/%40aipowergrid%2Fai-sdk-provider/0.1.0",
       "/npm/%40aipowergrid%2Fn8n-nodes-aipg/0.1.3",

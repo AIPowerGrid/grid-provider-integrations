@@ -25,6 +25,11 @@ const RELEASED_PACKAGES = [
 
 const UPSTREAM_PULL_REQUESTS = [
   { label: "LiteLLM", repository: "BerriAI/litellm", number: 38725 },
+  {
+    label: "Dify marketplace",
+    repository: "langgenius/dify-plugins",
+    number: 2986,
+  },
   { label: "Vercel AI SDK", repository: "vercel/ai", number: 20003 },
   { label: "ElizaOS registry", repository: "elizaOS/eliza", number: 29964 },
   { label: "LangChain docs", repository: "langchain-ai/docs", number: 5770 },
