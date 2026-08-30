@@ -46,6 +46,45 @@ instance discovered and loaded all four operations.
 The package and provenance are public. Creator Portal acceptance is separate
 from package publication.
 
+### Reverification on 2026-08-30
+
+- `npx @n8n/scan-community-package @aipowergrid/n8n-nodes-aipg` passed
+  provenance, source retrieval, and package security checks for public version
+  `0.1.2`.
+- The scanner resolved the attested source to repository commit `447a56b`.
+- `npm run lint`, `npm test`, and `npm pack --dry-run` passed after updating
+  the development-only `@n8n/node-cli` toolchain to `0.46.0` on `main`.
+- `npm audit --omit=dev` reports zero production dependency advisories. The
+  published package still has no runtime dependencies.
+
+## Portal field pack
+
+Use the Creator Portal's current field names as the authority. The values below
+are prepared submission copy, not evidence that a form was submitted.
+
+- **npm package:** `@aipowergrid/n8n-nodes-aipg`
+- **Display name:** `AI Power Grid`
+- **Short description:** `Generate text, images, video, and audio with community-powered models through the AI Power Grid API.`
+- **Category:** `AI`
+- **Source repository:** `https://github.com/AIPowerGrid/grid-provider-integrations/tree/main/n8n-nodes-aipg`
+- **Documentation:** `https://github.com/AIPowerGrid/grid-provider-integrations/tree/main/n8n-nodes-aipg#readme`
+- **API key console:** `https://console.aipowergrid.io/dashboard/api-key`
+- **Support:** `https://github.com/AIPowerGrid/grid-provider-integrations/issues`
+- **License:** `MIT`
+
+Long description:
+
+> AI Power Grid connects n8n workflows to open text, image, video, and audio
+> models served by community-operated workers. The node discovers currently
+> available models, keeps API credentials in n8n's encrypted credential store,
+> returns completed generation responses, and surfaces Grid HTTP errors to
+> normal workflow error branches. Requests are sent to remote workers, so users
+> should not submit secrets or regulated data without a separately verified
+> confidential-compute deployment.
+
+Do not claim Creator Portal acceptance, n8n endorsement, token streaming, or
+confidential inference in the submission.
+
 ## Portal submission
 
 Submit `@aipowergrid/n8n-nodes-aipg` at
