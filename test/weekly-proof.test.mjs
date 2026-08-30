@@ -66,6 +66,13 @@ const fixture = {
         npmUrl: "https://www.npmjs.com/package/@aipowergrid/n8n-nodes-aipg",
         provenance: true,
       },
+      {
+        label: "MCP/CLI",
+        name: "@aipowergrid/mcp",
+        version: "0.2.0",
+        npmUrl: "https://www.npmjs.com/package/@aipowergrid/mcp",
+        provenance: true,
+      },
     ],
     pullRequests: [
       {
@@ -126,6 +133,11 @@ const packageSources = {
   "@aipowergrid/n8n-nodes-aipg": {
     repository: "AIPowerGrid/n8n-nodes-aipg",
     tag: "n8n-nodes-aipg-v0.1.3",
+    workflow: ".github/workflows/publish.yml",
+  },
+  "@aipowergrid/mcp": {
+    repository: "AIPowerGrid/grid-skill",
+    tag: "mcp-v0.2.0",
     workflow: ".github/workflows/publish.yml",
   },
 };
@@ -213,7 +225,7 @@ test("weekly proof derives arithmetic and preserves trust boundaries", () => {
   );
   assert.match(
     markdown,
-    /Vercel AI SDK, ElizaOS, n8n packages are public on npm with provenance/,
+    /Vercel AI SDK, ElizaOS, n8n, MCP\/CLI packages are public on npm with provenance/,
   );
   assert.match(
     markdown,
@@ -222,6 +234,10 @@ test("weekly proof derives arithmetic and preserves trust boundaries", () => {
   assert.match(
     markdown,
     /npm @aipowergrid\/n8n-nodes-aipg@0\.1\.3 with provenance/,
+  );
+  assert.match(
+    markdown,
+    /npm @aipowergrid\/mcp@0\.2\.0 with provenance/,
   );
 
   const posts = markdown.split(/^### Post [0-9]+$/m).slice(1, 6);
@@ -305,10 +321,7 @@ test("weekly proof fetches only the reviewed public evidence endpoints", async (
                   name: packageDocument.name,
                   version: packageDocument.version,
                   repository: {
-                    url:
-                      packageDocument.name === "@aipowergrid/n8n-nodes-aipg"
-                        ? "git+https://github.com/AIPowerGrid/n8n-nodes-aipg.git"
-                        : "git+https://github.com/AIPowerGrid/grid-provider-integrations.git",
+                    url: `git+https://github.com/${packageSources[packageDocument.name].repository}.git`,
                   },
                   dist: {
                     integrity: packageIntegrity(packageDocument),
@@ -364,9 +377,11 @@ test("weekly proof fetches only the reviewed public evidence endpoints", async (
       "/github/repos/langgenius/dify-plugins/pulls/2986",
       "/github/repos/vercel/ai/pulls/20003",
       "/npm/%40aipowergrid%2Fai-sdk-provider/0.1.0",
+      "/npm/%40aipowergrid%2Fmcp/0.2.0",
       "/npm/%40aipowergrid%2Fn8n-nodes-aipg/0.1.3",
       "/npm/%40aipowergrid%2Fplugin-aipg/0.1.0",
       "/npm/-/npm/v1/attestations/%40aipowergrid%2Fai-sdk-provider@0.1.0",
+      "/npm/-/npm/v1/attestations/%40aipowergrid%2Fmcp@0.2.0",
       "/npm/-/npm/v1/attestations/%40aipowergrid%2Fn8n-nodes-aipg@0.1.3",
       "/npm/-/npm/v1/attestations/%40aipowergrid%2Fplugin-aipg@0.1.0",
       "/v1/payouts/public",
