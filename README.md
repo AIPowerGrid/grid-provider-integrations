@@ -149,11 +149,12 @@ ambiguous and fails closed.
 This package-level gate does not replace Dify Community Edition and Cloud UI
 installation checks, npm provenance, or upstream review.
 
-The three provider packages are public on npm:
+Four integration and agent packages are public on npm:
 
 - `@aipowergrid/ai-sdk-provider@0.1.0`
 - `@aipowergrid/plugin-aipg@0.1.0`
 - `@aipowergrid/n8n-nodes-aipg@0.1.3`
+- `@aipowergrid/mcp@0.2.0`
 
 Each package trusts only its matching GitHub Actions workflow through npm OIDC.
 The one-time bootstrap token and both repository `NPM_TOKEN` secrets were

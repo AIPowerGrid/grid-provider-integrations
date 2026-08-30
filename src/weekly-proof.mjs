@@ -29,6 +29,14 @@ const RELEASED_PACKAGES = [
     tag: "n8n-nodes-aipg-v0.1.3",
     workflow: ".github/workflows/publish.yml",
   },
+  {
+    label: "MCP/CLI",
+    name: "@aipowergrid/mcp",
+    version: "0.2.0",
+    repository: "AIPowerGrid/grid-skill",
+    tag: "mcp-v0.2.0",
+    workflow: ".github/workflows/publish.yml",
+  },
 ];
 
 const UPSTREAM_PULL_REQUESTS = [
@@ -452,7 +460,7 @@ Run a worker or validator: https://aipowergrid.io/run`,
 
 Upstream reviews: ${pullRequestSummary}.
 
-https://github.com/AIPowerGrid/grid-provider-integrations`,
+https://aipowergrid.io/docs/integrations`,
     4,
   );
   const post5 = boundedPost(

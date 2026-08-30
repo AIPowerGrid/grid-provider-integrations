@@ -42,7 +42,8 @@ acceptance.
   carries account or administrative grant identifiers.
 - `src/weekly-proof.mjs` plus `scripts/generate-weekly-proof.mjs` - read-only
   weekly snapshot renderer for public job, capacity, validator, and payout
-  evidence plus exact npm provenance and current upstream pull-request states.
+  evidence plus exact npm provenance for provider and agent packages and
+  current upstream pull-request states.
   Package provenance evidence must bind the registry integrity digest to the
   DSSE subject and the expected GitHub repository, release tag, workflow, push
   event, source revision, hosted builder, and transparency-log entry. This is a
