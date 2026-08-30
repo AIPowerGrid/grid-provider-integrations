@@ -32,7 +32,7 @@ independently operated community workers.
 ## Required checks
 
 - [x] I have read and followed the [Marketplace submission requirements](https://github.com/langgenius/dify-plugins/blob/main/docs/plugin-submission-requirements.md).
-- [ ] I have read and comply with the Plugin Developer Agreement.
+- [x] I have read and comply with the Plugin Developer Agreement.
 - [x] I tested this plugin on Dify Community Edition and Dify Cloud, or documented any limitation below.
 - [x] The package contains only files needed at runtime.
 - [x] The package does not contain secrets, local credentials, `.env` files, `.git` directories, virtual environments, caches, logs, or IDE files.
@@ -95,8 +95,10 @@ The exact validated package is staged on
 [`halfaipg/dify-plugins:feat/aipg-provider`](https://github.com/halfaipg/dify-plugins/tree/feat/aipg-provider/aipowergrid/aipg)
 at commit `caf265e8`. The branch is five commits ahead of current upstream
 `main`; together they add, refresh, and correct the path of only
-`aipowergrid/aipg/aipg-0.1.0.difypkg`. It has no open or closed Marketplace PR.
-Staging is not submission or acceptance.
+`aipowergrid/aipg/aipg-0.1.0.difypkg`. The package is submitted in
+[Marketplace PR #2986](https://github.com/langgenius/dify-plugins/pull/2986),
+which is open and awaiting required maintainer review. Submission is not
+Marketplace acceptance.
 
 ## Reviewer notes
 
