@@ -47,7 +47,9 @@ acceptance.
   required integration is a failing evidence contract, not an unpublished gap.
   It deliberately reports paid-demand, operator-independence, and
   historical-uptime gaps instead of inferring them, and fails closed when
-  published integration evidence drifts.
+  published integration evidence drifts. Its capacity post may link to the
+  reviewed `/run` operator funnel only while retaining the non-economic
+  validator and no-earnings-promise boundaries.
 - `scripts/smoke-packed-package.mjs` - installs the exact AI SDK or ElizaOS
   tarball into a disposable clean consumer with its declared host peer, imports
   the public package name, and removes the consumer afterward.

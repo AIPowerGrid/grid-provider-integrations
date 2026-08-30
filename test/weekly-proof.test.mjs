@@ -119,6 +119,10 @@ test("weekly proof derives arithmetic and preserves trust boundaries", () => {
   assert.match(markdown, /63,882\.7109 AIPG across 1,265 on-chain Base/);
   assert.match(markdown, /95\.3% agreement/);
   assert.match(markdown, /0 independently verified operators/);
+  assert.match(
+    markdown,
+    /Run a worker or validator: https:\/\/aipowergrid\.io\/run/,
+  );
   assert.match(markdown, /does not prove paid-request count/);
   assert.match(
     markdown,

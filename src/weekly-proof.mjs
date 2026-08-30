@@ -367,7 +367,9 @@ Verify the transactions: https://console.aipowergrid.io/transparency`,
   const post3 = boundedPost(
     `Validator preview: ${formatInteger(participating)} participants, ${formatInteger(completed)} assignments, ${percentage(validators.agreement_rate)} agreement.
 
-Limits: no economic authority; ${formatInteger(verifiedIndependent)} independently verified operators; ${formatInteger(belowTarget.length)}/${formatInteger(modelsOnline)} live routes below the ${formatInteger(redundancyTarget)}-worker redundancy target.`,
+Limits: no economic authority; ${formatInteger(verifiedIndependent)} independently verified operators; ${formatInteger(belowTarget.length)}/${formatInteger(modelsOnline)} live routes below the ${formatInteger(redundancyTarget)}-worker redundancy target.
+
+Run a worker or validator: https://aipowergrid.io/run`,
     3,
   );
   const post4 = boundedPost(

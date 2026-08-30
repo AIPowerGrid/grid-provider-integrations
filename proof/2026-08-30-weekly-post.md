@@ -1,6 +1,6 @@
 # AI Power Grid Weekly Proof Post - 2026-08-30
 
-Snapshot captured at `2026-08-30T09:49:44.909Z` from the public Grid API.
+Snapshot captured at `2026-08-30T10:04:18.038Z` from the public Grid API.
 
 ## Thread copy
 
@@ -8,21 +8,23 @@ Snapshot captured at `2026-08-30T09:49:44.909Z` from the public Grid API.
 
 AIPG proof snapshot, Aug 30:
 
-65,575 jobs recorded all time; 4,032 in the current 24h window. 8 workers are online across 11 text, image, video, and audio routes.
+65,578 jobs recorded all time; 3,980 in the current 24h window. 8 workers are online across 11 text, image, video, and audio routes.
 
 Live status: https://api.aipowergrid.io/v1/status/network
 
 ### Post 2
 
-Worker payouts: 68,947.0207 AIPG across 1,338 on-chain Base payouts to 8 payout addresses.
+Worker payouts: 69,091.5914 AIPG across 1,340 on-chain Base payouts to 8 payout addresses.
 
 Verify the transactions: https://console.aipowergrid.io/transparency
 
 ### Post 3
 
-Validator preview: 7 participants, 595 assignments, 96.3% agreement.
+Validator preview: 7 participants, 592 assignments, 96.3% agreement.
 
 Limits: no economic authority; 0 independently verified operators; 11/11 live routes below the 3-worker redundancy target.
+
+Run a worker or validator: https://aipowergrid.io/run
 
 ### Post 4
 
@@ -60,9 +62,9 @@ Metrics we will not fake: charging mode=allowlist; global=false. The public API 
 
 ## Calculation record
 
-- All-time jobs: `64,484 text + 23 3d + 107 video + 781 image + 180 audio = 65,575`.
-- Current day-window jobs: `4,015 text + 1 video + 15 image + 1 audio = 4,032`.
-- Agreement display: `0.9628318584070796`, rounded to `96.3%`.
+- All-time jobs: `64,487 text + 23 3d + 107 video + 781 image + 180 audio = 65,578`.
+- Current day-window jobs: `3,963 text + 1 video + 15 image + 1 audio = 3,980`.
+- Agreement display: `0.9629629629629629`, rounded to `96.3%`.
 - Charging mode: `allowlist`; global charging: `false`.
 - Public incident-history availability: `false`.
 - Published package evidence: `@aipowergrid/ai-sdk-provider@0.1.0, @aipowergrid/plugin-aipg@0.1.0, @aipowergrid/n8n-nodes-aipg@0.1.3`.
