@@ -17,8 +17,9 @@ shipping a different hand-written smoke test.
   image, experimental video, and typed music generation.
 - [`langchain-aipg/`](langchain-aipg/) - LangChain Python cookbook for model
   discovery, chat, streaming, and tool calls through the standard text API.
-- [`n8n-nodes-aipg/`](n8n-nodes-aipg/) - n8n community node for text, image,
-  video, and audio workflows with encrypted API-key credentials.
+- [`AIPowerGrid/n8n-nodes-aipg`](https://github.com/AIPowerGrid/n8n-nodes-aipg)
+  - dedicated n8n community node for text, image, video, and audio workflows
+  with encrypted API-key credentials.
 - [`starters/`](starters/) - runnable on-chain game NPC, DAO media, Telegram,
   NFT media, and wallet-funded agent examples with quote-before-dispatch cost
   guards and no wallet keys in the inference process.
@@ -109,17 +110,18 @@ prove them.
 
 Before publishing a provider package, create a disposable key carrying only
 `account.read` and `inference.submit`, enable charging for that account, and
-run the five-integration gate:
+run the four-integration gate:
 
 ```bash
 AIPG_LIVE_E2E=1 AIPG_API_KEY='...' npm run release:e2e:live
 ```
 
-The gate quotes ten fixed requests before dispatching, requires sufficient
+The gate quotes six fixed requests before dispatching, requires sufficient
 credit and active charging, and refuses to exceed a hard `$0.03` ceiling. It
-then exercises Dify, AI SDK, ElizaOS, LangChain, and n8n in sequence and checks
-that spend changed within the preflight bound. It does not print or persist the
-key, account balances, prompts, generated content, response headers, or worker
+then exercises Dify, AI SDK, ElizaOS, and LangChain in sequence and checks that
+spend changed within the preflight bound. The n8n package owns its live release
+gate in its dedicated repository. Neither gate prints or persists the key,
+account balances, prompts, generated content, response headers, or worker
 identity. Revoke the disposable key immediately after the run.
 
 After revoking it in the Console, keep the same environment variable only long
@@ -141,7 +143,7 @@ The three provider packages are public on npm:
 
 - `@aipowergrid/ai-sdk-provider@0.1.0`
 - `@aipowergrid/plugin-aipg@0.1.0`
-- `@aipowergrid/n8n-nodes-aipg@0.1.2`
+- `@aipowergrid/n8n-nodes-aipg@0.1.3`
 
 Each package trusts only its matching GitHub Actions workflow through npm OIDC.
 The one-time bootstrap token and both repository `NPM_TOKEN` secrets were

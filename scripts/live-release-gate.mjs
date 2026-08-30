@@ -50,21 +50,6 @@ export const LIVE_WORKLOADS = Object.freeze([
     prompt_tokens: 4_096,
     max_tokens: 256,
   },
-  {
-    id: "n8n-text",
-    model: "Smollm-135m",
-    modality: "text",
-    prompt_tokens: 2_048,
-    max_tokens: 4,
-  },
-  { id: "n8n-image", model: "z-image-turbo", modality: "image", n: 1 },
-  { id: "n8n-video", model: "LTX Director 2.0", modality: "video", seconds: 1 },
-  {
-    id: "n8n-audio",
-    model: "ace-step-v1.5-xl-turbo",
-    modality: "audio",
-    seconds: 10,
-  },
 ]);
 
 const COMMANDS = Object.freeze([
@@ -91,12 +76,6 @@ const COMMANDS = Object.freeze([
     command: "uv",
     args: ["run", "pytest", "-q", "tests/test_live_e2e.py"],
     cwd: "langchain-aipg",
-  },
-  {
-    label: "n8n",
-    command: "npm",
-    args: ["run", "test:e2e:live"],
-    cwd: "n8n-nodes-aipg",
   },
 ]);
 

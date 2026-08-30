@@ -17,9 +17,7 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: |
-            ai-sdk-aipg/package-lock.json
-            n8n-nodes-aipg/package-lock.json
+          cache-dependency-path: ai-sdk-aipg/package-lock.json
       - name: Root conformance tests
         run: npm test && npm run check && npm run conformance:public
       - name: Vercel AI SDK provider
@@ -27,9 +25,6 @@ jobs:
         run: npm ci && npm test && npm run typecheck && npm run lint && npm run build && npm audit --omit=dev && npm pack --dry-run
       - name: Vercel AI SDK packed consumer
         run: npm run test:package:ai-sdk
-      - name: n8n node
-        working-directory: n8n-nodes-aipg
-        run: npm ci && npm run lint && npm test && npm audit --omit=dev && npm pack --dry-run
       - name: Open WebUI guide
         working-directory: open-webui-aipg
         run: node scripts/check-public.mjs

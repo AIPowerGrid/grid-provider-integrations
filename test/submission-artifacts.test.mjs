@@ -78,30 +78,6 @@ test("LangChain cookbook preserves the compatibility and trust boundaries", asyn
   );
 });
 
-test("n8n Creator Portal submission stays aligned with the package and workflow", async () => {
-  const [packageJson, submission, workflow] = await Promise.all([
-    readJson("n8n-nodes-aipg/package.json"),
-    read("n8n-nodes-aipg/CREATOR_PORTAL_SUBMISSION.md"),
-    read(".github/workflows/publish-n8n.yml"),
-  ]);
-
-  assert.equal(packageJson.dependencies, undefined);
-  const releaseTagPrefix = packageJson.name.split("/").at(-1);
-  assert.match(
-    submission,
-    new RegExp(`${releaseTagPrefix}-v${packageJson.version}`),
-  );
-  assert.match(submission, /GitHub Actions with\s+provenance/);
-  assert.match(submission, /automated review.*Changes Required/is);
-  assert.match(submission, /Can't find credential file in repo/);
-  assert.match(submission, /repository\.directory: n8n-nodes-aipg/);
-  assert.match(submission, /not Creator Portal acceptance/);
-  assert.match(submission, /@aipowergrid%2Fn8n-nodes-aipg\/integration/);
-  assert.match(workflow, /n8n-nodes-aipg-v\$\(node -p/);
-  assert.match(workflow, /registry-url: https:\/\/registry\.npmjs\.org/);
-  assert.match(workflow, /cancel-in-progress: false/);
-});
-
 test("Open WebUI draft requires upstream consent before a provider page", async () => {
   const [pullRequest, query] = await Promise.all([
     read("open-webui-aipg/UPSTREAM_PR.md"),
@@ -163,7 +139,6 @@ test("GitHub workflows pin every third-party action by commit", async () => {
   const paths = [
     ".github/workflows/ci.yml",
     ".github/workflows/package-dify.yml",
-    ".github/workflows/publish-n8n.yml",
     ".github/workflows/publish-packages.yml",
   ];
 
@@ -178,10 +153,7 @@ test("GitHub workflows pin every third-party action by commit", async () => {
 });
 
 test("npm publication workflows disable package-manager caches", async () => {
-  const paths = [
-    ".github/workflows/publish-n8n.yml",
-    ".github/workflows/publish-packages.yml",
-  ];
+  const paths = [".github/workflows/publish-packages.yml"];
 
   for (const path of paths) {
     const workflow = await read(path);
@@ -193,10 +165,7 @@ test("npm publication workflows disable package-manager caches", async () => {
 });
 
 test("npm publication tags can release only commits already on main", async () => {
-  const workflows = [
-    [".github/workflows/publish-n8n.yml", 1],
-    [".github/workflows/publish-packages.yml", 2],
-  ];
+  const workflows = [[".github/workflows/publish-packages.yml", 2]];
 
   for (const [path, expectedJobs] of workflows) {
     const workflow = await read(path);

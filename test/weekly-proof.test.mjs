@@ -61,7 +61,7 @@ const fixture = {
       {
         label: "n8n",
         name: "@aipowergrid/n8n-nodes-aipg",
-        version: "0.1.2",
+        version: "0.1.3",
         npmUrl: "https://www.npmjs.com/package/@aipowergrid/n8n-nodes-aipg",
         provenance: true,
       },
@@ -130,7 +130,7 @@ test("weekly proof derives arithmetic and preserves trust boundaries", () => {
   );
   assert.match(
     markdown,
-    /npm @aipowergrid\/n8n-nodes-aipg@0\.1\.2 with provenance/,
+    /npm @aipowergrid\/n8n-nodes-aipg@0\.1\.3 with provenance/,
   );
 
   const posts = markdown.split(/^### Post [0-9]+$/m).slice(1, 6);
@@ -207,7 +207,10 @@ test("weekly proof fetches only the reviewed public evidence endpoints", async (
                   name: packageDocument.name,
                   version: packageDocument.version,
                   repository: {
-                    url: "git+https://github.com/AIPowerGrid/grid-provider-integrations.git",
+                    url:
+                      packageDocument.name === "@aipowergrid/n8n-nodes-aipg"
+                        ? "git+https://github.com/AIPowerGrid/n8n-nodes-aipg.git"
+                        : "git+https://github.com/AIPowerGrid/grid-provider-integrations.git",
                   },
                   dist: {
                     integrity: "sha512-fixture",
@@ -253,7 +256,7 @@ test("weekly proof fetches only the reviewed public evidence endpoints", async (
       "/github/repos/langchain-ai/docs/pulls/5770",
       "/github/repos/vercel/ai/pulls/20003",
       "/npm/%40aipowergrid%2Fai-sdk-provider/0.1.0",
-      "/npm/%40aipowergrid%2Fn8n-nodes-aipg/0.1.2",
+      "/npm/%40aipowergrid%2Fn8n-nodes-aipg/0.1.3",
       "/npm/%40aipowergrid%2Fplugin-aipg/0.1.0",
       "/v1/payouts/public",
       "/v1/stats/totals",

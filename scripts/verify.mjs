@@ -26,8 +26,6 @@ const checks = [
   ["Dify catalog", "uv", ["run", "python", "scripts/check_catalog.py"], "dify-aipg", { UV_CACHE_DIR: "/tmp/aipg-dify-uv" }],
   ["LangChain tests", "uv", ["run", "pytest"], "langchain-aipg", { UV_CACHE_DIR: "/tmp/aipg-langchain-uv-cache" }],
   ["LangChain lint", "uv", ["run", "ruff", "check", "."], "langchain-aipg", { UV_CACHE_DIR: "/tmp/aipg-langchain-uv-cache" }],
-  ["n8n lint", "npm", ["run", "lint"], "n8n-nodes-aipg"],
-  ["n8n tests", "npm", ["test"], "n8n-nodes-aipg"],
 ];
 
 for (const [label, command, args, directory, environment = {}] of checks) {
