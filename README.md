@@ -141,7 +141,7 @@ The three provider packages are public on npm:
 
 - `@aipowergrid/ai-sdk-provider@0.1.0`
 - `@aipowergrid/plugin-aipg@0.1.0`
-- `@aipowergrid/n8n-nodes-aipg@0.1.1`
+- `@aipowergrid/n8n-nodes-aipg@0.1.2`
 
 Each package trusts only its matching GitHub Actions workflow through npm OIDC.
 The one-time bootstrap token and both repository `NPM_TOKEN` secrets were
