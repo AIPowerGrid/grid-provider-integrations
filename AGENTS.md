@@ -94,6 +94,8 @@ acceptance.
   fund only a public integration or demo, expire after 60 days, and promise no
   cash, token, reimbursement, or automatic eligibility. Never collect account
   IDs, API keys, login tokens, seed phrases, or wallet private keys in issues.
+  The public form must explicitly acknowledge that community workers may
+  inspect plaintext prompts and outputs and require non-sensitive test data.
 
 ## Verification
 

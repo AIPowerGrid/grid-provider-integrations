@@ -80,6 +80,8 @@ body:
       options:
         - label: I understand that selection is manual and submitting this issue does not guarantee a grant.
           required: true
+        - label: I understand that Grid requests may be processed by community-operated workers that can inspect plaintext prompts and outputs, and I will use non-sensitive test data.
+          required: true
         - label: I will publish the funded integration, example, or demo and document how AIPG is used.
           required: true
         - label: I understand that credits are service-only, nontransferable, nonwithdrawable, expire after 60 days, and are limited to one grant per account and campaign.
