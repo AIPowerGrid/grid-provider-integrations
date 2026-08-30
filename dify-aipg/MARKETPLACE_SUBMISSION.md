@@ -33,7 +33,7 @@ independently operated community workers.
 
 - [x] I have read and followed the [Marketplace submission requirements](https://github.com/langgenius/dify-plugins/blob/main/docs/plugin-submission-requirements.md).
 - [ ] I have read and comply with the Plugin Developer Agreement.
-- [ ] I tested this plugin on Dify Community Edition and Dify Cloud, or documented any limitation below.
+- [x] I tested this plugin on Dify Community Edition and Dify Cloud, or documented any limitation below.
 - [x] The package contains only files needed at runtime.
 - [x] The package does not contain secrets, local credentials, `.env` files, `.git` directories, virtual environments, caches, logs, or IDE files.
 - [x] The package does not contain executables or bundled binaries, or I explained why they are required below.
@@ -71,14 +71,17 @@ Edition 1.17.0 deployment with signature verification disabled only for this
 unsigned development package. The install task completed successfully, the
 plugin runtime reached ready state, and Dify listed provider
 `aipowergrid/aipg/aipg` with its three curated text models: `auto`,
-`gpt-oss-120b`, and `deepseek-v4-flash-nvfp4`. This proves package
-installation and discovery on Community Edition; it does not replace the
-credentialed generation check.
+`gpt-oss-120b`, and `deepseek-v4-flash-nvfp4`.
 
-The exact artifact passed a credentialed Dify Cloud generation through `Auto
-Router`, after which the disposable scoped key was revoked. Credentialed Dify
-Community Edition generation remains pending. Do not submit this draft until
-that check passes and the corresponding checkbox above is honestly checked.
+The exact artifact passed credentialed generation in both Dify Cloud and Dify
+Community Edition. The Community Edition canary used the named
+`deepseek-v4-flash-nvfp4` model through Dify's Chatbot orchestration and
+completed a streamed 109-token request without a provider or billing error.
+At the reviewed Core price-book rates, that request was below $0.0001 and well
+inside the approved $0.03 test ceiling. Its disposable scoped API key was then
+revoked, and a subsequent authenticated generation request with that key
+returned HTTP 401. No key, prompt, response, or account balance is retained in
+this submission record.
 
 ## Upstream package path
 
